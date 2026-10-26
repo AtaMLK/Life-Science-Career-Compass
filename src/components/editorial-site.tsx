@@ -1,7 +1,7 @@
 "use client";
 import { useState } from "react";
 import Link from "next/link";
-import { ArrowUpRight, ArrowRight, Plus, Minus, Menu, X, Compass, Dna, MoveDownRight, Mail, Check, FlaskConical, Globe2, GraduationCap, BriefcaseBusiness, ChevronRight } from "lucide-react";
+import { ArrowUpRight, ArrowRight, Plus, Minus, Menu, X, Compass, Dna, MoveDownRight, Mail, FlaskConical, ChevronRight } from "lucide-react";
 import { copy, services, type Lang } from "@/lib/content";
 import MotionDirector from "./motion-director";
 
