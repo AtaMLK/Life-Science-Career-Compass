@@ -50,3 +50,16 @@ Set `NEXT_PUBLIC_SITE_URL` to the production origin (for example, `https://examp
 - `src/app/sitemap.ts`, `src/app/robots.ts`: crawl infrastructure.
 
 No account creation or testimonials/success statistics have been invented.
+
+
+## Editorial V3 (branch `design/editorial-motion-v2`)
+- Homepage with an original, six-stage GSAP ScrollTrigger career journey, a pinned portrait, active step indicator, progress rail and click-to-expand IHK certificate.
+- Dedicated localized `/[lang]/services` page with support fields, areas of expertise, interactive package comparison and enquiry links.
+- Navigation between homepage and services; English, German and Turkish content for both.
+- Data taken from the client-provided English brochure and uploaded professional portrait, IHK certificate, timeline, career consulting and package chart.
+- All five images are **required local assets**. Download the separate image package and extract its `public/` directory into the repository root:
+  `public/assets/farzaneh/{portrait,certificate,journey,consulting-overview,packages-table}.png`
+  The source repository contains code, not these private binary files. Next.js builds without them but pages will show broken images until copied.
+- The consultation action currently opens an email draft; it is not a completed calendar booking.
+- The prices and certificate details require owner approval before production publication.
+- Scroll-triggered effects respect `prefers-reduced-motion`; static content remains readable without JS animation.
