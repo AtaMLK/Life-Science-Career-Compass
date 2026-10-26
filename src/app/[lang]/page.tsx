@@ -1,7 +1,8 @@
 import type { Metadata } from "next";
 import { notFound } from "next/navigation";
 import { languages, isLang } from "@/lib/content";
-import Site from "@/components/site";
+import Site from "@/components/editorial-site";
+import "../editorial.css";
 
 type Props = { params: Promise<{ lang: string }> };
 export const generateStaticParams = () => languages.map(lang => ({lang}));
