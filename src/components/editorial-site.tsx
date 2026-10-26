@@ -18,7 +18,7 @@ export default function Site({lang}:{lang:Lang}){
  const e=editorialLocale[lang];
  const localizedService=(id:string)=>lang==="en"?services.find(x=>x.id===id)!:({...services.find(x=>x.id===id)!,...serviceTranslations[lang][id]});
  const [theme,setTheme]=useState<"light"|"dark">("light");
- useEffect(()=>{const saved=window.localStorage.getItem("lscc-theme");if(saved==="dark"||saved==="light")setTheme(saved);},[]);
+ useEffect(()=>{const id=window.requestAnimationFrame(()=>{const saved=window.localStorage.getItem("lscc-theme");if(saved==="dark"||saved==="light")setTheme(saved)});return ()=>window.cancelAnimationFrame(id);},[]);
  const switchTheme=()=>{const next=theme==="light"?"dark":"light";setTheme(next);window.localStorage.setItem("lscc-theme",next)};
  const [menu,setMenu]=useState(false);
  const [selected,setSelected]=useState<string|null>(null);
