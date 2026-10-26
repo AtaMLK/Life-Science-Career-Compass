@@ -1,5 +1,5 @@
 "use client";
-import {useState} from "react";
+import {useEffect,useState} from "react";
 import Link from "next/link";
 import Image from "next/image";
 import {ArrowUpRight,ArrowLeft,Check,ChevronDown,Mail,Compass} from "lucide-react";
@@ -19,10 +19,13 @@ tr:["Biyoloji","Biyokimya","Biyoteknoloji","Hücre Biyolojisi","Moleküler Biyol
 const mail=(name:string)=>"mailto:Ls.career-compass@mail.de?subject="+encodeURIComponent("Consultation — "+name);
 export default function ServicesExperience({lang}:{lang:Lang}){
  const l=labels[lang];const [active,setActive]=useState<string>("industry");
+ const [theme,setTheme]=useState<"light"|"dark">("light");
+ useEffect(()=>{const frame=requestAnimationFrame(()=>{if(localStorage.getItem("lscc-theme")==="dark")setTheme("dark")});return ()=>cancelAnimationFrame(frame)},[]);
+ const toggleTheme=()=>{const value=theme==="light"?"dark":"light";setTheme(value);localStorage.setItem("lscc-theme",value)};
  const selected=services.find(s=>s.id===active)!;
  const translate=(id:string)=>lang==="en"?services.find(s=>s.id===id)!:{...services.find(s=>s.id===id)!,...serviceTranslations[lang][id]};
- return <main className="service-page">
- <header className="service-page-nav"><Link href={`/${lang}`}><ArrowLeft size={18}/>{l.back}</Link><span>DR. FARZANEH HÄHNDEL <i>·</i> LIFE SCIENCE CAREER COMPASS</span><nav>{(["en","de","tr"] as const).map(x=><Link key={x} href={`/${x}/services`} aria-current={lang===x?"page":undefined}>{x.toUpperCase()}</Link>)}</nav></header>
+ return <main className="service-page" data-theme={theme}>
+ <header className="service-page-nav"><Link href={`/${lang}`}><ArrowLeft size={18}/>{l.back}</Link><span>DR. FARZANEH HÄHNDEL <i>·</i> LIFE SCIENCE CAREER COMPASS</span><button type="button" className="service-theme-switch" aria-label={theme==="dark"?"Switch to light mode":"Switch to dark mode"} aria-pressed={theme==="dark"} onClick={toggleTheme}>{theme==="dark"?"☾":"☼"}</button><nav>{(["en","de","tr"] as const).map(x=><Link key={x} href={`/${x}/services`} aria-current={lang===x?"page":undefined}>{x.toUpperCase()}</Link>)}</nav></header>
  <section className="service-page-hero"><div><span className="index-mark">{l.eyebrow}</span><h1>{l.headline}</h1><p>{l.sub}</p><a href="#package-explorer">{l.pricing} <ArrowUpRight size={17}/></a></div><div className="service-cover"><Image src="/assets/farzaneh/consulting-overview.png" fill sizes="(max-width:760px) 90vw,44vw" alt="Career consulting overview: fields, services and Germany, Austria, Switzerland"/></div></section>
  <section className="support-mosaic"><div><span className="index-mark">{l.who}</span><h2>{l.intro}</h2></div><div className="support-chip-wall">{l.support.map((v,i)=><span key={v}><b>{String(i+1).padStart(2,"0")}</b>{v}</span>)}</div></section>
  <section className="expertise-panel"><div className="index-mark">{l.areas}</div><div className="expertise-marquee">{expertise[lang].map((area,i)=><span key={area}>{area}<i>{i%3===0?"✳":"·"}</i></span>)}</div><a target="_blank" rel="noreferrer" href="/assets/farzaneh/consulting-overview.png">{l.image} ↗</a></section>
