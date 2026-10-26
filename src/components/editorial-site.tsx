@@ -34,9 +34,9 @@ export default function Site({lang}:{lang:Lang}){
  <main>
   <section className="editorial-hero">
    <div className="hero-ambient ambient-1"/><div className="hero-ambient ambient-2"/>
-   <div className="hero-meta"><span>{e.introLabel}</span><span>GERMANY · EN / DE / TR</span></div>
+   <div className="hero-meta"><span>{e.introLabel}</span><span>{e.based} · EN / DE / TR</span></div>
    <div className="hero-stage">
-    <p className="hero-kicker" data-reveal>{e.heroTag}</p><div className="hero-nameplate" data-reveal><span>{e.person}</span><strong>Dr. Farzaneh Hähndel</strong><small>PhD · IHK-Certified Job & Application Coach</small></div>
+    <p className="hero-kicker" data-reveal>{e.heroTag}</p><div className="hero-nameplate" data-reveal><span>{e.person}</span><strong>Dr. Farzaneh Hähndel</strong><small>PhD · IHK</small></div>
     <h1 data-reveal>{e.heroA}<br/><em>{e.heroB}</em><br/><span>{e.heroC}</span></h1>
     <div className="hero-photo" aria-label="Science research photography"><div className="hero-photo-image" data-image-parallax/><div className="photo-overlay"><span>FH</span><small>{e.portraitPending}</small></div></div>
     <div className="hero-side-note"><span className="asterisk">✳</span><p>{e.forMinds}</p></div>
@@ -57,7 +57,7 @@ export default function Site({lang}:{lang:Lang}){
    <div className="service-outro"><span>{e.notSure}</span><a href="#connect">{e.figure} <ArrowUpRight size={18}/></a></div>
   </section>
 
-  <section className="story" id="story"><div className="story-visual"><div className="story-visual-photo" data-image-parallax/><div className="story-person-tag">DR. FARZANEH HÄHNDEL<br/><span>PhD · IHK CAREER COACH</span></div><span className="story-image-note">RESEARCH / EXPERIENCE / HUMAN CONNECTION</span></div><div className="story-copy"><span className="index-mark">{e.storyLabel}</span><h2 data-reveal>{e.storyA}<br/><i>{e.storyB}</i></h2><p className="story-name">Dr. Farzaneh Hähndel</p><p>{c.about}</p><div className="career-path">{c.timeline.map((t,i)=><div key={t} className="career-stop"><span>0{i+1}</span><p>{t}</p></div>)}</div><a className="story-cta" href="#connect">{e.conversation} <ArrowUpRight size={18}/></a></div></section>
+  <section className="story" id="story"><div className="story-visual"><div className="story-visual-photo" data-image-parallax/><div className="story-person-tag">DR. FARZANEH HÄHNDEL<br/><span>PhD · IHK CAREER COACH</span></div><span className="story-image-note">{e.foundation} / Dr. Farzaneh Hähndel</span></div><div className="story-copy"><span className="index-mark">{e.storyLabel}</span><h2 data-reveal>{e.storyA}<br/><i>{e.storyB}</i></h2><p className="story-name">Dr. Farzaneh Hähndel</p><p>{c.about}</p><div className="career-path">{c.timeline.map((t,i)=><div key={t} className="career-stop"><span>0{i+1}</span><p>{t}</p></div>)}</div><a className="story-cta" href="#connect">{e.conversation} <ArrowUpRight size={18}/></a></div></section>
 
   <section className="proof"><div className="proof-inner"><span className="eyebrow-alt">{e.foundation}</span><div className="proof-line"><strong>PhD</strong><p>{e.scienceTraining}</p></div><div className="proof-line"><strong>IHK</strong><p>{e.ihk}</p></div><div className="proof-line"><strong>DE</strong><p>{e.based}</p></div></div></section>
 
@@ -67,7 +67,7 @@ export default function Site({lang}:{lang:Lang}){
 
   <section className="faq-v2" id="questions"><div className="faq-title"><span className="index-mark">{e.faqLabel}</span><h2 data-reveal>{e.faqA}<br/><i>{e.faqB}</i></h2><p>{e.faqText}</p></div><div className="faq-accordion">{c.faq.map(([q,a],i)=><div className="faq-row" key={q}><button type="button" onClick={()=>setFaq(faq===i?null:i)} aria-expanded={faq===i}><span>{String(i+1).padStart(2,"0")}</span><strong>{q}</strong>{faq===i?<Minus size={20}/>:<Plus size={20}/>}</button>{faq===i&&<p>{a}</p>}</div>)}</div></section>
 
-  <section className="finale" id="connect"><div className="finale-art"><Compass size={300} strokeWidth={.4}/></div><p className="index-mark">{e.finalTag}</p><h2 data-reveal>{e.finalA}<br/>{e.finalB} <i>{e.finalC}</i></h2><a className="finale-link" href={mail("Consultation request for Dr. Farzaneh Hähndel")}>{e.letsTalk} <ArrowUpRight size={45} strokeWidth={1.4}/></a><div className="finale-contacts"><a href="mailto:Ls.career-compass@mail.de"><Mail size={17}/>Ls.career-compass@mail.de</a><a href="tel:+4915785331977">+49 157 85331977</a><span>BASED IN GERMANY</span></div></section>
+  <section className="finale" id="connect"><div className="finale-art"><Compass size={300} strokeWidth={.4}/></div><p className="index-mark">{e.finalTag}</p><h2 data-reveal>{e.finalA}<br/>{e.finalB} <i>{e.finalC}</i></h2><a className="finale-link" href={mail("Consultation request for Dr. Farzaneh Hähndel")}>{e.letsTalk} <ArrowUpRight size={45} strokeWidth={1.4}/></a><div className="finale-contacts"><a href="mailto:Ls.career-compass@mail.de"><Mail size={17}/>Ls.career-compass@mail.de</a><a href="tel:+4915785331977">+49 157 85331977</a><span>{e.based}</span></div></section>
  </main>
  <footer className="creative-footer"><span>© {new Date().getFullYear()} LIFE SCIENCE CAREER COMPASS</span><a href="https://www.linkedin.com/in/fhaehndel" rel="noreferrer" target="_blank">LINKEDIN ↗</a><span>{e.footer}</span></footer>
  </div>;
