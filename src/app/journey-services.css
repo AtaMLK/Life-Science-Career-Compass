@@ -47,3 +47,27 @@
 .service-page[data-theme="dark"] .package-duration,.service-page[data-theme="dark"] .package-rate{border-color:#d3ecdf45}
 .service-page[data-theme="dark"] .package-contact{background:#b5e4d4;color:#122527}
 .service-page[data-theme="dark"] .service-finale{background:#704b42}
+
+
+/* V3.1 journey and package finishing details */
+.journey-step.active h3{color:#116e75}
+.journey-step.active .journey-serial{box-shadow:0 0 0 6px #77cac329}
+.journey-step{transition:opacity .35s,color .35s}
+.certificate-open,.package-contact{transition:background .26s,color .26s,transform .26s}
+.certificate-open:hover{background:#16363f;color:#fff;transform:translateY(-2px)}
+.package-contact:hover{background:#246a69;transform:translateY(-2px)}
+.package-option{transition:background .2s,color .2s,padding .2s}
+.package-option:hover{padding-left:13px;background:#bfe0d733}
+.package-option.active{background:#bfe0d766;padding-left:13px}
+.service-page-hero>a:hover,.service-page-hero a:hover{color:#056c74}
+.support-chip-wall span{transition:background .25s,transform .25s,border-color .25s}
+.support-chip-wall span:hover{transform:translateY(-3px);background:#c5e5da;border-color:#6aaea7}
+.certificate-modal{border-radius:7px;box-shadow:0 30px 95px #0006}
+.certificate-modal>button:hover{text-decoration:underline;text-underline-offset:4px}
+.package-display{box-shadow:0 25px 70px #0c303013}
+.service-page[data-theme="dark"] .journey-step.active h3{color:#a5e3d6}
+.service-page[data-theme="dark"] .package-option:hover,.service-page[data-theme="dark"] .package-option.active{background:#5fa89d22}
+.service-page[data-theme="dark"] .support-chip-wall span:hover{background:#3d706c}
+.service-page[data-theme="dark"] .package-display{box-shadow:0 20px 50px #0003}
+@media(max-width:760px){.journey-step.active h3{color:inherit}.package-option:hover{padding-left:4px}.package-option.active{padding-left:9px}.service-page-hero>div:first-child{padding-top:64px}.service-cover{min-height:330px}.service-finale{gap:35px}}
+@media(prefers-reduced-motion:reduce){.journey-step,.certificate-open,.package-contact,.package-option,.support-chip-wall span{transition:none!important}.package-option:hover,.support-chip-wall span:hover{transform:none!important}}
