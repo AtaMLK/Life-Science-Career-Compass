@@ -53,3 +53,36 @@
 .v2[data-theme="dark"] .photo-overlay{background:linear-gradient(125deg,#07191bdc,#195b63b8)}
 .v2 [data-reveal]{will-change:transform,opacity}
 @media(max-width:760px){.v2 .cosmic-toggle{margin-left:auto;width:71px}.v2 .cosmic-track{width:63px}.v2 .cosmic-orb{width:23px}.v2[data-theme="dark"] .cosmic-orb{transform:translateX(34px) rotate(360deg)}.v2 .menu-toggle{margin-left:0}.v2 .hero-nameplate{margin:20px 0}.v2 .hero-nameplate strong{font-size:24px}.v2[data-theme="dark"] .creative-links.open{background:#121e21}}
+
+
+/* V3.1 visual refinement — typography, navigation, hover states, motion */
+.v2{font-feature-settings:"kern" 1;text-rendering:optimizeLegibility}
+.v2 h1,.v2 h2,.v2 h3{overflow-wrap:normal}
+.v2 .creative-nav{box-shadow:0 8px 35px #071b2408}
+.v2 .creative-links>a:not(.nav-contact){position:relative;padding:8px 0}
+.v2 .creative-links>a:not(.nav-contact):after{content:"";position:absolute;bottom:2px;left:0;right:0;height:1px;background:currentColor;transform:scaleX(0);transform-origin:right;transition:transform .36s cubic-bezier(.22,1,.36,1)}
+.v2 .creative-links>a:not(.nav-contact):hover:after{transform:scaleX(1);transform-origin:left}
+.v2 .hero-photo{transition:box-shadow .6s ease;box-shadow:0 32px 95px #142f3050}
+.v2 .hero-photo:hover{box-shadow:0 45px 120px #142f305c}
+.v2 .hero-side-note{backdrop-filter:blur(12px);box-shadow:0 15px 42px #152b2a25}
+.v2 .hero-nameplate{background:linear-gradient(90deg,#def7ed7a,transparent);padding-top:6px;padding-bottom:6px}
+.v2 .path-item,.v2 .service-entry button,.v2 .faq-row button,.v2 .process-step,.v2 .story-cta,.v2 .finale-link{transition:color .24s,background-color .24s,transform .24s}
+.v2 .path-item:hover{transform:translateX(7px)}
+.v2 .service-entry button:hover{transform:translateX(5px)}
+.v2 .service-open-icon{transition:transform .3s,background-color .3s}
+.v2 .service-entry button:hover .service-open-icon{transform:rotate(90deg);background:#ffffff55}
+.v2 .cluster{box-shadow:0 15px 35px #1a303014}
+.v2 .story-actual-portrait img{filter:drop-shadow(0 28px 32px #0d20247a)}
+.v2 .story-cta:hover,.v2 .service-page-cta:hover{transform:translateX(7px)}
+.v2 .finale-link:hover svg{transform:translate(6px,-6px)}
+.v2 .finale-link svg{transition:transform .3s}
+.v2 .hero-action a:hover svg{transform:translate(3px,4px)}
+.v2 .hero-action a svg{transition:transform .3s}
+.v2 .faq-row button:hover{color:#388b83}
+.v2 .cosmic-toggle:focus-visible{outline:3px solid #149ca9;outline-offset:4px}
+.v2 .cluster:focus-within{outline:1px solid #183e3e66}
+.v2 .service-entry button:focus-visible{outline-offset:-2px}
+.v2 .service-answer{animation:editorialReveal .28s ease both}
+@keyframes editorialReveal{from{opacity:0;transform:translateY(-7px)}to{opacity:1;transform:translateY(0)}}
+@media(max-width:760px){.v2 .hero-photo{box-shadow:0 25px 70px #142f3050}.v2 .cluster{box-shadow:none}.v2 .hero-side-note{max-width:190px}.v2 .process-step{min-height:175px}.v2 .finale-link svg{width:30px}}
+@media(prefers-reduced-motion:reduce){.v2 .service-answer{animation:none}.v2 .path-item:hover,.v2 .service-entry button:hover,.v2 .story-cta:hover{transform:none}}
