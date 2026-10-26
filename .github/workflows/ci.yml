@@ -1,7 +1,7 @@
 name: Quality checks
 on:
   push:
-    branches: [main]
+    branches: [main, design/editorial-motion-v2]
   pull_request:
 jobs:
   verify:
