@@ -1,0 +1,18 @@
+"use client";
+import {useState} from "react";
+import {ArrowRight,ArrowLeft,Compass} from "lucide-react";
+import {type Lang,services} from "@/lib/content";
+import {serviceTranslations} from "@/lib/editorial-locale";
+const words={
+en:{eyebrow:"CAREER COMPASS",heading:"Not sure where to start?",intro:"Answer three quick questions. No personal details required.",questions:["Where are you in your career?","What do you need help with?","Where are you exploring opportunities?"],choices:[["Graduate / starting out","PhD / Research","Industry professional","Career change"],["Finding opportunities","CV & application documents","Interview preparation","Salary & career strategy"],["Germany","Austria or Switzerland","Still exploring"]],result:"A suggested starting point",note:"This recommendation is a guide, not an assessment or job guarantee.",ask:"Ask Farzaneh",back:"Back",again:"Start again"},
+de:{eyebrow:"KARRIEREKOMPASS",heading:"Wo soll es losgehen?",intro:"Drei kurze Fragen. Keine persönlichen Angaben erforderlich.",questions:["Wo stehen Sie beruflich?","Wobei brauchen Sie Unterstützung?","Wo suchen Sie Perspektiven?"],choices:[["Berufseinstieg","Promotion / Forschung","Industrie","Beruflicher Wechsel"],["Stellen finden","Lebenslauf & Bewerbung","Vorstellungsgespräch","Gehalt & Karrierestrategie"],["Deutschland","Österreich oder Schweiz","Noch unentschlossen"]],result:"Ein möglicher Einstieg",note:"Diese Empfehlung ist eine Orientierung, keine Garantie.",ask:"Farzaneh anfragen",back:"Zurück",again:"Neu beginnen"},
+tr:{eyebrow:"KARİYER PUSULASI",heading:"Nereden başlamalısınız?",intro:"Üç kısa soruyu yanıtlayın. Kişisel bilgi gerekmez.",questions:["Kariyerinizin hangi aşamasındasınız?","Hangi konuda desteğe ihtiyacınız var?","Nerede fırsat arıyorsunuz?"],choices:[["Yeni mezun","Doktora / Araştırma","Sektör profesyoneli","Kariyer değişikliği"],["İş fırsatları","CV ve başvurular","Mülakat hazırlığı","Maaş ve kariyer stratejisi"],["Almanya","Avusturya veya İsviçre","Henüz karar vermedim"]],result:"Önerilen başlangıç",note:"Bu öneri rehberlik amaçlıdır, iş garantisi vermez.",ask:"Farzaneh'e danış",back:"Geri",again:"Yeniden başla"}
+};
+const serviceIds=["industry","cv","interview","coaching"];
+export default function CareerFinder({lang}:{lang:Lang}){
+ const t=words[lang];const [answers,setAnswers]=useState<number[]>([]);
+ const step=answers.length;const id=serviceIds[answers[1]??3];
+ const base=services.find(x=>x.id===id)!;
+ const title=lang==="en"?base.name:serviceTranslations[lang][id].name;
+ return <section id="finder" className="editorial-finder"><div className="finder-heading"><span className="index-mark">{t.eyebrow}</span><h2>{t.heading}</h2><p>{t.intro}</p></div><div className="finder-surface"><div className="finder-progress">{[0,1,2].map(i=><span key={i} className={i<=step?"filled":""}/>)}</div>{step<3?<><h3>{t.questions[step]}</h3><div className="finder-choices">{t.choices[step].map((option,i)=><button type="button" key={option} onClick={()=>setAnswers(a=>[...a,i])}><span>{option}</span><ArrowRight size={18}/></button>)}</div></>:<div className="finder-recommendation"><span>{t.result}</span><h3>{title}</h3><p>{t.note}</p><a href={"mailto:Ls.career-compass@mail.de?subject="+encodeURIComponent("Career Compass: "+title)}>{t.ask} <ArrowRight size={18}/></a></div>}<div className="finder-footer"><button type="button" disabled={step===0} onClick={()=>setAnswers(a=>a.slice(0,-1))}><ArrowLeft size={15}/>{t.back}</button><button type="button" onClick={()=>setAnswers([])}><Compass size={15}/>{t.again}</button></div></div></section>
+}
