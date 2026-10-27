@@ -15,8 +15,18 @@ const items=[
 ] as const;
 export default function JourneyScroll({lang}:{lang:Lang}){
  const root=useRef<HTMLElement>(null);
+ const certificateDialog=useRef<HTMLDialogElement>(null);
  const [active,setActive]=useState(0);
  const [documentOpen,setDocumentOpen]=useState(false);
+ useEffect(()=>{
+  const dialog=certificateDialog.current;
+  if(!dialog)return;
+  if(!documentOpen){dialog.close();return;}
+  const previousOverflow=document.body.style.overflow;
+  dialog.showModal();
+  document.body.style.overflow="hidden";
+  return ()=>{dialog.close();document.body.style.overflow=previousOverflow;};
+ },[documentOpen]);
  useEffect(()=>{
   const rootEl=root.current;if(!rootEl)return;
   if(window.matchMedia("(prefers-reduced-motion: reduce)").matches)return;
@@ -37,7 +47,7 @@ export default function JourneyScroll({lang}:{lang:Lang}){
  <div className="journey-photo-caption"><strong>Dr. Farzaneh Hähndel</strong><span>PhD · IHK Job & Application Coach</span></div>
  <button type="button" className="certificate-open" onClick={()=>setDocumentOpen(true)}>{text.see}<span>↗</span></button>
  </div></div><div className="journey-steps"><div className="journey-progress-rail"><span className="journey-progress-fill"/></div>{items.map((item,i)=><article key={i} className={active===i?"journey-step active":"journey-step"}><div className="journey-serial">{String(i+1).padStart(2,"0")}</div><div className="journey-date">{item.year} · {item.place}</div><h3>{item[lang]}</h3><p>{lang==="en"?item.enText:lang==="de"?item.deText:item.trText}</p></article>)}</div></div>
- <div className="journey-archive"><a href="/assets/farzaneh/journey.png" target="_blank" rel="noreferrer">{text.full} ↗</a></div>
- {documentOpen&&<div className="certificate-lightbox" role="dialog" aria-modal="true" aria-label="IHK certificate" onClick={()=>setDocumentOpen(false)}><div className="certificate-modal" onClick={event=>event.stopPropagation()}><button type="button" onClick={()=>setDocumentOpen(false)}>{text.close} ✕</button><Image src="/assets/farzaneh/certificate.png" width={800} height={1150} sizes="(max-width:760px) 90vw,650px" alt="IHK Job und Bewerbungscoaching certificate of Dr. Farzaneh Hähndel"/></div></div>}
+
+ <dialog ref={certificateDialog} className="certificate-lightbox" aria-labelledby="certificate-title" onCancel={()=>setDocumentOpen(false)} onClick={event=>{if(event.target===event.currentTarget)setDocumentOpen(false)}}><div className="certificate-modal"><header className="certificate-header"><h3 id="certificate-title" className="certificate-sr-only">{lang==="de"?"IHK-Zertifikat":lang==="tr"?"IHK sertifikası":"IHK certificate"}</h3><button autoFocus type="button" className="certificate-close" aria-label={text.close} onClick={()=>setDocumentOpen(false)}><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" aria-hidden="true"><path d="m7 7 10 10M17 7 7 17"/></svg></button></header><div className="certificate-document"><Image src="/assets/farzaneh/certificate.png" width={1131} height={1391} sizes="(max-width:760px) 92vw,650px" alt="IHK Job und Bewerbungscoaching certificate of Dr. Farzaneh Hähndel"/></div><footer className="certificate-footer"><span>Job- und Bewerbungscoaching (IHK)</span><a href="/assets/farzaneh/certificate.png" target="_blank" rel="noreferrer">{lang==="de"?"Original öffnen":lang==="tr"?"Orijinali aç":"Open original"} ↗</a></footer></div></dialog>
  </section>;
 }

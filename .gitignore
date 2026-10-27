@@ -5,3 +5,7 @@ out
 !.env.example
 *.tsbuildinfo
 .DS_Store
+
+.next-audit/
+audit-*.png
+.vercel

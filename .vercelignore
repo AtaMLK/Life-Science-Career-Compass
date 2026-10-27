@@ -1,0 +1,8 @@
+.next
+.next-audit
+node_modules
+.git
+scripts
+audit-results.json
+audit-*.png
+QA-REPORT.md

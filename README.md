@@ -63,3 +63,6 @@ No account creation or testimonials/success statistics have been invented.
 - The consultation action currently opens an email draft; it is not a completed calendar booking.
 - The prices and certificate details require owner approval before production publication.
 - Scroll-triggered effects respect `prefers-reduced-motion`; static content remains readable without JS animation.
+
+## Preview audit and production setup
+See [QA-REPORT.md](QA-REPORT.md) for verified behavior, test commands and remaining owner inputs. Environment variables are documented in `.env.example`. Analytics loads only after opt-in when a valid GA4 ID is configured.

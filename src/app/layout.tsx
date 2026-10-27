@@ -1,3 +1,5 @@
+import {headers} from "next/headers";
+import Analytics from "@/components/analytics";
 import type { Metadata } from "next";
 import "./globals.css";
 import "./journey-services.css";
@@ -5,9 +7,11 @@ import "./journey-services.css";
 export const metadata: Metadata = {
   title: { default: "Life Science Career Compass | Dr. Farzaneh Hähndel", template: "%s | Life Science Career Compass" },
   description: "Personalized life science career coaching in Germany. Explore job opportunities, German-standard CVs, interviews and career guidance with Dr. Farzaneh Hähndel.",
-  robots: { index: true, follow: true },
+  robots: { index: Boolean(process.env.NEXT_PUBLIC_SITE_URL), follow: true },
+  verification: {google:process.env.GOOGLE_SITE_VERIFICATION},
 };
 
-export default function RootLayout({ children }: Readonly<{ children: React.ReactNode }>) {
-  return <html lang="en"><body>{children}</body></html>;
+export default async function RootLayout({ children }: Readonly<{ children: React.ReactNode }>) {
+  const lang=(await headers()).get("x-site-language")??"en";
+  return <html lang={lang}><body>{children}<Analytics/></body></html>;
 }

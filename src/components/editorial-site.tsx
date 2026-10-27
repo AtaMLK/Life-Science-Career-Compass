@@ -1,7 +1,8 @@
 "use client";
+import Image from "next/image";
 import { useEffect, useState } from "react";
 import Link from "next/link";
-import { ArrowUpRight, ArrowRight, Plus, Minus, Menu, X, Compass, Dna, MoveDownRight, Mail, FlaskConical, ChevronRight } from "lucide-react";
+import { ArrowUpRight,  Plus, Minus, Menu, X, Compass, Dna, MoveDownRight, Mail,  ChevronRight } from "lucide-react";
 import { copy, services, type Lang } from "@/lib/content";
 import MotionDirector from "./motion-director";
 import JourneyScroll from "./journey-scroll";
@@ -58,7 +59,7 @@ export default function Site({lang}:{lang:Lang}){
    <div className="service-outro"><Link href={`/${lang}/services`} className="all-services-link">ALL SERVICES & PACKAGES ↗</Link><span>{e.notSure}</span><a href="#connect">{e.figure} <ArrowUpRight size={18}/></a></div>
   </section>
 
-  <JourneyScroll lang={lang}/><section className="story" id="story"><div className="story-visual"><div className="story-visual-photo" data-image-parallax/><div className="story-actual-portrait"><img src="/assets/farzaneh/portrait.png" alt="Dr. Farzaneh Hähndel" /></div><div className="story-person-tag">DR. FARZANEH HÄHNDEL<br/><span>PhD · IHK CAREER COACH</span></div><span className="story-image-note">{e.foundation} / Dr. Farzaneh Hähndel</span></div><div className="story-copy"><span className="index-mark">{e.storyLabel}</span><h2 data-reveal>{e.storyA}<br/><i>{e.storyB}</i></h2><p className="story-name">Dr. Farzaneh Hähndel</p><p>{c.about}</p><div className="career-path" data-reveal-stagger>{c.timeline.map((t,i)=><div key={t} className="career-stop"><span>0{i+1}</span><p>{t}</p></div>)}</div><a className="story-cta" href="#connect">{e.conversation} <ArrowUpRight size={18}/></a></div></section>
+  <JourneyScroll lang={lang}/><section className="story" id="story"><div className="story-visual"><div className="story-visual-photo" data-image-parallax/><div className="story-actual-portrait"><Image src="/assets/farzaneh/portrait.png" alt="Dr. Farzaneh Hähndel" width={1061} height={1483} /></div><div className="story-person-tag">DR. FARZANEH HÄHNDEL<br/><span>PhD · IHK CAREER COACH</span></div><span className="story-image-note">{e.foundation} / Dr. Farzaneh Hähndel</span></div><div className="story-copy"><span className="index-mark">{e.storyLabel}</span><h2 data-reveal>{e.storyA}<br/><i>{e.storyB}</i></h2><p className="story-name">Dr. Farzaneh Hähndel</p><p>{c.about}</p><div className="career-path" data-reveal-stagger>{c.timeline.map((t,i)=><div key={t} className="career-stop"><span>0{i+1}</span><p>{t}</p></div>)}</div><a className="story-cta" href="#connect">{e.conversation} <ArrowUpRight size={18}/></a></div></section>
 
   <section className="proof"><div className="proof-inner"><span className="eyebrow-alt">{e.foundation}</span><div className="proof-line"><strong>PhD</strong><p>{e.scienceTraining}</p></div><div className="proof-line"><strong>IHK</strong><p>{e.ihk}</p></div><div className="proof-line"><strong>DE</strong><p>{e.based}</p></div></div></section>
 
