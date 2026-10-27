@@ -26,3 +26,9 @@ Services: http://localhost:3000/en/services
 No push, Vercel deployment or production settings change was made for this experiment. The public Vercel alias continues to serve the previous version.
 
 To return locally to the saved deployed version after committing preview work: `git switch design/editorial-motion-v2`.
+
+## Separate review deployment
+On 27 October 2026, a separate Vercel project was created at the owner's request to share this experiment:
+https://career-compass-interactive-preview.vercel.app/en
+
+This supersedes the earlier local-only deployment note. The original project and alias https://life-science-career-compass.vercel.app were not changed.
