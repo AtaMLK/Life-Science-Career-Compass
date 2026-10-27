@@ -1,7 +1,7 @@
 name: Quality checks
 on:
   push:
-    branches: [main, design/editorial-motion-v2]
+    branches: [main, design/editorial-motion-v2, feature/gsap-original-content]
   pull_request:
 jobs:
   verify:
