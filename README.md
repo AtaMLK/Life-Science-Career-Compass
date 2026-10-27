@@ -63,3 +63,12 @@ No account creation or testimonials/success statistics have been invented.
 - The consultation action currently opens an email draft; it is not a completed calendar booking.
 - The prices and certificate details require owner approval before production publication.
 - Scroll-triggered effects respect `prefers-reduced-motion`; static content remains readable without JS animation.
+
+## Preserved GSAP edition — content branch
+
+Branch `feature/gsap-original-content` starts from the original GSAP editorial V3.1 commit `ffd18d1`, preserving its layout, typography, color palette and existing scroll animations. The only added UI is a localized, three-question Career Compass section with no account requirement or data persistence. Existing localized services, pricing explorer, journey, person schema, hreflang and sitemap remain.
+
+### Private visual assets
+The portrait and certificate images are deliberately delivered as a separate ZIP for copying into `public/assets/farzaneh/`: `portrait.png`, `portrait-office.png`, `certificate.png`. The supplied public certificate image has its date-of-birth line covered. Older assets `journey.png`, `consulting-overview.png`, and `packages-table.png` from the earlier visual-assets package remain necessary for the corresponding illustrations. Do not publicly deploy the original, unredacted certificate.
+
+The booking CTAs currently open email drafts; this is not a paid reservation service. Verify copy, working hours and public credentials before publishing.
