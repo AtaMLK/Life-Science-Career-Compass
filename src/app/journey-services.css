@@ -71,3 +71,30 @@
 .service-page[data-theme="dark"] .package-display{box-shadow:0 20px 50px #0003}
 @media(max-width:760px){.journey-step.active h3{color:inherit}.package-option:hover{padding-left:4px}.package-option.active{padding-left:9px}.service-page-hero>div:first-child{padding-top:64px}.service-cover{min-height:330px}.service-finale{gap:35px}}
 @media(prefers-reduced-motion:reduce){.journey-step,.certificate-open,.package-contact,.package-option,.support-chip-wall span{transition:none!important}.package-option:hover,.support-chip-wall span:hover{transform:none!important}}
+
+/* Preserve the GSAP frame; reserve separate rows for portrait, caption and action. */
+.journey-frame{display:flex;flex-direction:column}
+.journey-portrait-wrap{position:relative;inset:auto;flex:1;min-height:0;width:100%;overflow:hidden}
+.journey-person-photo{object-fit:cover;object-position:center 22%;filter:none}
+.journey-number{background:#f4f2e9dd;border-radius:6px;padding:4px 10px;font-size:48px}
+.journey-photo-caption{position:relative;inset:auto;padding:18px 24px 12px;background:#a6d7d1;text-shadow:none;flex:none}
+.certificate-open{position:relative;inset:auto;margin:0 22px 22px;flex:none}
+.v2[data-theme="dark"] .journey-photo-caption{background:#245f61;color:#fff}
+.certificate-lightbox{display:none;border:0;width:100%;height:100%;max-width:none;max-height:none;margin:0;background:transparent}
+.certificate-lightbox[open]{display:grid}
+.certificate-lightbox::backdrop{background:#081115e8}
+.certificate-modal{color:#16363f}
+.service-cover img{object-fit:cover;object-position:center 30%}
+.v2[data-theme="dark"] .journey-step.active h3{color:#a5e3d6}
+.skip-link{position:fixed;top:-100px;left:15px;z-index:2000;background:#f4f2e9;color:#15252a;padding:15px}.skip-link:focus{top:12px}
+@media(max-width:760px){.journey-photo-caption{padding:12px 18px}.journey-number{top:12px;left:14px;font-size:32px}.journey-sticky{height:65svh;min-height:420px;max-height:620px}.journey-photo-caption strong{font-size:23px}.certificate-open{margin:0 18px 15px}.service-cover{min-height:480px}}
+@media(min-width:761px) and (max-width:1200px){.creative-nav-inner{gap:12px}.creative-links{gap:12px}.identity{min-width:180px}.nav-contact{padding:12px}.creative-links .locale-options{margin-left:0}}
+
+.cookie-settings{position:fixed;bottom:12px;left:12px;z-index:80;border:1px solid #577d78;background:#f4f2e9;color:#182729;padding:9px 13px;border-radius:4px;font-size:11px}.cookie-banner{position:fixed;bottom:55px;left:15px;right:15px;z-index:90;background:#f4f2e9;color:#182729;padding:24px;box-shadow:0 8px 50px #0004;display:flex;gap:30px;align-items:center}.cookie-banner p{max-width:650px;font-size:14px;line-height:1.6}.cookie-actions{display:flex;gap:12px;flex-wrap:wrap}.cookie-actions button{padding:12px;background:#173c3d;color:white;border:1px solid #173c3d}@media(max-width:760px){.cookie-banner{flex-direction:column;align-items:start;gap:10px}}
+/* Keep the established mobile menu available on narrow tablets too. */
+@media(min-width:761px) and (max-width:1100px){.v2 .menu-toggle{display:block;margin-left:0;color:inherit}.v2 .nav-contact{display:none}.v2 .creative-links{display:none;position:absolute;left:0;top:82px;right:0;margin:0;padding:30px;background:#f4f2e9;box-shadow:0 30px 40px #14272d30;flex-direction:column;align-items:flex-start;gap:22px}.v2 .creative-links.open{display:flex}.v2 .cosmic-toggle{margin-left:auto}.v2[data-theme="dark"] .creative-links.open{background:#121e21}}
+.journey-frame .certificate-open{margin-top:6px}
+.journey-grid-v3>*{min-width:0}.journey-step h3,.journey-step p{overflow-wrap:anywhere;hyphens:auto}.package-layout>*{min-width:0}.package-option strong{overflow-wrap:anywhere}
+.v2 .journey-step h3,.v2 .journey-step p,.v2 .process-intro h2{overflow-wrap:anywhere;hyphens:auto}
+@media(max-width:480px){.v2 main h1,.v2 main h2,.v2 main h3,.service-page h1,.service-page h2{overflow-wrap:anywhere;hyphens:auto}.v2 .story>*,.v2 .chapter>*{min-width:0}}
+.support-mosaic>*{min-width:0}.support-chip-wall{grid-template-columns:repeat(2,minmax(0,1fr))}.support-chip-wall span{min-width:0;overflow-wrap:anywhere}

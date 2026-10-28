@@ -1,0 +1,36 @@
+const base=process.env.QA_BASE_URL||'http://localhost:3011';
+/* eslint-disable @typescript-eslint/no-require-imports */
+const {chromium}=require(process.env.PLAYWRIGHT_MODULE||'playwright');
+const assert=require('node:assert/strict');const fs=require('node:fs');
+(async()=>{
+fs.mkdirSync('qa',{recursive:true});const browser=await chromium.launch({channel:'msedge',headless:true});const results=[];
+for(const width of [1440,390])for(const lang of ['en','de','tr']){
+ const page=await browser.newPage({viewport:{width,height:900},reducedMotion:lang==='en'&&width===1440?'no-preference':'reduce'});await page.addInitScript(()=>{document.addEventListener('DOMContentLoaded',()=>{const style=document.createElement('style');style.textContent='html{scroll-behavior:auto!important}';document.head.appendChild(style)})});const errors=[];page.on('pageerror',e=>errors.push(e.message));
+ await page.goto(base+'/'+lang);await page.locator('.hero-nameplate').waitFor();await page.waitForTimeout(300);
+ assert.equal(await page.locator('html').getAttribute('lang'),lang);
+ assert.equal(await page.locator('.v2').count(),1);assert.equal(await page.locator('.friendly').count(),0);
+ const price=page.locator('.price-reveal-button');await price.click();await page.waitForTimeout(120);assert.equal(await price.getAttribute('aria-expanded'),'true');assert.equal(await page.locator('.rate-list>div').count(),10);assert.ok(!(await price.innerText()).includes('{e.'));await price.click();await page.waitForTimeout(120);assert.equal(await page.locator('.rate-list').count(),0);
+ for(const btn of await page.locator('.service-entry>button').all()){await btn.click();await page.waitForTimeout(120);assert.equal(await btn.getAttribute('aria-expanded'),'true');assert.ok(await page.locator('.service-answer a').getAttribute('href'));await btn.click();await page.waitForTimeout(120);}
+ for(const btn of await page.locator('.faq-row>button').all()){await btn.click();await page.waitForTimeout(120);assert.equal(await btn.getAttribute('aria-expanded'),'true');await btn.click();await page.waitForTimeout(120);}
+ for(let need=0;need<4;need++){await page.locator('.finder-footer button').last().click();await page.waitForTimeout(120);await page.locator('.finder-choices button').nth(1).click();await page.waitForTimeout(120);await page.locator('.finder-choices button').nth(need).click();await page.waitForTimeout(120);await page.locator('.finder-choices button').first().click();await page.waitForTimeout(120);assert.equal(await page.locator('.finder-recommendation').count(),1);await page.locator('.finder-footer button').first().click();await page.waitForTimeout(120);assert.equal(await page.locator('.finder-choices button').count(),3);}
+ const certificate=page.locator('.certificate-open');await certificate.click();await page.waitForTimeout(120);assert.equal(await page.locator('dialog[open]').count(),1);await page.locator('.certificate-modal img').evaluate(el=>el.decode());assert.ok(await page.locator('.certificate-modal img').evaluate(el=>el.naturalWidth>0));await page.keyboard.press('Escape');assert.equal(await page.locator('dialog[open]').count(),0);assert.ok(await certificate.evaluate(el=>el===document.activeElement));
+ await certificate.click();await page.waitForTimeout(120);await page.locator('.certificate-modal>button').click();await page.waitForTimeout(120);
+ const boxes=await page.locator('.journey-frame').evaluate(el=>{const box=x=>{const r=x.getBoundingClientRect();return {y:r.y,height:r.height}};return {frame:box(el),caption:box(el.querySelector('.journey-photo-caption')),photo:box(el.querySelector('.journey-portrait-wrap')),button:box(el.querySelector('.certificate-open'))}});const {frame,caption,photo,button}=boxes;assert.ok(photo.y+photo.height<=caption.y+1);assert.ok(caption.y+caption.height<=button.y+1);assert.ok(button.y+button.height<=frame.y+frame.height);
+ await page.locator('.cosmic-toggle').click();await page.waitForTimeout(120);assert.equal(await page.locator('.v2').getAttribute('data-theme'),'dark');await page.reload();await page.locator('.v2[data-theme=dark]').waitFor();assert.equal(await page.locator('.v2[data-theme=dark]').count(),1);await page.locator('.cosmic-toggle').click();await page.waitForTimeout(120);
+ if(width===390){await page.locator('.menu-toggle').click();await page.waitForTimeout(120);assert.equal(await page.locator('.creative-links.open').count(),1);await page.keyboard.press('Escape');assert.equal(await page.locator('.creative-links.open').count(),0);await page.locator('.menu-toggle').click();await page.waitForTimeout(120);await page.locator('.creative-links>a').first().click();await page.waitForTimeout(120);assert.equal(await page.locator('.creative-links.open').count(),0);}
+ for(const a of await page.locator('a[href^="#"]').all()){const href=await a.getAttribute('href');assert.equal(await page.locator(href).count(),1,'anchor '+href);}
+ await page.locator('.journey-step').last().scrollIntoViewIfNeeded();await page.waitForTimeout(1300);if(lang==='en'&&width===1440)assert.ok((await page.locator('.journey-number').innerText()).startsWith('06'));
+ assert.ok(await page.evaluate(()=>document.documentElement.scrollWidth<=innerWidth+2),'overflow homepage '+width);
+ if(lang==='en'){await page.locator('.journey-frame').screenshot({path:`qa/journey-${width}.png`});await page.evaluate(()=>scrollTo(0,0));await page.waitForTimeout(1200);await page.screenshot({path:`qa/home-${width}.png`});}
+ await page.goto(base+'/'+lang+'/services?service=interview');await page.waitForFunction(()=>document.querySelector('.package-option.active')?.getAttribute('data-service-id')==='interview');assert.equal(await page.locator('.package-option.active strong').innerText(),await page.locator('.package-display h3').innerText());
+ for(const btn of await page.locator('.package-option').all()){await btn.click();await page.waitForTimeout(120);assert.equal(await btn.getAttribute('aria-pressed'),'true');assert.equal(await btn.locator('strong').innerText(),await page.locator('.package-display h3').innerText());}
+ await page.locator('.service-theme-switch').click();await page.waitForTimeout(120);assert.equal(await page.locator('.service-page').getAttribute('data-theme'),'dark');await page.locator('.service-theme-switch').click();await page.waitForTimeout(120);
+ for(const a of await page.locator('a[href^="/assets/"]').all())assert.equal((await page.request.get(await a.getAttribute('href'))).status(),200);
+ await page.locator('.service-cover').scrollIntoViewIfNeeded();await page.waitForTimeout(500);for(const img of await page.locator('img').all()){await img.scrollIntoViewIfNeeded();await page.waitForTimeout(200);assert.ok(await img.evaluate(x=>x.complete&&x.naturalWidth>0),'broken image');}
+ assert.ok(await page.evaluate(()=>document.documentElement.scrollWidth<=innerWidth+2),'overflow services '+width);
+ if(lang==='en'){await page.evaluate(()=>scrollTo(0,0));await page.screenshot({path:`qa/services-${width}.png`});}
+ assert.deepEqual(errors,[]);results.push({lang,width,status:'passed'});console.log('PASS',lang,width);await page.close();
+}
+await browser.close();fs.writeFileSync('qa/results.json',JSON.stringify(results,null,2));
+})().catch(e=>{console.error(e);process.exit(1)});
+

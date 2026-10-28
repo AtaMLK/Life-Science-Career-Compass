@@ -15,6 +15,7 @@ const items=[
 ] as const;
 export default function JourneyScroll({lang}:{lang:Lang}){
  const root=useRef<HTMLElement>(null);
+ const dialog=useRef<HTMLDialogElement>(null);
  const [active,setActive]=useState(0);
  const [documentOpen,setDocumentOpen]=useState(false);
  useEffect(()=>{
@@ -29,6 +30,7 @@ export default function JourneyScroll({lang}:{lang:Lang}){
   },rootEl);
   return ()=>ctx.revert();
  },[]);
+ useEffect(()=>{const el=dialog.current;if(!el)return;if(!documentOpen){el.close();return;}const overflow=document.body.style.overflow;el.showModal();document.body.style.overflow="hidden";return ()=>{el.close();document.body.style.overflow=overflow}},[documentOpen]);
  const text={en:{k:"THE JOURNEY",a:"Experience isn't a title.",b:"It's a journey.",intro:"Six chapters across education, research, industry and career coaching. Scroll through the moments that shaped Farzaneh's perspective.",see:"View IHK certificate",close:"Close certificate",full:"View original career journey illustration"},de:{k:"DER WEG",a:"Erfahrung ist kein Titel.",b:"Sondern ein Weg.",intro:"Sechs Etappen zwischen Studium, Forschung, Industrie und Karrierecoaching.",see:"IHK-Zertifikat ansehen",close:"Zertifikat schließen",full:"Originalillustration zum Karriereweg ansehen"},tr:{k:"KARİYER YOLCULUĞU",a:"Deneyim bir unvan değil.",b:"Bir yolculuktur.",intro:"Eğitim, araştırma, endüstri ve kariyer danışmanlığı boyunca altı önemli adım.",see:"IHK sertifikasını görüntüle",close:"Sertifikayı kapat",full:"Özgün kariyer yolculuğu görselini aç"}}[lang];
  return <section ref={root} className="journey-v3" id="journey"><div className="journey-heading"><span className="index-mark">03 / {text.k}</span><h2>{text.a}<br/><i>{text.b}</i></h2><p>{text.intro}</p></div>
  <div className="journey-grid-v3"><div className="journey-sticky"><div className="journey-frame">
@@ -37,7 +39,6 @@ export default function JourneyScroll({lang}:{lang:Lang}){
  <div className="journey-photo-caption"><strong>Dr. Farzaneh Hähndel</strong><span>PhD · IHK Job & Application Coach</span></div>
  <button type="button" className="certificate-open" onClick={()=>setDocumentOpen(true)}>{text.see}<span>↗</span></button>
  </div></div><div className="journey-steps"><div className="journey-progress-rail"><span className="journey-progress-fill"/></div>{items.map((item,i)=><article key={i} className={active===i?"journey-step active":"journey-step"}><div className="journey-serial">{String(i+1).padStart(2,"0")}</div><div className="journey-date">{item.year} · {item.place}</div><h3>{item[lang]}</h3><p>{lang==="en"?item.enText:lang==="de"?item.deText:item.trText}</p></article>)}</div></div>
- <div className="journey-archive"><a href="/assets/farzaneh/journey.png" target="_blank" rel="noreferrer">{text.full} ↗</a></div>
- {documentOpen&&<div className="certificate-lightbox" role="dialog" aria-modal="true" aria-label="IHK certificate" onClick={()=>setDocumentOpen(false)}><div className="certificate-modal" onClick={event=>event.stopPropagation()}><button type="button" onClick={()=>setDocumentOpen(false)}>{text.close} ✕</button><Image src="/assets/farzaneh/certificate.png" width={800} height={1150} sizes="(max-width:760px) 90vw,650px" alt="IHK Job und Bewerbungscoaching certificate of Dr. Farzaneh Hähndel"/></div></div>}
+ <dialog ref={dialog} className="certificate-lightbox" aria-label={text.see} onCancel={()=>setDocumentOpen(false)} onClick={event=>{if(event.target===event.currentTarget)setDocumentOpen(false)}}><div className="certificate-modal" onClick={event=>event.stopPropagation()}><button autoFocus type="button" onClick={()=>setDocumentOpen(false)}>{text.close} ✕</button><Image src="/assets/farzaneh/certificate-public.png" width={800} height={1150} sizes="(max-width:760px) 90vw,650px" alt="IHK Job und Bewerbungscoaching certificate of Dr. Farzaneh Hähndel"/></div></dialog>
  </section>;
 }

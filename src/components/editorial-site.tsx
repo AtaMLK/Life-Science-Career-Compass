@@ -1,7 +1,8 @@
 "use client";
 import { useEffect, useState } from "react";
 import Link from "next/link";
-import { ArrowUpRight, ArrowRight, Plus, Minus, Menu, X, Compass, Dna, MoveDownRight, Mail, FlaskConical, ChevronRight } from "lucide-react";
+import Image from "next/image";
+import { ArrowUpRight, Plus, Minus, Menu, X, Compass, Dna, MoveDownRight, Mail, ChevronRight } from "lucide-react";
 import { copy, services, type Lang } from "@/lib/content";
 import MotionDirector from "./motion-director";
 import JourneyScroll from "./journey-scroll";
@@ -19,28 +20,31 @@ export default function Site({lang}:{lang:Lang}){
  const c=copy[lang];
  const e=editorialLocale[lang];
  const localizedService=(id:string)=>lang==="en"?services.find(x=>x.id===id)!:({...services.find(x=>x.id===id)!,...serviceTranslations[lang][id]});
+ useEffect(()=>{document.documentElement.lang=lang},[lang]);
  const [theme,setTheme]=useState<"light"|"dark">("light");
- useEffect(()=>{const id=window.requestAnimationFrame(()=>{const saved=window.localStorage.getItem("lscc-theme");if(saved==="dark"||saved==="light")setTheme(saved)});return ()=>window.cancelAnimationFrame(id);},[]);
- const switchTheme=()=>{const next=theme==="light"?"dark":"light";setTheme(next);window.localStorage.setItem("lscc-theme",next)};
+ useEffect(()=>{const id=window.requestAnimationFrame(()=>{let saved:string|null=null;try{saved=window.localStorage.getItem("lscc-theme")}catch{}if(saved==="dark"||saved==="light")setTheme(saved)});return ()=>window.cancelAnimationFrame(id);},[]);
+ const switchTheme=()=>{const next=theme==="light"?"dark":"light";setTheme(next);try{window.localStorage.setItem("lscc-theme",next)}catch{}};
  const [menu,setMenu]=useState(false);
+ useEffect(()=>{if(!menu)return;const close=(event:KeyboardEvent)=>{if(event.key==="Escape")setMenu(false)};window.addEventListener("keydown",close);return ()=>window.removeEventListener("keydown",close)},[menu]);
  const [selected,setSelected]=useState<string|null>(null);
  const [faq,setFaq]=useState<number|null>(null);
  const [showPrices,setShowPrices]=useState(false);
  return <div className="v2" data-theme={theme}>
+ <a className="skip-link" href="#main-content">{lang==="de"?"Zum Inhalt":lang==="tr"?"İçeriğe geç":"Skip to content"}</a>
  <MotionDirector/>
  <header className="creative-nav"><div className="creative-nav-inner">
   <Link href={`/${lang}`} className="identity" aria-label="Life Science Career Compass"><Compass size={30} strokeWidth={1.3}/><span>LIFE SCIENCE<br/><b>CAREER COMPASS</b></span></Link>
-  <nav className={menu?"creative-links open":"creative-links"} aria-label="Primary navigation"><a href="#approach" onClick={()=>setMenu(false)}>{e.menu[0]}</a><a href={`/${lang}/services`} onClick={()=>setMenu(false)}>{e.menu[1]}</a><a href="#story" onClick={()=>setMenu(false)}>{e.menu[2]}</a><a href="#questions" onClick={()=>setMenu(false)}>{e.menu[3]}</a><div className="locale-options">{(["en","de","tr"] as const).map(l=><Link key={l} aria-current={lang===l?"page":undefined} href={`/${l}`}>{l.toUpperCase()}</Link>)}</div></nav>
-  <button type="button" className="cosmic-toggle" onClick={switchTheme} aria-label={theme==="light"?e.toggleDark:e.toggleLight} title={theme==="light"?e.toggleDark:e.toggleLight} aria-pressed={theme==="dark"}><span className="cosmic-track"><span className="cosmic-stars">✦ ✧</span><span className="cosmic-orb">{theme==="light"?"☼":"☾"}</span></span></button><a className="nav-contact" href="#connect">{c.navCta}<ArrowUpRight size={17}/></a><button className="menu-toggle" aria-label="Toggle menu" aria-expanded={menu} onClick={()=>setMenu(!menu)}>{menu?<X/>:<Menu/>}</button>
+  <nav id="primary-navigation" className={menu?"creative-links open":"creative-links"} aria-label="Primary navigation"><a href="#approach" onClick={()=>setMenu(false)}>{e.menu[0]}</a><a href={`/${lang}/services`} onClick={()=>setMenu(false)}>{e.menu[1]}</a><a href="#story" onClick={()=>setMenu(false)}>{e.menu[2]}</a><a href="#questions" onClick={()=>setMenu(false)}>{e.menu[3]}</a><div className="locale-options">{(["en","de","tr"] as const).map(l=><Link key={l} aria-current={lang===l?"page":undefined} href={`/${l}`}>{l.toUpperCase()}</Link>)}</div></nav>
+  <button type="button" className="cosmic-toggle" onClick={switchTheme} aria-label={theme==="light"?e.toggleDark:e.toggleLight} title={theme==="light"?e.toggleDark:e.toggleLight} aria-pressed={theme==="dark"}><span className="cosmic-track"><span className="cosmic-stars">✦ ✧</span><span className="cosmic-orb">{theme==="light"?"☼":"☾"}</span></span></button><a className="nav-contact" href="#connect">{c.navCta}<ArrowUpRight size={17}/></a><button className="menu-toggle" type="button" aria-controls="primary-navigation" aria-label={lang==="de"?"Menü öffnen oder schließen":lang==="tr"?"Menüyü aç veya kapat":"Toggle menu"} aria-expanded={menu} onClick={()=>setMenu(!menu)}>{menu?<X/>:<Menu/>}</button>
  </div></header>
- <main>
+ <main id="main-content">
   <section className="editorial-hero">
    <div className="hero-ambient ambient-1"/><div className="hero-ambient ambient-2"/>
    <div className="hero-meta"><span>{e.introLabel}</span><span>{e.based} · EN / DE / TR</span></div>
    <div className="hero-stage">
     <p className="hero-kicker" data-reveal>{e.heroTag}</p><div className="hero-nameplate" data-reveal><span>{e.person}</span><strong>Dr. Farzaneh Hähndel</strong><small>PhD · IHK</small></div>
     <h1 data-reveal>{e.heroA}<br/><em>{e.heroB}</em><br/><span>{e.heroC}</span></h1>
-    <div className="hero-photo" aria-label="Science research photography"><div className="hero-photo-image hero-portrait-real" data-image-parallax/><div className="photo-overlay photo-overlay-backup"><span>FH</span><small>{e.portraitPending}</small></div></div>
+    <div className="hero-photo" role="img" aria-label="Dr. Farzaneh Hähndel"><div className="hero-photo-image hero-portrait-real" data-image-parallax/></div>
     <div className="hero-side-note"><span className="asterisk">✳</span><p>{e.forMinds}</p></div>
     <div className="hero-action"><a href="#approach">{e.scroll} <MoveDownRight size={18}/></a></div>
    </div>
@@ -56,16 +60,16 @@ export default function Site({lang}:{lang:Lang}){
       <div className="cluster-head" data-reveal><div className="cluster-number">{cluster.number}<span> / 03</span></div><div className="cluster-label">{e.chapterLabels[Number(cluster.number)-1]}</div><h3>{e.chapterTitles[Number(cluster.number)-1]}</h3><p>{e.chapterDescriptions[Number(cluster.number)-1]}</p></div>
       <div className="cluster-services">{cluster.keys.map(id=>{const s=localizedService(id);const open=selected===id;return <div className="service-entry" key={id}><button type="button" aria-expanded={open} onClick={()=>setSelected(open?null:id)}><span>{s.name}</span><span className="service-open-icon">{open?<Minus size={20}/>:<Plus size={20}/>}</span></button>{open&&<div className="service-answer"><p>{s.description}</p><small>{s.duration}</small><a href={mail(s.name+" consultation request")}>{e.askService} <ArrowUpRight size={16}/></a></div>}</div>})}</div>
    </article>)}</div>
-   <div className="service-outro"><Link href={`/${lang}/services`} className="all-services-link">ALL SERVICES & PACKAGES ↗</Link><span>{e.notSure}</span><a href="#connect">{e.figure} <ArrowUpRight size={18}/></a></div>
+   <div className="service-outro"><Link href={`/${lang}/services`} className="all-services-link">{lang==="de"?"ALLE LEISTUNGEN & PAKETE ↗":lang==="tr"?"TÜM HİZMETLER VE PAKETLER ↗":"ALL SERVICES & PACKAGES ↗"}</Link><span>{e.notSure}</span><a href="#connect">{e.figure} <ArrowUpRight size={18}/></a></div>
   </section>
 
-  <CareerFinder lang={lang}/><JourneyScroll lang={lang}/><section className="story" id="story"><div className="story-visual"><div className="story-visual-photo" data-image-parallax/><div className="story-actual-portrait"><img src="/assets/farzaneh/portrait.png" alt="Dr. Farzaneh Hähndel" /></div><div className="story-person-tag">DR. FARZANEH HÄHNDEL<br/><span>PhD · IHK CAREER COACH</span></div><span className="story-image-note">{e.foundation} / Dr. Farzaneh Hähndel</span></div><div className="story-copy"><span className="index-mark">{e.storyLabel}</span><h2 data-reveal>{e.storyA}<br/><i>{e.storyB}</i></h2><p className="story-name">Dr. Farzaneh Hähndel</p><p>{c.about}</p><div className="career-path" data-reveal-stagger>{c.timeline.map((t,i)=><div key={t} className="career-stop"><span>0{i+1}</span><p>{t}</p></div>)}</div><a className="story-cta" href="#connect">{e.conversation} <ArrowUpRight size={18}/></a></div></section>
+  <CareerFinder lang={lang}/><JourneyScroll lang={lang}/><section className="story" id="story"><div className="story-visual"><div className="story-visual-photo" data-image-parallax/><div className="story-actual-portrait"><Image src="/assets/farzaneh/portrait.png" width={1061} height={1483} alt="Dr. Farzaneh Hähndel" /></div><div className="story-person-tag">DR. FARZANEH HÄHNDEL<br/><span>PhD · IHK CAREER COACH</span></div><span className="story-image-note">{e.foundation} / Dr. Farzaneh Hähndel</span></div><div className="story-copy"><span className="index-mark">{e.storyLabel}</span><h2 data-reveal>{e.storyA}<br/><i>{e.storyB}</i></h2><p className="story-name">Dr. Farzaneh Hähndel</p><p>{c.about}</p><div className="career-path" data-reveal-stagger>{c.timeline.map((t,i)=><div key={t} className="career-stop"><span>0{i+1}</span><p>{t}</p></div>)}</div><a className="story-cta" href="#connect">{e.conversation} <ArrowUpRight size={18}/></a></div></section>
 
   <section className="proof"><div className="proof-inner"><span className="eyebrow-alt">{e.foundation}</span><div className="proof-line"><strong>PhD</strong><p>{e.scienceTraining}</p></div><div className="proof-line"><strong>IHK</strong><p>{e.ihk}</p></div><div className="proof-line"><strong>DE</strong><p>{e.based}</p></div></div></section>
 
   <section className="process-v2"><div className="process-intro"><p className="index-mark">{e.processLabel}</p><h2 data-reveal>{e.processA}<br/><em>{e.processB}</em></h2></div><div className="process-steps" data-reveal-stagger>{c.steps.map(([n,title,desc])=><div key={n} className="process-step"><span>{n}</span><h3>{title}</h3><p>{desc}</p><ChevronRight size={28}/></div>)}</div></section>
 
-  <section className="investment" id="investment"><div className="investment-photo"><div data-image-parallax/></div><div className="investment-copy"><span className="index-mark">{e.investmentLabel}</span><h2 data-reveal>{e.investmentA}<br/><em>{e.investmentB}</em></h2><p>{e.investmentText}</p><Link href={`/${lang}/services`} className="service-page-cta">All services, package details and pricing <ArrowUpRight size={19}/></Link><button type="button" className="price-reveal-button" onClick={()=>setShowPrices(!showPrices)} aria-expanded={showPrices}>{showPrices?"{e.hidePrices}":"{e.showPrices}"} {showPrices?<Minus size={19}/>:<Plus size={19}/>}</button>{showPrices&&<div className="rate-list">{services.map(s=><div key={s.id}><span>{localizedService(s.id).name}</span><strong>{s.individual}</strong></div>)}<p className="rate-disclaimer">{e.ratesNote}</p></div>}<a className="story-cta" href="#connect">{e.discuss} <ArrowUpRight size={18}/></a></div></section>
+  <section className="investment" id="investment"><div className="investment-photo"><div data-image-parallax/></div><div className="investment-copy"><span className="index-mark">{e.investmentLabel}</span><h2 data-reveal>{e.investmentA}<br/><em>{e.investmentB}</em></h2><p>{e.investmentText}</p><Link href={`/${lang}/services`} className="service-page-cta">{lang==="de"?"Alle Leistungen, Pakete und Preise":lang==="tr"?"Tüm hizmetler, paketler ve fiyatlar":"All services, package details and pricing"} <ArrowUpRight size={19}/></Link><button type="button" className="price-reveal-button" onClick={()=>setShowPrices(!showPrices)} aria-expanded={showPrices}>{showPrices?e.hidePrices:e.showPrices} {showPrices?<Minus size={19}/>:<Plus size={19}/>}</button>{showPrices&&<div className="rate-list">{services.map(s=><div key={s.id}><span>{localizedService(s.id).name}</span><strong>{s.individual}</strong></div>)}<p className="rate-disclaimer">{e.ratesNote}</p></div>}<a className="story-cta" href="#connect">{e.discuss} <ArrowUpRight size={18}/></a></div></section>
 
   <section className="faq-v2" id="questions"><div className="faq-title"><span className="index-mark">{e.faqLabel}</span><h2 data-reveal>{e.faqA}<br/><i>{e.faqB}</i></h2><p>{e.faqText}</p></div><div className="faq-accordion">{c.faq.map(([q,a],i)=><div className="faq-row" key={q}><button type="button" onClick={()=>setFaq(faq===i?null:i)} aria-expanded={faq===i}><span>{String(i+1).padStart(2,"0")}</span><strong>{q}</strong>{faq===i?<Minus size={20}/>:<Plus size={20}/>}</button>{faq===i&&<p>{a}</p>}</div>)}</div></section>
 

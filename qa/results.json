@@ -1,0 +1,32 @@
+[
+  {
+    "lang": "en",
+    "width": 1440,
+    "status": "passed"
+  },
+  {
+    "lang": "de",
+    "width": 1440,
+    "status": "passed"
+  },
+  {
+    "lang": "tr",
+    "width": 1440,
+    "status": "passed"
+  },
+  {
+    "lang": "en",
+    "width": 390,
+    "status": "passed"
+  },
+  {
+    "lang": "de",
+    "width": 390,
+    "status": "passed"
+  },
+  {
+    "lang": "tr",
+    "width": 390,
+    "status": "passed"
+  }
+]

@@ -1,13 +1,10 @@
 "use client";
-import { useEffect, useRef } from "react";
+import { useEffect } from "react";
 import gsap from "gsap";
 import { ScrollTrigger } from "gsap/ScrollTrigger";
 
 export default function MotionDirector(){
- const initialized=useRef(false);
  useEffect(()=>{
-  if(initialized.current)return;
-  initialized.current=true;
   if(window.matchMedia("(prefers-reduced-motion: reduce)").matches)return;
   gsap.registerPlugin(ScrollTrigger);
   const ctx=gsap.context(()=>{

@@ -2,7 +2,7 @@
 import {useEffect,useState} from "react";
 import Link from "next/link";
 import Image from "next/image";
-import {ArrowUpRight,ArrowLeft,Check,ChevronDown,Mail,Compass} from "lucide-react";
+import {ArrowUpRight,ArrowLeft,Check,ChevronDown,Compass} from "lucide-react";
 import {type Lang,services} from "@/lib/content";
 import {serviceTranslations} from "@/lib/editorial-locale";
 
@@ -19,19 +19,22 @@ tr:["Biyoloji","Biyokimya","Biyoteknoloji","Hücre Biyolojisi","Moleküler Biyol
 const mail=(name:string)=>"mailto:Ls.career-compass@mail.de?subject="+encodeURIComponent("Consultation — "+name);
 export default function ServicesExperience({lang}:{lang:Lang}){
  const l=labels[lang];const [active,setActive]=useState<string>("industry");
+ useEffect(()=>{document.documentElement.lang=lang},[lang]);
  const [theme,setTheme]=useState<"light"|"dark">("light");
- useEffect(()=>{const frame=requestAnimationFrame(()=>{if(localStorage.getItem("lscc-theme")==="dark")setTheme("dark")});return ()=>cancelAnimationFrame(frame)},[]);
- const toggleTheme=()=>{const value=theme==="light"?"dark":"light";setTheme(value);localStorage.setItem("lscc-theme",value)};
+ useEffect(()=>{const frame=requestAnimationFrame(()=>{try{if(localStorage.getItem("lscc-theme")==="dark")setTheme("dark")}catch{}});return ()=>cancelAnimationFrame(frame)},[]);
+ const toggleTheme=()=>{const value=theme==="light"?"dark":"light";setTheme(value);try{localStorage.setItem("lscc-theme",value)}catch{}};
+ useEffect(()=>{const id=new URLSearchParams(window.location.search).get("service");if(id&&services.some(s=>s.id===id)){const frame=requestAnimationFrame(()=>setActive(id));return ()=>cancelAnimationFrame(frame)}},[]);
  const selected=services.find(s=>s.id===active)!;
  const translate=(id:string)=>lang==="en"?services.find(s=>s.id===id)!:{...services.find(s=>s.id===id)!,...serviceTranslations[lang][id]};
- return <main className="service-page" data-theme={theme}>
+ return <main id="main-content" className="service-page" data-theme={theme}>
+ <a className="skip-link" href="#main-content">{lang==="de"?"Zum Inhalt":lang==="tr"?"İçeriğe geç":"Skip to content"}</a>
  <header className="service-page-nav"><Link href={`/${lang}`}><ArrowLeft size={18}/>{l.back}</Link><span>DR. FARZANEH HÄHNDEL <i>·</i> LIFE SCIENCE CAREER COMPASS</span><button type="button" className="service-theme-switch" aria-label={theme==="dark"?"Switch to light mode":"Switch to dark mode"} aria-pressed={theme==="dark"} onClick={toggleTheme}>{theme==="dark"?"☾":"☼"}</button><nav>{(["en","de","tr"] as const).map(x=><Link key={x} href={`/${x}/services`} aria-current={lang===x?"page":undefined}>{x.toUpperCase()}</Link>)}</nav></header>
- <section className="service-page-hero"><div><span className="index-mark">{l.eyebrow}</span><h1>{l.headline}</h1><p>{l.sub}</p><a href="#package-explorer">{l.pricing} <ArrowUpRight size={17}/></a></div><div className="service-cover"><Image src="/assets/farzaneh/consulting-overview.png" fill sizes="(max-width:760px) 90vw,44vw" alt="Career consulting overview: fields, services and Germany, Austria, Switzerland"/></div></section>
+ <section className="service-page-hero"><div><span className="index-mark">{l.eyebrow}</span><h1>{l.headline}</h1><p>{l.sub}</p><a href="#package-explorer">{l.pricing} <ArrowUpRight size={17}/></a></div><div className="service-cover"><Image src="/assets/farzaneh/portrait-office.png" fill sizes="(max-width:760px) 90vw,44vw" alt="Dr. Farzaneh Hähndel in her office"/></div></section>
  <section className="support-mosaic"><div><span className="index-mark">{l.who}</span><h2>{l.intro}</h2></div><div className="support-chip-wall">{l.support.map((v,i)=><span key={v}><b>{String(i+1).padStart(2,"0")}</b>{v}</span>)}</div></section>
- <section className="expertise-panel"><div className="index-mark">{l.areas}</div><div className="expertise-marquee">{expertise[lang].map((area,i)=><span key={area}>{area}<i>{i%3===0?"✳":"·"}</i></span>)}</div><a target="_blank" rel="noreferrer" href="/assets/farzaneh/consulting-overview.png">{l.image} ↗</a></section>
+ <section className="expertise-panel"><div className="index-mark">{l.areas}</div><div className="expertise-marquee">{expertise[lang].map((area,i)=><span key={area}>{area}<i>{i%3===0?"✳":"·"}</i></span>)}</div></section>
  <section className="package-explorer" id="package-explorer"><div className="package-topline"><span className="index-mark">SERVICES / PACKAGES</span><h2>{l.pricing}</h2><p>{l.pricingIntro}</p></div>
-  <div className="package-layout"><div className="package-list">{services.map((s,i)=><button key={s.id} type="button" className={active===s.id?"package-option active":"package-option"} aria-pressed={active===s.id} onClick={()=>setActive(s.id)}><span>{String(i+1).padStart(2,"0")}</span><strong>{translate(s.id).name}</strong><ChevronDown size={18}/></button>)}</div><article className="package-display" key={active}><div className="package-display-label">LIFE SCIENCE CAREER COMPASS <Compass size={22}/></div><h3>{translate(active).name}</h3><p>{translate(active).description}</p><div className="package-duration"><span>{l.duration}</span><strong>{selected.duration}</strong></div><div className="package-rate"><span>{l.individual}</span><strong>{selected.individual}</strong></div><div className="package-rate"><span>{l.small}</span><strong>{selected.semi??"—"}</strong></div><div className="package-rate"><span>{l.group}</span><strong>{selected.group??"—"}</strong></div><div className="package-explainer"><Check size={17}/><span>{l.moreText}</span></div><a className="package-contact" href={mail(translate(active).name)}>{l.ask}<ArrowUpRight size={19}/></a></article></div>
-  <div className="package-footnote"><span>{l.note}</span><a target="_blank" rel="noreferrer" href="/assets/farzaneh/packages-table.png">{l.packages} ↗</a></div>
+  <div className="package-layout"><div className="package-list">{services.map((s,i)=><button key={s.id} data-service-id={s.id} type="button" className={active===s.id?"package-option active":"package-option"} aria-pressed={active===s.id} onClick={()=>setActive(s.id)}><span>{String(i+1).padStart(2,"0")}</span><strong>{translate(s.id).name}</strong><ChevronDown size={18}/></button>)}</div><article className="package-display" key={active} aria-live="polite"><div className="package-display-label">LIFE SCIENCE CAREER COMPASS <Compass size={22}/></div><h3>{translate(active).name}</h3><p>{translate(active).description}</p><div className="package-duration"><span>{l.duration}</span><strong>{selected.duration}</strong></div><div className="package-rate"><span>{l.individual}</span><strong>{selected.individual}</strong></div><div className="package-rate"><span>{l.small}</span><strong>{selected.semi??"—"}</strong></div><div className="package-rate"><span>{l.group}</span><strong>{selected.group??"—"}</strong></div><div className="package-explainer"><Check size={17}/><span>{l.moreText}</span></div><a className="package-contact" href={mail(translate(active).name)}>{l.ask}<ArrowUpRight size={19}/></a></article></div>
+  <div className="package-footnote"><span>{l.note}</span></div>
  </section><section className="service-finale"><div><span className="index-mark">{l.connect}</span><h2>Dr. Farzaneh Hähndel</h2><a href={mail("Career consultation")}>{l.cta} <ArrowUpRight size={23}/></a></div><div className="service-footer-photo"><Image src="/assets/farzaneh/portrait.png" alt="Dr. Farzaneh Hähndel" fill sizes="(max-width:760px) 70vw,350px"/></div></section>
  </main>;
 }

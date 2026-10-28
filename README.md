@@ -32,8 +32,8 @@ Set `NEXT_PUBLIC_SITE_URL` to the production origin (for example, `https://examp
 - CI workflow for typecheck, lint and build.
 
 ## Important before publishing
-1. **Add the actual portrait and confirmed brand logo.** The current hero is an original CSS-based scientific compass placeholder; the biography panel is an FH monogram. Do not present stock photos as Dr. Hähndel.
-2. **Review translations.** Service names and descriptions currently remain English inside all languages; the major UI copy is localized. Translate the catalog before claiming full localization.
+1. The actual Farzaneh portraits and public, birth-date-redacted certificate are included.
+2. Review the localized English, German and Turkish copy before publication.
 3. **Confirm credentials, employers and pricing** against source documents and obtain any permissions needed for certification or employer logo display.
 4. **Add accurate German Imprint (Impressum), privacy notice (Datenschutzerklärung), and relevant contact/legal business details** before launching ads. The current footer explicitly indicates these are pending.
 5. **Integrate a real booking/contact workflow** and backend if needed. Email links alone cannot produce measured completed bookings.
@@ -68,7 +68,10 @@ No account creation or testimonials/success statistics have been invented.
 
 Branch `feature/gsap-original-content` starts from the original GSAP editorial V3.1 commit `ffd18d1`, preserving its layout, typography, color palette and existing scroll animations. The only added UI is a localized, three-question Career Compass section with no account requirement or data persistence. Existing localized services, pricing explorer, journey, person schema, hreflang and sitemap remain.
 
-### Private visual assets
-The portrait and certificate images are deliberately delivered as a separate ZIP for copying into `public/assets/farzaneh/`: `portrait.png`, `portrait-office.png`, `certificate.png`. The supplied public certificate image has its date-of-birth line covered. Older assets `journey.png`, `consulting-overview.png`, and `packages-table.png` from the earlier visual-assets package remain necessary for the corresponding illustrations. Do not publicly deploy the original, unredacted certificate.
+### Included visual assets and verification
 
-The booking CTAs currently open email drafts; this is not a paid reservation service. Verify copy, working hours and public credentials before publishing.
+The real dark-background portrait and office portrait are committed in public/assets/farzaneh, together with a flattened public IHK certificate whose birth-date line is covered. A separate image ZIP is no longer required for these assets.
+
+See QA-REPORT.md for the exact source files, unavailable attachments, verification results and remaining operational limits. Missing brochure-image download links were removed; the translated HTML service descriptions and prices remain available.
+
+To run the browser checks, start the production server on port 3011, then run node scripts/verify-gsap.cjs and node scripts/verify-navigation.cjs. The checks use Microsoft Edge by default. Screenshots and results are saved in qa/.
