@@ -3,10 +3,11 @@ import {useEffect,useRef,useState} from "react";
 import gsap from "gsap";
 import {ScrollTrigger} from "gsap/ScrollTrigger";
 import Image from "next/image";
+import ResourceViewer from "./resource-viewer";
 import type {Lang} from "@/lib/content";
 
 const items=[
- {year:"2014—2017",place:"Istanbul, Türkiye",en:"The scientific foundation",de:"Das wissenschaftliche Fundament",tr:"Bilimsel temel",enText:"Food Science and Technology, Istanbul Technical University.",deText:"Lebensmittelwissenschaft und -technologie, Technische Universität Istanbul.",trText:"İstanbul Teknik Üniversitesi, Gıda Bilimi ve Teknolojisi."},
+ {year:"2014—2017",place:"Istanbul, Türkiye",en:"The scientific foundation",de:"Das wissenschaftliche Fundament",tr:"Bilimsel temel",enText:"Bachelor’s degree in Food Science and Technology, Istanbul Technical University.",deText:"Bachelorstudium Lebensmittelwissenschaft und -technologie, Technische Universität Istanbul.",trText:"İstanbul Teknik Üniversitesi, Gıda Bilimi ve Teknolojisi lisans eğitimi."},
  {year:"2019—2025",place:"Jena, Germany",en:"The doctorate",de:"Die Promotion",tr:"Doktora yolculuğu",enText:"Doctoral research at Friedrich Schiller University Jena.",deText:"Promotionsforschung an der Friedrich-Schiller-Universität Jena.",trText:"Friedrich Schiller Üniversitesi Jena'da doktora araştırmaları."},
  {year:"2019—2023",place:"Jena, Germany",en:"Research in practice",de:"Forschung in der Praxis",tr:"Uygulamalı araştırma",enText:"Research experience at University Hospital Jena.",deText:"Forschungserfahrung am Universitätsklinikum Jena.",trText:"Jena Üniversite Hastanesinde araştırma deneyimi."},
  {year:"2023—2024",place:"Jena, Germany",en:"From academia to industry",de:"Von der Wissenschaft in die Industrie",tr:"Akademiden endüstriye",enText:"A new perspective at Analytik Jena.",deText:"Ein neuer Blickwinkel bei Analytik Jena.",trText:"Analytik Jena'da yeni bir bakış açısı."},
@@ -39,6 +40,7 @@ export default function JourneyScroll({lang}:{lang:Lang}){
  <div className="journey-photo-caption"><strong>Dr. Farzaneh Hähndel</strong><span>PhD · IHK Job & Application Coach</span></div>
  <button type="button" className="certificate-open" onClick={()=>setDocumentOpen(true)}>{text.see}<span>↗</span></button>
  </div></div><div className="journey-steps"><div className="journey-progress-rail"><span className="journey-progress-fill"/></div>{items.map((item,i)=><article key={i} className={active===i?"journey-step active":"journey-step"}><div className="journey-serial">{String(i+1).padStart(2,"0")}</div><div className="journey-date">{item.year} · {item.place}</div><h3>{item[lang]}</h3><p>{lang==="en"?item.enText:lang==="de"?item.deText:item.trText}</p></article>)}</div></div>
+ <div className="journey-archive"><ResourceViewer src="/assets/farzaneh/career-journey.png" label={text.full} lang={lang}/></div>
  <dialog ref={dialog} className="certificate-lightbox" aria-label={text.see} onCancel={()=>setDocumentOpen(false)} onClick={event=>{if(event.target===event.currentTarget)setDocumentOpen(false)}}><div className="certificate-modal" onClick={event=>event.stopPropagation()}><button autoFocus type="button" onClick={()=>setDocumentOpen(false)}>{text.close} ✕</button><Image src="/assets/farzaneh/certificate-public.png" width={800} height={1150} sizes="(max-width:760px) 90vw,650px" alt="IHK Job und Bewerbungscoaching certificate of Dr. Farzaneh Hähndel"/></div></dialog>
  </section>;
 }

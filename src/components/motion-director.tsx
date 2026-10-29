@@ -27,7 +27,10 @@ export default function MotionDirector(){
     const progress=document.querySelector<HTMLElement>(".reading-progress");
     if(progress)gsap.fromTo(progress,{scaleX:0,transformOrigin:"left"},{scaleX:1,ease:"none",scrollTrigger:{trigger:document.body,start:"top top",end:"bottom bottom",scrub:true}});
   });
-  return ()=>ctx.revert();
+  let refreshFrame=0;
+  const observer=new ResizeObserver(()=>{cancelAnimationFrame(refreshFrame);refreshFrame=requestAnimationFrame(()=>ScrollTrigger.refresh())});
+  const main=document.getElementById("main-content");if(main)observer.observe(main);
+  return ()=>{observer.disconnect();cancelAnimationFrame(refreshFrame);ctx.revert()};
  },[]);
  return <span className="reading-progress" aria-hidden="true"/>;
 }

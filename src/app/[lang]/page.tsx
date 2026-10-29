@@ -4,8 +4,10 @@ import { notFound } from "next/navigation";
 import { languages, isLang } from "@/lib/content";
 import Site from "@/components/editorial-site";
 import "../editorial.css";
+import "../review-fixes.css";
 
 type Props = { params: Promise<{ lang: string }> };
+export const dynamicParams = false;
 export const generateStaticParams = () => languages.map(lang => ({lang}));
 
 export async function generateMetadata({params}:Props):Promise<Metadata>{

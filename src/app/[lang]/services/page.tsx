@@ -3,6 +3,8 @@ import type {Metadata} from "next";
 import {notFound} from "next/navigation";
 import {isLang,type Lang} from "@/lib/content";
 import ServicesExperience from "@/components/services-experience";
+export const generateStaticParams = () => ["en","de","tr"].map(lang => ({lang}));
+export const dynamicParams = false;
 type Props={params:Promise<{lang:string}>};
 export async function generateMetadata({params}:Props):Promise<Metadata>{
  const {lang}=await params;if(!isLang(lang))return {};
