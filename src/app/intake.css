@@ -13,8 +13,8 @@
 .friendly .journey-progress-rail{background:var(--f-line)}
 .friendly .journey-progress-fill{background:var(--f-accent)}
 .friendly .journey-photo-caption{background:#d9eeebed;border-radius:9px;padding:13px;bottom:90px;color:#172f3b;text-shadow:none}
-.friendly .journey-photo-caption strong{font:700 clamp(19px,2.1vw,29px)/1.2 Arial,Helvetica,sans-serif;letter-spacing:-.02em}
-.friendly .journey-photo-caption span{letter-spacing:.02em}
+.friendly .journey-photo-caption strong{color:#172f3b;font:700 clamp(19px,2.1vw,29px)/1.2 Arial,Helvetica,sans-serif;letter-spacing:-.02em}
+.friendly .journey-photo-caption span{color:#36535b;letter-spacing:.02em}
 .friendly .journey-number{padding:0 10px;border-radius:8px;background:#d9eeebed}
 .friendly .journey-frame>.certificate-open{border-radius:9px;background:var(--f-card);color:var(--f-text);border-color:var(--f-line)}
 .certificate-lightbox:not([open]){display:none}
