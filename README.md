@@ -2,6 +2,11 @@
 
 A responsive multilingual single-page marketing website for **Dr. Farzaneh Hähndel**, designed for life-science career coaching in Germany.
 
+The interactive-preview branch now includes the six-stage GSAP journey and a multilingual,
+consented career intake with server-side email and optional site-scoped AI service matching.
+See [intake setup and verification](docs/INTAKE-OPERATIONS.md) for required provider configuration,
+privacy behavior, and the distinction between provider acceptance and verified inbox delivery.
+
 ## Stack
 Next.js App Router, React 19, TypeScript, CSS, Lucide icons.
 

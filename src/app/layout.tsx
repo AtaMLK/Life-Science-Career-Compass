@@ -5,6 +5,7 @@ import "./globals.css";
 import "./journey-services.css";
 import "./friendly.css";
 import "./preview.css";
+import "./intake.css";
 
 export const metadata: Metadata = {
   title: { default: "Life Science Career Compass | Dr. Farzaneh Hähndel", template: "%s | Life Science Career Compass" },
@@ -15,5 +16,5 @@ export const metadata: Metadata = {
 
 export default async function RootLayout({ children }: Readonly<{ children: React.ReactNode }>) {
   const lang=(await headers()).get("x-site-language")??"en";
-  return <html lang={lang}><body>{children}<Analytics/></body></html>;
+  return <html lang={lang} data-scroll-behavior="smooth"><body>{children}<Analytics/></body></html>;
 }
