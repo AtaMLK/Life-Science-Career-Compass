@@ -1,0 +1,48 @@
+/* Self-hosted variable font: real intermediate weights for small interface text.
+   Latin and Latin Extended subsets cover EN, DE and TR without Google requests. */
+.friendly{--f-font:"Inter Variable",Arial,Helvetica,sans-serif;font-family:var(--f-font);font-optical-sizing:auto}
+.friendly h1,.friendly h2,.friendly h3,
+.friendly.service-page h1,.friendly.service-page h2,.friendly.service-page h3,
+.friendly .journey-heading h2,.friendly .journey-step h3,
+.friendly .journey-photo-caption strong,.friendly .journey-photo-caption span,
+.friendly.service-page .package-option strong,
+.friendly.service-page .package-rate strong,
+.friendly.service-page .expertise-marquee span{font-family:var(--f-font)}
+.friendly h1,.friendly.service-page h1{font-weight:650;letter-spacing:-.04em}
+.friendly h2,.friendly.service-page h2,.friendly .journey-heading h2{font-weight:600;letter-spacing:-.035em}
+.friendly h3,.friendly.service-page h3,.friendly .journey-step h3{font-weight:600;letter-spacing:-.025em}
+.friendly .friendly-links{font-size:13px;font-weight:550}
+.friendly .friendly-button{font-size:13px;font-weight:600;line-height:1.5}
+.friendly .small-kicker,.friendly .index-mark{font-weight:600;letter-spacing:.1em}
+.friendly .hero-person{font-weight:600}
+.friendly .portrait-label b,.friendly .qualification b,.friendly .doc-overlay{font-weight:600}
+.friendly .explorer-label{font-size:12px;font-weight:550;letter-spacing:.045em}
+.friendly .field-tag{font-size:10px;font-weight:550;letter-spacing:.09em}
+.friendly .field-card strong{font-weight:600}
+.friendly .field-preview-top{font-size:10px;font-weight:550;letter-spacing:.12em}
+.friendly .field-roles-label{font-size:11px;font-weight:500}
+.friendly .need-options button{font-size:12px;font-weight:500}
+.friendly .answer-list button{font-size:14px;font-weight:500;line-height:1.5}
+.friendly .finder-progress{font-size:12px;font-weight:550}
+.friendly .finder-bottom button{font-size:13px;font-weight:500}
+.friendly .finder-preferences dd{font-weight:500}
+.friendly .friendly-text-link{font-size:13px;font-weight:550}
+.friendly .explorer-actions>a:last-child{font-size:12px;font-weight:500}
+.friendly .simple-steps>div>span,.friendly .journey-date,.friendly .journey-serial{font-weight:550}
+.friendly .friendly-faq-row button{font-size:15px;font-weight:550;line-height:1.5}
+.friendly .journey-photo-caption strong{font-weight:600}
+.friendly .journey-photo-caption span{font-weight:400}
+.friendly .journey-frame>.certificate-open{font-size:13px;font-weight:550}
+.friendly.service-page .package-option strong{font-weight:550}
+.friendly.service-page .package-option.active strong{font-weight:600}
+.friendly.service-page .package-contact,.friendly.service-page .service-page-hero a{font-size:13px;font-weight:600}
+.friendly.service-page .support-chip-wall span{font-weight:500}
+.friendly.service-page .service-directory summary{font-weight:550}
+.friendly .intake-launch{font-size:13px!important;font-weight:550!important}
+.friendly .intake-ai summary{font-weight:550}
+.friendly .intake-suggestion strong{font-weight:600}
+@media(max-width:760px){
+ .friendly .friendly-brand b{font-weight:600}
+ .friendly .need-options button{font-size:12px}
+ .friendly.service-page .package-option strong{font-size:14px}
+}
