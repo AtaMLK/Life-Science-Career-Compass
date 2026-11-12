@@ -1,5 +1,6 @@
 import Link from "next/link";
 import type {Lang} from "@/lib/content";
+import {legalTranslations} from "@/lib/legal-translations";
 
 type LegalKind="impressum"|"datenschutz";
 const word={en:{home:"Back to website",privacy:"Privacy policy",imprint:"Imprint",draft:"Draft — publication review required"},de:{home:"Zurück zur Website",privacy:"Datenschutzerklärung",imprint:"Impressum",draft:"Entwurf — vor Veröffentlichung prüfen"},tr:{home:"Siteye dön",privacy:"Gizlilik politikası",imprint:"Yasal bilgiler",draft:"Taslak — yayından önce kontrol edilmeli"}};
@@ -7,17 +8,21 @@ const email="Ls.career-compass@mail.de";
 
 export default function LegalPages({lang,kind}:{lang:Lang;kind:LegalKind}){
  const t=word[lang];
+ const localized=lang==="de"?null:legalTranslations[lang];
  return <div className="legal-page">
-  <header className="legal-page-header"><Link href={"/"+lang}>← {t.home}</Link><nav aria-label="Legal navigation"><Link href={"/"+lang+"/impressum"}>{t.imprint}</Link><Link href={"/"+lang+"/datenschutz"}>{t.privacy}</Link></nav></header>
+  <header className="legal-page-header"><Link href={"/"+lang}>← {t.home}</Link><nav aria-label="Legal navigation"><Link href={"/"+lang+"/impressum"}>{t.imprint}</Link><Link href={"/"+lang+"/datenschutz"}>{t.privacy}</Link></nav><nav className="legal-language-switch" aria-label="Select language">{(["de","en","tr"] as const).map(code=><Link key={code} href={`/${code}/${kind}`} aria-current={code===lang?"page":undefined}>{code.toUpperCase()}</Link>)}</nav></header>
   <main>
    <span className="legal-eyebrow">LIFE SCIENCE CAREER COMPASS · {t.draft}</span>
-   <h1>{kind==="impressum"?"Impressum":"Datenschutzerklärung"}</h1>
-   <p className="legal-draft"><strong>Redaktioneller Entwurf:</strong> Diese Seite ist noch nicht als abschließend rechtskonform freigegeben. Die ladungsfähige Anschrift, der genaue Geschäftsstatus, die technischen Dienste, gegebenenfalls steuerliche Angaben und Aufbewahrungsfristen sind vor Veröffentlichung mit der Anbieterin zu prüfen. Bei einer Übertragung zu Wix muss der Hosting-Abschnitt aktualisiert werden.</p>
-   {kind==="impressum"?<Impressum/>:<Privacy/>}
+   <h1>{localized?(kind==="impressum"?localized.title.impressum:localized.title.privacy):(kind==="impressum"?"Impressum":"Datenschutzerklärung")}</h1>
+   <p className="legal-draft">{localized?localized.notice:<><strong>Redaktioneller Entwurf:</strong> Diese Seite ist noch nicht als abschließend rechtskonform freigegeben. Die ladungsfähige Anschrift, der genaue Geschäftsstatus, die technischen Dienste, gegebenenfalls steuerliche Angaben und Aufbewahrungsfristen sind vor Veröffentlichung mit der Anbieterin zu prüfen. Bei einer Übertragung zu Wix muss der Hosting-Abschnitt aktualisiert werden.</>}</p>
+   {localized?<div className="legal-translation-note"><strong>{localized.original}:</strong> <Link href={`/de/${kind}`}>{kind==="impressum"?"Impressum":"Datenschutzerklärung"} ↗</Link></div>:null}
+   {localized?<TranslatedSections sections={kind==="impressum"?localized.imprint:localized.privacy}/>:kind==="impressum"?<Impressum/>:<Privacy/>}
   </main>
-  <footer className="legal-page-footer"><Link href={"/"+lang}>{t.home}</Link><Link href={"/"+lang+"/impressum"}>Impressum</Link><Link href={"/"+lang+"/datenschutz"}>Datenschutzerklärung</Link></footer>
+  <footer className="legal-page-footer"><Link href={"/"+lang}>{t.home}</Link><Link href={"/"+lang+"/impressum"}>{t.imprint}</Link><Link href={"/"+lang+"/datenschutz"}>{t.privacy}</Link></footer>
  </div>;
 }
+
+function TranslatedSections({sections}:{sections:{heading:string;body:string}[]}){return <>{sections.map(section=><section key={section.heading} className="legal-entry"><h2>{section.heading}</h2><p>{section.body}</p></section>)}</>}
 
 function Impressum(){
  return <>
@@ -44,7 +49,7 @@ function Privacy(){
   <h2>3. Kontaktaufnahme per E-Mail</h2>
   <p>Bei Kontaktaufnahme per E-Mail werden die freiwillig mitgeteilten Daten zur Bearbeitung Ihrer Anfrage verarbeitet. Die Rechtsgrundlage ist Art. 6 Abs. 1 lit. b DSGVO für vorvertragliche Maßnahmen oder Art. 6 Abs. 1 lit. f DSGVO für allgemeine Kommunikation. Nachrichten werden gelöscht, sobald sie für den Zweck nicht mehr erforderlich sind, sofern keine gesetzlichen Aufbewahrungspflichten bestehen. <span className="legal-fill">[E-Mail-Anbieter und tatsächlich geltende Fristen prüfen.]</span></p>
   <h2>4. Interaktiver Karriere-Kompass</h2>
-  <p>Die Auswahl im Karriere-Kompass wird nach der derzeitigen Code-Fassung zunächst lokal im Browser ausgewertet. Es findet dadurch keine automatische Übermittlung der Antworten an uns statt. Erst wenn Sie selbst den E-Mail-Link für eine Anfrage verwenden und die E-Mail absenden, erhalten wir die darin enthaltenen Angaben. <span className="legal-fill">[Nach jeder Funktionsänderung erneut überprüfen.]</span></p>
+  <p>Die Antworten auf die drei Fragen im Karriere-Kompass werden nach der aktuellen Code-Fassung nur lokal im Browser ausgewertet und führen zu einem passenden Beratungsangebot auf dieser Website. Die Antworten werden nicht automatisch an uns übermittelt. Erst wenn Sie anschließend selbst eine Anfrage per E-Mail versenden, erhalten wir die darin enthaltenen Angaben. <span className="legal-fill">[Nach jeder Funktionsänderung erneut überprüfen.]</span></p>
   <h2>4a. Sprachvorauswahl und Spracheinstellung</h2>
   <p>Beim Besuch der sprachneutralen Startadresse wird das durch den Hostinganbieter anhand der IP-Adresse ermittelte Länderkennzeichen für die Sprachauswahl verwendet: Deutschland, Österreich und die Schweiz werden zunächst zur deutschen Version geleitet, alle übrigen oder nicht erkannten Länder zur englischen Version. Die Anwendung speichert das Länderkennzeichen nicht zusätzlich in einer eigenen Datenbank. Eine von Ihnen ausdrücklich ausgewählte Sprache (Deutsch, Englisch oder Türkisch) wird als funktionale Einstellung in einem Erstanbieter-Cookie <code>lscc-language</code> für höchstens ein Jahr hinterlegt und hat Vorrang vor der geografischen Vorauswahl. Direkte Links zu einer Sprachversion bleiben unverändert erreichbar. <span className="legal-fill">[Prüfen, ob eingesetzte Hosting-/CDN-Anbieter Standortdaten zusätzlich protokollieren; tatsächliche Speicherfristen ergänzen.]</span></p>
   <h2>5. Lokale Einstellungen und optionale Reichweitenmessung</h2>
