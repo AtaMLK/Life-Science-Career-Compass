@@ -4,6 +4,7 @@ import Link from "next/link";
 import Image from "next/image";
 import { ArrowUpRight, Plus, Minus, Menu, X, Compass, Dna, MoveDownRight, Mail, ChevronRight } from "lucide-react";
 import { copy, services, type Lang } from "@/lib/content";
+import {rememberLanguage} from "@/lib/geo-language";
 import ThemeToggle from "./theme-toggle";
 import MotionDirector from "./motion-director";
 import JourneyScroll from "./journey-scroll";
@@ -35,7 +36,7 @@ export default function Site({lang}:{lang:Lang}){
  <MotionDirector/>
  <header className="creative-nav"><div className="creative-nav-inner">
   <Link href={`/${lang}`} className="identity" aria-label="Life Science Career Compass"><Compass size={30} strokeWidth={1.3}/><span>LIFE SCIENCE<br/><b>CAREER COMPASS</b></span></Link>
-  <nav id="primary-navigation" className={menu?"creative-links open":"creative-links"} aria-label="Primary navigation"><a href="#approach" onClick={()=>setMenu(false)}>{e.menu[0]}</a><a href="#services" onClick={()=>setMenu(false)}>{e.menu[1]}</a><a href="#story" onClick={()=>setMenu(false)}>{e.menu[2]}</a><a href="#questions" onClick={()=>setMenu(false)}>{e.menu[3]}</a><div className="locale-options">{(["en","de","tr"] as const).map(l=><Link key={l} aria-current={lang===l?"page":undefined} href={`/${l}`}>{l.toUpperCase()}</Link>)}</div></nav>
+  <nav id="primary-navigation" className={menu?"creative-links open":"creative-links"} aria-label="Primary navigation"><a href="#approach" onClick={()=>setMenu(false)}>{e.menu[0]}</a><a href="#services" onClick={()=>setMenu(false)}>{e.menu[1]}</a><a href="#story" onClick={()=>setMenu(false)}>{e.menu[2]}</a><a href="#questions" onClick={()=>setMenu(false)}>{e.menu[3]}</a><div className="locale-options">{(["en","de","tr"] as const).map(l=><Link key={l} aria-current={lang===l?"page":undefined} href={`/${l}`} onClick={()=>rememberLanguage(l)}>{l.toUpperCase()}</Link>)}</div></nav>
   <ThemeToggle theme={theme} lang={lang} onToggle={switchTheme}/><a className="nav-contact" href="#connect">{c.navCta}<ArrowUpRight size={17}/></a><button className="menu-toggle" type="button" aria-controls="primary-navigation" aria-label={lang==="de"?"Menü öffnen oder schließen":lang==="tr"?"Menüyü aç veya kapat":"Toggle menu"} aria-expanded={menu} onClick={()=>setMenu(!menu)}>{menu?<X/>:<Menu/>}</button>
  </div></header>
  <main id="main-content">
