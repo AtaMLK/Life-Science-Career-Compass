@@ -76,6 +76,6 @@ export default function Site({lang}:{lang:Lang}){
 
   <section className="finale" id="connect"><div className="finale-art"><Compass size={300} strokeWidth={.4}/></div><p className="index-mark">{e.finalTag}</p><h2 data-reveal>{e.finalA}<br/>{e.finalB} <i>{e.finalC}</i></h2><a className="finale-link" href={mail("Consultation request for Dr. Farzaneh Hähndel")}>{e.letsTalk} <ArrowUpRight size={45} strokeWidth={1.4}/></a><div className="finale-contacts"><a href="mailto:Ls.career-compass@mail.de"><Mail size={17}/>Ls.career-compass@mail.de</a><a href="tel:+4915785331977">+49 157 85331977</a><span>{e.based}</span><a href="https://www.instagram.com/LifeScience_CareerCompass_DE/" target="_blank" rel="noreferrer">Instagram ↗</a></div></section>
  </main>
- <footer className="creative-footer"><span>© {new Date().getFullYear()} LIFE SCIENCE CAREER COMPASS</span><a href="https://www.linkedin.com/in/fhaehndel" rel="noreferrer" target="_blank">LINKEDIN ↗</a><span>{e.footer}</span></footer>
+ <footer className="creative-footer"><span>© {new Date().getFullYear()} LIFE SCIENCE CAREER COMPASS</span><a href="https://www.linkedin.com/in/fhaehndel" rel="noreferrer" target="_blank">LINKEDIN ↗</a><div className="site-legal-links"><Link href={"/"+lang+"/impressum"}>Impressum</Link><Link href={"/"+lang+"/datenschutz"}>Datenschutzerklärung</Link></div><span>{e.footer}</span></footer>
  </div>;
 }

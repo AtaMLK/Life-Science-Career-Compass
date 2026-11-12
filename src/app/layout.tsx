@@ -5,6 +5,7 @@ import "./globals.css";
 import "./journey-services.css";
 import "./career-finder.css";
 import "./review-fixes.css";
+import "./site-polish.css";
 
 export const metadata: Metadata = {
   title: { default: "Life Science Career Compass | Dr. Farzaneh Hähndel", template: "%s | Life Science Career Compass" },
