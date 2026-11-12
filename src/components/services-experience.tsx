@@ -17,14 +17,13 @@ de:{back:"Zurück zur Startseite",eyebrow:"IHRE KARRIERE, IHRE ENTSCHEIDUNG",hea
 tr:{back:"Ana sayfaya dön",eyebrow:"KARİYERİNİZ, SİZİN SEÇİMİNİZ",headline:"Doğru destek fark yaratır.",sub:"Almanya ve Almanca konuşulan ülkelerde başvuru, mülakat ve kariyer planlaması için profesyonel destek.",areas:"Uzmanlık alanları",who:"Kimlere destek veriyorum",intro:"Her bilimsel kariyerin başlangıcı farklıdır.",pricing:"Net hizmetler, anlaşılır fiyatlar.",pricingIntro:"Bir hizmet seçin; bireysel, küçük grup ve grup seçeneklerini karşılaştırın.",individual:"Bireysel",small:"Küçük grup (4 kişiye kadar)",group:"Grup (8 kişiye kadar)",duration:"Süre",ask:"Bu paketi sor",note:"Fiyatlar yayından önce teyit edilmelidir. Grup seçenekleri uygunluğa bağlıdır.",connect:"Hangi hizmetin uygun olduğundan emin değil misiniz?",cta:"Hedefinizi paylaşın",image:"Orijinal hizmet özetini incele",packages:"Orijinal paket listesini incele",more:"Neler dahil",moreText:"Danışmanlık eğitiminize, deneyiminize ve hedeflediğiniz pozisyona göre uyarlanır.",support:["Yaşam Bilimleri","Mühendislik","BT ve Yazılım","Eğitim","Üretim ve Endüstri","Tarım","Sağlık","İş ve Ticaret"]}
 };
 const mail=(name:string)=>"mailto:Ls.career-compass@mail.de?subject="+encodeURIComponent("Consultation — "+name);
-export default function ServicesExperience({lang}:{lang:Lang}){
- const l=labels[lang];const [active,setActive]=useState<string>("industry");
+export default function ServicesExperience({lang,initialService}:{lang:Lang;initialService?:string}){
+ const l=labels[lang];const [active,setActive]=useState<string>(initialService && services.some(service=>service.id===initialService)?initialService:"industry");
  const [tier,setTier]=useState<ConsultationTier>("individual");
  useEffect(()=>{document.documentElement.lang=lang;const frame=requestAnimationFrame(()=>window.scrollTo({top:0,behavior:"instant"}));return()=>cancelAnimationFrame(frame)},[lang]);
  const [theme,setTheme]=useState<"light"|"dark">("light");
  useEffect(()=>{const frame=requestAnimationFrame(()=>{try{if(localStorage.getItem("lscc-theme")==="dark")setTheme("dark")}catch{}});return ()=>cancelAnimationFrame(frame)},[]);
  const toggleTheme=()=>{const value=theme==="light"?"dark":"light";setTheme(value);try{localStorage.setItem("lscc-theme",value)}catch{}};
- useEffect(()=>{const id=new URLSearchParams(window.location.search).get("service");if(id&&services.some(s=>s.id===id)){const frame=requestAnimationFrame(()=>setActive(id));return ()=>cancelAnimationFrame(frame)}},[]);
  const selected=services.find(s=>s.id===active)!;
  const story=serviceStory(active,lang);
  const checkout=consultationCheckoutUrl(active,tier);
