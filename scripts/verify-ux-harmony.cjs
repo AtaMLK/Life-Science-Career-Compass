@@ -16,6 +16,8 @@ function checkLocalLinks(list,baseUrl) {
     if(!href || /^(mailto:|tel:|https?:\/\/)/i.test(href) && !href.startsWith(baseUrl))continue;
     const parsed=new URL(href,baseUrl);
     if(parsed.origin!==new URL(baseUrl).origin)continue;
+    // Asset downloads are valid local links, not app routes.
+    if(/^\/assets\/[a-z0-9_\/-]+\.(?:png|jpe?g|webp|svg|pdf)$/i.test(parsed.pathname))continue;
     assert(allowed.has(parsed.pathname.replace(/\/$/,"")||"/"),"Unexpected internal link route "+href);
   }
 }
