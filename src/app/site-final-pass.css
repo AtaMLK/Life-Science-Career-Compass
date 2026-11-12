@@ -1,0 +1,156 @@
+/* November 2026 editorial finishing: fewer scroll traps, fewer repeated photos,
+   and service-led storytelling without changing the established color system. */
+
+/* Content should determine section height; short sections should not mimic a full-screen slideshow. */
+@media (min-width:761px) {
+  .v2 .statement {
+    padding:clamp(42px,6.2svh,78px) var(--site-gutter) clamp(35px,5.5svh,68px);
+  }
+  .v2 .statement h2 {font-size:clamp(46px,5.8vw,85px);margin:clamp(18px,3svh,30px) 0}
+  .v2 .statement > div > p {font-size:clamp(15px,1.35vw,18px);margin-bottom:0}
+  .v2 .statement-line {margin:clamp(25px,4svh,42px) 0 20px}
+  .v2 .chapter {min-height:0}
+  .v2 .chapter-image {min-height:clamp(420px,65svh,700px)}
+  .v2 .chapter-content {padding:clamp(35px,6svh,78px) clamp(34px,6vw,96px)}
+  .v2 .process-v2 {padding-block:clamp(48px,7.5svh,90px)}
+  .v2 .process-intro h2 {font-size:clamp(47px,5.5vw,82px);margin:16px 0}
+  .v2 .process-steps {margin-top:clamp(28px,5svh,55px)}
+  .v2 .process-step {min-height:190px}
+  .v2 .story-visual {min-height:clamp(430px,62svh,630px)}
+  .v2 .investment-photo {min-height:clamp(420px,67svh,620px)}
+  .v2 .investment-copy {padding-block:clamp(42px,7svh,84px)}
+  .v2 .faq-v2 {padding-block:clamp(55px,8svh,95px)}
+}
+/* Story shows a genuine coaching scene rather than superimposing another instance of the hero portrait. */
+.v2 .story-visual-photo{inset:0;background-size:cover;background-position:center}
+.v2 .story-person-tag{background:rgba(19,44,47,.78);color:#f5f1e7;padding:11px 15px;border-radius:3px}
+.v2 .story-image-note{color:#f4f2e9;text-shadow:0 1px 7px #102b2b}
+
+/* Main page's former desk photograph becomes a restrained, original typographic graphic.
+   The unique desk photograph now belongs to Services. */
+.v2 .investment-photo>.investment-illustration {
+  position:absolute;
+  inset:0;
+  background:radial-gradient(circle at 54% 38%,#477f7d 0%,#254b50 48%,#18333a 100%);
+  color:#e1f0e6;
+  display:flex;
+  flex-direction:column;
+  align-items:center;
+  justify-content:center;
+  gap:clamp(16px,3vw,35px);
+  padding:clamp(35px,5vw,70px);
+  overflow:hidden;
+  isolation:isolate;
+}
+.v2 .investment-illustration::before,
+.v2 .investment-illustration::after{
+  content:"";position:absolute;border:1px solid #d8ede55b;border-radius:50%;
+  width:min(70vw,520px);aspect-ratio:1;transform:rotate(25deg) scaleX(.74);pointer-events:none;z-index:-1;
+}
+.v2 .investment-illustration::after{width:min(52vw,380px);transform:rotate(-30deg) scaleX(.74)}
+.v2 .investment-illustration>span{align-self:flex-start;font-size:11px;letter-spacing:.17em;text-transform:uppercase}
+.v2 .investment-illustration svg{filter:drop-shadow(0 18px 24px #0e252533)}
+.v2 .investment-illustration strong{font-family:var(--site-font-display);font-size:clamp(43px,6vw,88px);font-weight:400;letter-spacing:-.04em;text-align:center}
+.v2 .investment-illustration small{font-size:12px;letter-spacing:.4em}
+
+/* Service pages start at the beginning, with each service receiving its own useful explanation. */
+.service-page .service-page-hero{
+  min-height:0;grid-template-columns:minmax(0,56%) minmax(0,44%);
+  align-items:stretch;background:#d9e9df;
+}
+.service-page .service-page-hero>.service-hero-copy{
+  padding:clamp(38px,5.5svh,70px) clamp(32px,5.3vw,88px);
+  display:flex;flex-direction:column;align-items:flex-start;justify-content:center;min-width:0;
+}
+.service-page .service-hero-counter{font-size:12px;letter-spacing:.2em;margin-top:9px;color:#466664}
+.service-page .service-page-hero h1{
+  font-size:clamp(39px,4.7vw,73px);
+  line-height:1.065;letter-spacing:-.045em;margin:clamp(16px,2.5vw,28px) 0 18px;
+  hyphens:auto;overflow-wrap:break-word;text-wrap:balance;max-width:100%;
+}
+.service-page .service-page-hero .service-hero-hook{
+  font-family:var(--site-font-display);font-size:clamp(18px,1.7vw,24px);
+  line-height:1.45;max-width:48ch;margin:0 0 17px;
+}
+.service-page .service-page-hero .service-hero-description{
+  font-size:14px;line-height:1.7;max-width:64ch;margin:0 0 17px;color:#395653;
+}
+.service-page .service-hero-focus{border-top:1px solid #20494745;width:100%;padding-top:15px}
+.service-page .service-hero-focus .index-mark{font-size:10px}
+.service-page .service-hero-focus ul{margin:11px 0 0;padding:0;list-style:none;display:grid;gap:6px}
+.service-page .service-hero-focus li{font-size:13px;line-height:1.5;padding-left:17px;position:relative}
+.service-page .service-hero-focus li::before{content:"";position:absolute;left:0;top:.65em;width:6px;height:6px;border-radius:50%;background:#318d8c}
+.service-page .service-page-hero .service-hero-copy>a{font-size:13px;font-weight:700;margin:17px 0 0}
+.service-page .service-cover{position:relative;min-height:clamp(540px,76svh,760px);background:#749794}
+.service-page .service-cover img{object-fit:cover;object-position:center}
+.service-page .service-cover::after{content:"";position:absolute;inset:30% 0 0;background:linear-gradient(transparent,#122e308b);pointer-events:none}
+.service-page .service-cover-label{position:absolute;bottom:clamp(25px,4vw,65px);left:clamp(25px,4vw,60px);right:clamp(25px,4vw,60px);z-index:1;display:grid;gap:12px;color:#f6f2ea;text-shadow:0 1px 12px #112e2e99}
+.service-page .service-cover-label span{font-size:10px;letter-spacing:.17em}
+.service-page .service-cover-label strong{font-family:var(--site-font-display);font-size:clamp(26px,3.4vw,48px);line-height:1.05;font-weight:400}
+.service-page .package-explorer{padding-block:clamp(65px,8vw,115px)}
+.service-page .package-topline h2{font-size:clamp(46px,5.8vw,87px);margin:20px 0}
+.service-page .package-topline p{max-width:68ch}
+.service-page .package-story-followup{font-family:var(--site-font-display);font-size:clamp(16px,1.5vw,20px);line-height:1.5;padding-bottom:13px}
+.service-page .package-display{top:24px}
+.service-page .package-contact{display:flex;align-items:center;justify-content:space-between;gap:16px}
+.service-page .package-choices .package-rate.selected{box-shadow:inset 0 0 0 1px #146d75}
+.service-page .service-finale{
+  min-height:0;
+  grid-template-columns:minmax(0,1.4fr) minmax(220px,.6fr);
+  padding:clamp(38px,5svh,70px) var(--site-gutter);align-items:center;
+}
+.service-page .service-finale h2{font-size:clamp(43px,4.8vw,76px);line-height:1.06;margin:18px 0}
+.service-page .service-finale-mark{display:flex;align-items:center;justify-content:center;flex-direction:column;gap:18px;color:#2a6562;min-height:205px}
+.service-page .service-finale-mark span{font-size:10px;letter-spacing:.12em;text-align:center}
+
+/* Legal information must be usable in all chosen languages, not just the navigation labels. */
+.legal-page .legal-language-switch{gap:10px}
+.legal-page .legal-language-switch a{
+  padding:7px 9px;
+  border:1px solid #31565342;
+  border-radius:4px;
+  font-size:11px;
+  letter-spacing:.1em;
+}
+.legal-page .legal-language-switch a[aria-current="page"]{background:#204b4b;color:#f4f2e9}
+.legal-page .legal-translation-note{
+  margin:0 0 25px;
+  padding:15px 20px;
+  background:#e1ece6;
+  border-left:3px solid #4b938a;
+  font-size:14px;
+}
+.legal-page .legal-translation-note a{text-decoration:underline}
+.legal-page .legal-entry{max-width:75ch}
+.legal-page .legal-entry h2{font-size:clamp(25px,3vw,35px)}
+.legal-page .legal-entry p{overflow-wrap:anywhere}
+
+/* Respect actual reading length on narrow screens; avoid giant empty picture panels. */
+@media(max-width:760px){
+  .v2 .statement{padding-block:48px 44px}
+  .v2 .statement h2{font-size:clamp(39px,8.7vw,61px);margin:25px 0}
+  .v2 .statement-line{margin:35px 0 18px}
+  .v2 .chapter-image{min-height:320px}
+  .v2 .chapter-content{padding-block:54px}
+  .v2 .story-visual{min-height:330px}
+  .v2 .process-v2{padding-block:62px}
+  .v2 .investment-photo{min-height:300px}
+  .v2 .investment-illustration svg{width:110px;height:110px}
+  .v2 .investment-illustration strong{font-size:47px}
+  .v2 .faq-v2{padding-block:65px}
+  .service-page .service-page-hero{grid-template-columns:1fr}
+  .service-page .service-page-hero>.service-hero-copy{padding:35px var(--site-gutter) 37px}
+  .service-page .service-page-hero h1{font-size:clamp(38px,9vw,60px)}
+  .service-page .service-page-hero .service-hero-hook{font-size:19px}
+  .service-page .service-cover{min-height:190px;height:210px}
+  .service-page .service-cover-label{bottom:18px;left:20px}
+  .service-page .service-cover-label strong{font-size:25px}
+  .service-page .package-explorer{padding-block:65px}
+  .service-page .package-display{top:0}
+  .service-page .service-finale{grid-template-columns:1fr;gap:20px;padding-block:55px}
+  .service-page .service-finale-mark{min-height:140px}
+  .service-page .service-finale-mark svg{width:105px;height:105px}
+  .legal-page-header{align-items:flex-start}
+  .legal-page .legal-language-switch{width:100%}
+}
+@media(prefers-reduced-motion:reduce){.service-page .service-cover img{transition:none}}
