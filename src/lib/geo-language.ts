@@ -8,3 +8,10 @@ export function defaultLanguage(countryCode:string|null|undefined, stored:string
   if(stored==="de"||stored==="en"||stored==="tr")return stored;
   return dachCountries.has((countryCode??"").toUpperCase())?"de":"en";
 }
+
+/** Remember an intentional switch, not the automatically detected locale. */
+export function rememberLanguage(lang:SiteLanguage):void {
+  if(typeof document==="undefined")return;
+  const secure=window.location.protocol==="https:"?"; Secure":"";
+  document.cookie=`${PREFERRED_LANGUAGE_COOKIE}=${lang}; Max-Age=31536000; Path=/; SameSite=Lax${secure}`;
+}
