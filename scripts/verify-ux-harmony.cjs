@@ -63,6 +63,16 @@ async function auditPage(page,label,width,height) {
       assert.equal(response.status(),200,`DE home did not respond with 200`);
       await page.waitForTimeout(420);
       await auditPage(page,"de",width,height);
+      if(width===1440){
+        const routes=["/","/en","/de","/tr"];
+        for(const lang of ["en","de","tr"])for(const part of ["/services","/impressum","/datenschutz"])routes.push("/"+lang+part);
+        const assets=["/assets/farzaneh/portrait.png","/assets/farzaneh/certificate-public.png","/assets/farzaneh/portrait-office.png"];
+        for(const path of [...routes,...assets]){
+          const result=await page.request.get(base+path);
+          assert.equal(result.status(),200,`Broken route or media: ${path} responded ${result.status()}`);
+        }
+        console.log("Direct route/media checks passed: "+routes.length+" pages and "+assets.length+" public image paths");
+      }
       if(width===1440||width===390){
         for(const lang of ["en","tr"]){
           const res=await page.goto(base+"/"+lang,{waitUntil:"domcontentloaded"});
@@ -87,6 +97,28 @@ async function auditPage(page,label,width,height) {
           const res=await page.goto(base+path,{waitUntil:"domcontentloaded"});
           assert.equal(res.status(),200,`Legal page missing: ${path}`);
         }
+        if(width===390){
+          await page.goto(base+"/de",{waitUntil:"domcontentloaded"});
+          const menu=page.locator(".menu-toggle");
+          await menu.click();
+          assert.equal(await menu.getAttribute("aria-expanded"),"true","Mobile navigation menu did not open");
+          await page.locator('#primary-navigation a[href="#services"]').click();
+          assert.equal(await menu.getAttribute("aria-expanded"),"false","Mobile menu did not close after navigation");
+          const accordion=page.locator(".service-entry button").first();
+          await accordion.click();
+          assert.equal(await accordion.getAttribute("aria-expanded"),"true","Service disclosure did not open");
+          const faq=page.locator(".faq-row button").first();
+          await faq.click();
+          assert.equal(await faq.getAttribute("aria-expanded"),"true","FAQ accordion did not open");
+          const choices=page.locator(".finder-choices button");
+          await choices.first().click();
+          await choices.nth(1).click();
+          await choices.first().click();
+          const recommendation=page.locator(".finder-recommendation a");
+          assert((await recommendation.getAttribute("href")).includes("/de/services?service=cv"),"Career Finder recommendation lost its selected service");
+          console.log("Mobile interactions passed: navigation, services disclosure, FAQ and Career Finder service link");
+        }
+
       }
       await page.close();
     }
