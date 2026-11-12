@@ -28,7 +28,7 @@ async function auditPage(page,label,width,height) {
     const urls=Array.from(document.querySelectorAll("a[href]")).map(a=>({href:a.getAttribute("href"),name:a.textContent?.trim()}));
     const brokenFragments=urls.filter(a=>a.href?.startsWith("#")&&!document.getElementById(a.href.slice(1))).map(x=>x.href);
     const visible=document.body.innerText||"";
-    return {hero:rect(".editorial-hero"),nav:rect(".creative-nav"),viewport:innerHeight,documentWidth:document.documentElement.scrollWidth,clientWidth:document.documentElement.clientWidth,journeys:document.querySelectorAll(".journey-v3").length,timelines:document.querySelectorAll(".career-path").length,proofs:document.querySelectorAll(".proof").length,duplicatePriceLists:document.querySelectorAll(".price-reveal-button").length,brokenFragments,links:urls,hasUnrenderedCode:/\{e\.showPrices\}/.test(visible)};
+    return {hero:rect(".editorial-hero"),nav:rect(".creative-nav"),viewport:innerHeight,documentWidth:document.documentElement.scrollWidth,clientWidth:document.documentElement.clientWidth,journeys:document.querySelectorAll(".journey-v3").length,timelines:document.querySelectorAll(".career-path").length,proofs:document.querySelectorAll(".proof").length,duplicatePriceLists:document.querySelectorAll(".price-reveal-button").length,shortSections:Object.fromEntries([".statement",".process-v2",".investment"].map(q=>[q,Math.round(document.querySelector(q)?.getBoundingClientRect().height||0)])),repeatedPortraits:document.querySelectorAll('img[src*="portrait.png"]').length,brokenFragments,links:urls,hasUnrenderedCode:/\{e\.showPrices\}/.test(visible)};
   });
   assert(measurements.documentWidth<=measurements.clientWidth+3,`Horizontal overflow on ${label} @${width} (doc ${measurements.documentWidth}, viewport ${measurements.clientWidth})`);
   assert.equal(measurements.journeys,1,`Expected one GSAP Journey on ${label}`);
@@ -37,6 +37,8 @@ async function auditPage(page,label,width,height) {
   assert.equal(measurements.duplicatePriceLists,0,"Prices duplicated on home");
   assert.deepEqual(measurements.brokenFragments,[],`Dead in-page fragment on ${label}`);
   assert.equal(measurements.hasUnrenderedCode,false,"Accidental JSX text displayed");
+  assert.equal(measurements.repeatedPortraits,0,"Hero portrait repeated elsewhere");
+  if(width>=1024&&height>=760){for(const [selector,sectionHeight] of Object.entries(measurements.shortSections)){assert(sectionHeight<=height-measurements.nav.height+12,`Short section ${selector} too tall: ${sectionHeight}px at ${width}x${height}`)}}
   assert(measurements.hero&&measurements.nav,"Missing hero/navigation on "+label);
   if(width>=761&&height>=760){
     const expected=height-measurements.nav.height;
@@ -80,8 +82,11 @@ async function auditPage(page,label,width,height) {
           await page.waitForTimeout(420);
           await auditPage(page,lang,width,height);
         }
-        const responseServices=await page.goto(base+"/de/services?service=interview#package-explorer",{waitUntil:"domcontentloaded"});
+        const responseServices=await page.goto(base+"/de/services?service=interview",{waitUntil:"domcontentloaded"});
         assert.equal(responseServices.status(),200,"Service detail route failed");
+        await page.waitForFunction(()=>document.querySelector("#service-hero-title")?.textContent?.includes("Vorstellungsgespräch"));
+        assert((await page.evaluate(()=>window.scrollY))<5,"Selected service must open from top");
+        assert((await page.locator(".service-hero-hook").innerText()).length>40,"Missing service-specific hook");
         await page.waitForFunction(()=>document.querySelector(".package-option.active")?.getAttribute("data-service-id")==="interview",{timeout:5000});
         const rates=page.locator(".package-choices button.package-rate");
         assert.equal(await rates.count(),3,"Interview must offer three distinct session formats");
@@ -93,10 +98,29 @@ async function auditPage(page,label,width,height) {
         const items=await page.locator("a[href]").evaluateAll(nodes=>nodes.map(a=>({href:a.getAttribute("href")})));
         checkLocalLinks(items,base);
         await page.screenshot({path:`${folder}/de-${width}x${height}-services.png`});
+        await page.locator('.package-option[data-service-id="academia"]').click();
+        await page.waitForFunction(()=>document.querySelector("#service-hero-title")?.textContent?.includes("Hochschulen"));
+        await page.waitForTimeout(600);
+        assert((await page.evaluate(()=>window.scrollY))<25,"Switching consultation should return to service introduction");
+        const pageWidth=await page.evaluate(()=>({doc:document.documentElement.scrollWidth,client:document.documentElement.clientWidth}));
+        assert(pageWidth.doc<=pageWidth.client+3,"Services horizontal overflow");
+        await page.screenshot({path:"qa-harmony/de-academic-service.png"});
+
         for(const path of ["/de/impressum","/de/datenschutz"]){
           const res=await page.goto(base+path,{waitUntil:"domcontentloaded"});
           assert.equal(res.status(),200,`Legal page missing: ${path}`);
         }
+        for(const [l,expected] of [["en","Privacy policy"],["tr","Gizlilik ve veri koruma politikası"]]){
+          const privacy=await page.goto(base+"/"+l+"/datenschutz",{waitUntil:"domcontentloaded"});
+          assert.equal(privacy.status(),200);
+          assert((await page.locator("h1").innerText()).includes(expected),"Privacy title not localized");
+          assert((await page.locator(".legal-entry").count())>=10,"Translated privacy section missing");
+          assert(await page.locator('.legal-translation-note a[href="/de/datenschutz"]').count(),"German source link missing");
+          const imprint=await page.goto(base+"/"+l+"/impressum",{waitUntil:"domcontentloaded"});
+          assert.equal(imprint.status(),200);
+          assert((await page.locator(".legal-entry").count())>=6,"Translated legal notice incomplete");
+        }
+
         if(width===390){
           await page.goto(base+"/de",{waitUntil:"domcontentloaded"});
           const menu=page.locator(".menu-toggle");
