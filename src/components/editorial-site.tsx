@@ -30,7 +30,6 @@ export default function Site({lang}:{lang:Lang}){
  useEffect(()=>{if(!menu)return;const close=(event:KeyboardEvent)=>{if(event.key==="Escape")setMenu(false)};window.addEventListener("keydown",close);return ()=>window.removeEventListener("keydown",close)},[menu]);
  const [selected,setSelected]=useState<string|null>(null);
  const [faq,setFaq]=useState<number|null>(null);
- const [showPrices,setShowPrices]=useState(false);
  return <div className="v2" data-theme={theme} data-language={lang}>
  <a className="skip-link" href="#main-content">{lang==="de"?"Zum Inhalt":lang==="tr"?"İçeriğe geç":"Skip to content"}</a>
  <MotionDirector/>
@@ -41,7 +40,6 @@ export default function Site({lang}:{lang:Lang}){
  </div></header>
  <main id="main-content">
   <section className="editorial-hero">
-   <div className="hero-ambient ambient-1"/><div className="hero-ambient ambient-2"/>
    <div className="hero-meta"><span>{e.introLabel}</span><span>{e.based} · EN / DE / TR</span></div>
    <div className="hero-stage">
     <p className="hero-kicker" data-reveal>{e.heroTag}</p><div className="hero-nameplate" data-reveal><span>{e.person}</span><strong>Dr. Farzaneh Hähndel</strong><small>PhD · IHK</small></div>
@@ -65,13 +63,11 @@ export default function Site({lang}:{lang:Lang}){
    <div className="service-outro"><Link href={`/${lang}/services`} className="all-services-link">{lang==="de"?"ALLE LEISTUNGEN & PAKETE ↗":lang==="tr"?"TÜM HİZMETLER VE PAKETLER ↗":"ALL SERVICES & PACKAGES ↗"}</Link><span>{e.notSure}</span><a href="#connect">{e.figure} <ArrowUpRight size={18}/></a></div>
   </section>
 
-  <CareerFinder lang={lang}/><JourneyScroll lang={lang}/><section className="story" id="story"><div className="story-visual"><div className="story-visual-photo"/><div className="story-actual-portrait"><Image src="/assets/farzaneh/portrait.png" width={1061} height={1483} alt="Dr. Farzaneh Hähndel" /></div><div className="story-person-tag">DR. FARZANEH HÄHNDEL<br/><span>PhD · IHK CAREER COACH</span></div><span className="story-image-note">{e.foundation} / Dr. Farzaneh Hähndel</span></div><div className="story-copy"><span className="index-mark">{e.storyLabel}</span><h2 data-reveal>{e.storyA}<br/><i>{e.storyB}</i></h2><p className="story-name">Dr. Farzaneh Hähndel</p><p>{c.about}</p><div className="career-path" data-reveal-stagger>{c.timeline.map((t,i)=><div key={t} className="career-stop"><span>0{i+1}</span><p>{t}</p></div>)}</div><a className="story-cta" href="#connect">{e.conversation} <ArrowUpRight size={18}/></a></div></section>
-
-  <section className="proof"><div className="proof-inner"><span className="eyebrow-alt">{e.foundation}</span><div className="proof-line"><strong>PhD</strong><p>{e.scienceTraining}</p></div><div className="proof-line"><strong>IHK</strong><p>{e.ihk}</p></div><div className="proof-line"><strong>DE</strong><p>{e.based}</p></div></div></section>
+  <CareerFinder lang={lang}/><JourneyScroll lang={lang}/><section className="story" id="story"><div className="story-visual"><div className="story-visual-photo"/><div className="story-actual-portrait"><Image src="/assets/farzaneh/portrait.png" width={1061} height={1483} alt="Dr. Farzaneh Hähndel" /></div><div className="story-person-tag">DR. FARZANEH HÄHNDEL<br/><span>PhD · IHK CAREER COACH</span></div><span className="story-image-note">{e.foundation} / Dr. Farzaneh Hähndel</span></div><div className="story-copy"><span className="index-mark">{e.storyLabel}</span><h2 data-reveal>{e.storyA}<br/><i>{e.storyB}</i></h2><p className="story-name">Dr. Farzaneh Hähndel</p><p>{c.about}</p><a className="story-cta" href="#connect">{e.conversation} <ArrowUpRight size={18}/></a></div></section>
 
   <section className="process-v2"><div className="process-intro"><p className="index-mark">{e.processLabel}</p><h2 data-reveal>{e.processA}<br/><em>{e.processB}</em></h2></div><div className="process-steps" data-reveal-stagger>{c.steps.map(([n,title,desc])=><div key={n} className="process-step"><span>{n}</span><h3>{title}</h3><p>{desc}</p><ChevronRight size={28}/></div>)}</div></section>
 
-  <section className="investment" id="investment"><div className="investment-photo"><div data-image-parallax/></div><div className="investment-copy"><span className="index-mark">{e.investmentLabel}</span><h2 data-reveal>{e.investmentA}<br/><em>{e.investmentB}</em></h2><p>{e.investmentText}</p><Link href={`/${lang}/services`} className="service-page-cta">{lang==="de"?"Alle Leistungen, Pakete und Preise":lang==="tr"?"Tüm hizmetler, paketler ve fiyatlar":"All services, package details and pricing"} <ArrowUpRight size={19}/></Link><button type="button" className="price-reveal-button" onClick={()=>setShowPrices(!showPrices)} aria-expanded={showPrices}>{showPrices?e.hidePrices:e.showPrices} {showPrices?<Minus size={19}/>:<Plus size={19}/>}</button>{showPrices&&<div className="rate-list">{services.map(s=><div key={s.id}><span>{localizedService(s.id).name}</span><strong>{s.individual}</strong></div>)}<p className="rate-disclaimer">{e.ratesNote}</p></div>}<a className="story-cta" href="#connect">{e.discuss} <ArrowUpRight size={18}/></a></div></section>
+  <section className="investment" id="investment"><div className="investment-photo"><div data-image-parallax/></div><div className="investment-copy"><span className="index-mark">{e.investmentLabel}</span><h2 data-reveal>{e.investmentA}<br/><em>{e.investmentB}</em></h2><p>{e.investmentText}</p><Link href={`/${lang}/services`} className="service-page-cta">{lang==="de"?"Alle Leistungen, Pakete und Preise":lang==="tr"?"Tüm hizmetler, paketler ve fiyatlar":"All services, package details and pricing"} <ArrowUpRight size={19}/></Link><a className="story-cta" href="#connect">{e.discuss} <ArrowUpRight size={18}/></a></div></section>
 
   <section className="faq-v2" id="questions"><div className="faq-title"><span className="index-mark">{e.faqLabel}</span><h2 data-reveal>{e.faqA}<br/><i>{e.faqB}</i></h2><p>{e.faqText}</p></div><div className="faq-accordion">{c.faq.map(([q,a],i)=><div className="faq-row" key={q}><button type="button" onClick={()=>setFaq(faq===i?null:i)} aria-expanded={faq===i}><span>{String(i+1).padStart(2,"0")}</span><strong>{q}</strong>{faq===i?<Minus size={20}/>:<Plus size={20}/>}</button>{faq===i&&<p>{a}</p>}</div>)}</div></section>
 
