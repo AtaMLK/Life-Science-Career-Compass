@@ -11,6 +11,7 @@
 - LinkedIn: https://www.linkedin.com/in/fhaehndel
 - Sprachen: Englisch / Deutsch / Türkisch
 - Standort: Deutschland (vollständige Anschrift fehlt)
+- Betreiberangabe (vom Auftraggeber bestätigt): Geschäft ist offiziell registriert; beide mitgeteilten Bankkonten sind Geschäftskonten. Die Kontonummern werden **nicht** im Quellcode oder auf öffentlichen Seiten veröffentlicht. Genaue Rechtsform/Registernummer bleiben zu bestätigen.
 
 ## Pflicht- und Einzelfallangaben
 1. **Impressum (§ 5 DDG):** vollständige ladungsfähige Straßenanschrift samt Postleitzahl/Ort, tatsächliche Anbieterrechtsform/Einzelunternehmen oder freiberufliche Tätigkeit. Falls zutreffend: Registergericht und -nummer, Aufsichtsbehörde, berufsspezifische Angaben, USt-IdNr. oder Wirtschafts-Identifikationsnummer. **Nicht automatisch eine private Steuernummer veröffentlichen.**
@@ -18,7 +19,7 @@
 3. **Datenschutz (Art. 13 DSGVO):** tatsächliche Verantwortliche/Kontaktadresse, Hosting- und E-Mail-Vertragspartner, Speicherfristen, Empfänger, Drittlandübermittlungen, Verträge zur Auftragsverarbeitung und technische Leistungen dokumentieren. Angaben zu Vercel nicht ungeprüft für Wix übernehmen.
 4. **Analyse/Cookies (§ 25 TDDDG):** messen, ob Google Analytics oder weitere Drittanbieter-Skripte/Schriftarten tatsächlich geladen werden; nur erforderliche Technologien ohne Einwilligung. Einwilligungs-/Widerrufsweg im echten Browser testen.
 5. **Kontakt & Journey:** bestätigen, ob die Journey-Antworten nur im Browser bleiben oder per E-Mail/Backend gesendet werden und ob Daten gespeichert werden; danach Datenschutzhinweise aktualisieren.
-6. **Buchung und Zahlung:** festlegen, ob Termine nur per E-Mail angefragt werden oder ob online verbindliche Verträge/Zahlungen zustande kommen. Wenn Verbraucherverträge im Fernabsatz geschlossen werden, Widerrufsbelehrung, Musterformular und ggf. elektronische Widerrufsfunktion prüfen.
+6. **Buchung und Zahlung:** Auftraggeber möchte einzelne **Beratungsleistungen** online bezahlen lassen (keine Lehrgänge/Kurse). Wix Pay Links für Direktzahlung oder Wix Bookings für Beratung mit Terminwahl wählen; Online-Checkout erst nach echter Provideraktivierung und Prüfung der korrekten Servicepreise aktivieren. Widerrufsbelehrung, Musterformular, § 312j BGB und seit 19.06.2026 § 356a BGB (Widerrufsfunktion) mit qualifizierter Rechtsberatung prüfen.
 7. **Weitere Pflichten:** Angaben zur Verbraucherstreitbeilegung (VSBG) und Anwendungsbereich BFSG/Barrierefreiheit nach Unternehmensgröße und Angebot prüfen.
 8. **Referenzen und Zertifikate:** schriftliche Freigaben für Kundenzitate, Logos, Fotos und Zeugnisse klären; bei IHK-Zertifikat eine redigierte Veröffentlichungsversion ohne Geburtsdatum und Zertifikatsnummer verwenden. Ältere öffentliche Assets und Git-Historie beachten.
 9. **Preise / Leistungen:** angebotene Formate, Preisangaben, möglichen Steuerhinweis und Umfang schriftlich freigeben. Keine nicht belegten Testimonials oder Erfolgsstatistiken veröffentlichen.
