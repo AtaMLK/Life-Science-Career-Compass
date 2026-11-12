@@ -1,4 +1,6 @@
 /* Focused finishing pass. Existing colors and content order are intentionally unchanged. */
+/* Remove blurry ambient halo blobs without changing the base background color or page flow. */
+.v2 .editorial-hero .hero-ambient{display:none!important}
 .v2,.service-page{font-family:"Avenir Next","Segoe UI",Arial,Helvetica,sans-serif;font-kerning:normal;-webkit-font-smoothing:antialiased}
 .v2 h1,.v2 h2,.v2 h3,.service-page h1,.service-page h2,.service-page h3,.journey-heading h2,.journey-step h3{font-family:"Iowan Old Style","Baskerville","Palatino Linotype",Georgia,serif;letter-spacing:-.038em;font-weight:400;text-wrap:balance}
 .v2 p,.v2 li,.service-page p{letter-spacing:normal;line-height:1.68}
