@@ -4,6 +4,7 @@ import Link from "next/link";
 import Image from "next/image";
 import {ArrowUpRight,ArrowLeft,Check,ChevronDown,Compass} from "lucide-react";
 import {type Lang,services} from "@/lib/content";
+import {rememberLanguage} from "@/lib/geo-language";
 import ThemeToggle from "./theme-toggle";
 import ResourceViewer from "./resource-viewer";
 import {serviceTranslations} from "@/lib/editorial-locale";
@@ -30,7 +31,7 @@ export default function ServicesExperience({lang}:{lang:Lang}){
  const translate=(id:string)=>lang==="en"?services.find(s=>s.id===id)!:{...services.find(s=>s.id===id)!,...serviceTranslations[lang][id]};
  return <main id="main-content" className="service-page" data-theme={theme}>
  <a className="skip-link" href="#main-content">{lang==="de"?"Zum Inhalt":lang==="tr"?"İçeriğe geç":"Skip to content"}</a>
- <header className="service-page-nav"><Link href={`/${lang}`}><ArrowLeft size={18}/>{l.back}</Link><span>DR. FARZANEH HÄHNDEL <i>·</i> LIFE SCIENCE CAREER COMPASS</span><ThemeToggle theme={theme} lang={lang} onToggle={toggleTheme}/><nav aria-label="Language">{(["en","de","tr"] as const).map(x=><Link key={x} href={`/${x}/services/?service=${active}`} aria-current={lang===x?"page":undefined}>{x.toUpperCase()}</Link>)}</nav></header>
+ <header className="service-page-nav"><Link href={`/${lang}`}><ArrowLeft size={18}/>{l.back}</Link><span>DR. FARZANEH HÄHNDEL <i>·</i> LIFE SCIENCE CAREER COMPASS</span><ThemeToggle theme={theme} lang={lang} onToggle={toggleTheme}/><nav aria-label="Language">{(["en","de","tr"] as const).map(x=><Link key={x} href={`/${x}/services/?service=${active}`} aria-current={lang===x?"page":undefined} onClick={()=>rememberLanguage(x)}>{x.toUpperCase()}</Link>)}</nav></header>
  <section className="service-page-hero"><div><span className="index-mark">{l.eyebrow}</span><h1>{l.headline}</h1><p>{l.sub}</p><a href="#package-explorer">{l.pricing} <ArrowUpRight size={17}/></a></div><div className="service-cover"><Image src="/assets/farzaneh/interview-session.jpg" fill priority sizes="(max-width:760px) 100vw,45vw" alt={lang==="de"?"Persönliches Karrieregespräch":lang==="tr"?"Birebir kariyer danışmanlığı görüşmesi":"A one-to-one career coaching conversation"}/></div></section>
  <section className="support-mosaic"><div><span className="index-mark">{l.who}</span><h2>{l.intro}</h2></div><div className="support-chip-wall">{l.support.map((v,i)=><span key={v}><b>{String(i+1).padStart(2,"0")}</b>{v}</span>)}</div></section>
  <section className="expertise-panel"><div className="index-mark">{l.areas}</div><div className="expertise-marquee">{expertise[lang].map((area,i)=><span key={area}>{area}<i>{i%3===0?"✳":"·"}</i></span>)}</div></section>
