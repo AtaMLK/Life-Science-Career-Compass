@@ -1,3 +1,4 @@
+/* eslint-disable @typescript-eslint/no-require-imports -- Node-only CommonJS regression script */
 // Regression checks for location-based language defaults; no internet/server required.
 const assert=require("node:assert/strict");
 const fs=require("node:fs");
