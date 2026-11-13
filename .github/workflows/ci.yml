@@ -13,5 +13,27 @@ jobs:
           node-version: '22'
       - run: npm ci --no-audit --no-fund
       - run: npm run typecheck
+      - run: node scripts/verify-geo-language.cjs
+      - run: node scripts/verify-content.cjs
       - run: npm run lint
       - run: npm run build
+      - run: npx playwright install --with-deps chromium
+      - name: Start local preview for browser QA
+        run: |
+          npm run start -- --hostname 127.0.0.1 --port 3000 > /tmp/lscc-app.log 2>&1 &
+          for i in $(seq 1 60); do
+            if curl -fsS http://127.0.0.1:3000/de >/dev/null; then
+              exit 0
+            fi
+            sleep 1
+          done
+          cat /tmp/lscc-app.log
+          exit 1
+      - run: node scripts/verify-ux-harmony.cjs
+      - uses: actions/upload-artifact@v4
+        if: always()
+        with:
+          name: career-compass-responsive-qa
+          path: qa-harmony/
+          if-no-files-found: ignore
+

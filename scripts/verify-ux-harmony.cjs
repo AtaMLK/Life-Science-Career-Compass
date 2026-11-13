@@ -1,0 +1,152 @@
+/* eslint-disable @typescript-eslint/no-require-imports -- standalone Node/Playwright QA */
+const {chromium}=require("playwright");
+const fs=require("node:fs");
+const assert=require("node:assert/strict");
+const base=process.env.QA_BASE_URL || "http://127.0.0.1:3000";
+const folder="qa-harmony";
+fs.mkdirSync(folder,{recursive:true});
+
+function checkLocalLinks(list,baseUrl) {
+  const allowed=new Set(["/","/en","/de","/tr"]);
+  for(const lang of ["en","de","tr"]) {
+    for(const part of ["/services","/impressum","/datenschutz"])allowed.add("/"+lang+part);
+  }
+  for(const item of list) {
+    const href=item.href;
+    if(!href || /^(mailto:|tel:|https?:\/\/)/i.test(href) && !href.startsWith(baseUrl))continue;
+    const parsed=new URL(href,baseUrl);
+    if(parsed.origin!==new URL(baseUrl).origin)continue;
+    // Asset downloads are valid local links, not app routes.
+    if(/^\/assets\/[a-z0-9_\/-]+\.(?:png|jpe?g|webp|svg|pdf)$/i.test(parsed.pathname))continue;
+    assert(allowed.has(parsed.pathname.replace(/\/$/,"")||"/"),"Unexpected internal link route "+href);
+  }
+}
+
+async function auditPage(page,label,width,height) {
+  const measurements=await page.evaluate(()=>{
+    const rect=(selector)=>{const node=document.querySelector(selector);const r=node?.getBoundingClientRect();return r?{height:r.height,width:r.width,top:r.top}:null;};
+    const urls=Array.from(document.querySelectorAll("a[href]")).map(a=>({href:a.getAttribute("href"),name:a.textContent?.trim()}));
+    const brokenFragments=urls.filter(a=>a.href?.startsWith("#")&&!document.getElementById(a.href.slice(1))).map(x=>x.href);
+    const visible=document.body.innerText||"";
+    return {hero:rect(".editorial-hero"),nav:rect(".creative-nav"),viewport:innerHeight,documentWidth:document.documentElement.scrollWidth,clientWidth:document.documentElement.clientWidth,journeys:document.querySelectorAll(".journey-v3").length,timelines:document.querySelectorAll(".career-path").length,proofs:document.querySelectorAll(".proof").length,duplicatePriceLists:document.querySelectorAll(".price-reveal-button").length,shortSections:Object.fromEntries([".statement",".process-v2",".investment"].map(q=>[q,Math.round(document.querySelector(q)?.getBoundingClientRect().height||0)])),repeatedPortraits:document.querySelectorAll('img[src*="portrait.png"]').length,brokenFragments,links:urls,hasUnrenderedCode:/\{e\.showPrices\}/.test(visible)};
+  });
+  assert(measurements.documentWidth<=measurements.clientWidth+3,`Horizontal overflow on ${label} @${width} (doc ${measurements.documentWidth}, viewport ${measurements.clientWidth})`);
+  assert.equal(measurements.journeys,1,`Expected one GSAP Journey on ${label}`);
+  assert.equal(measurements.timelines,0,"Chronological story timeline duplicated");
+  assert.equal(measurements.proofs,0,"Credential proof block duplicated");
+  assert.equal(measurements.duplicatePriceLists,0,"Prices duplicated on home");
+  assert.deepEqual(measurements.brokenFragments,[],`Dead in-page fragment on ${label}`);
+  assert.equal(measurements.hasUnrenderedCode,false,"Accidental JSX text displayed");
+  assert.equal(measurements.repeatedPortraits,0,"Hero portrait repeated elsewhere");
+  if(width>=1024&&height>=760){for(const [selector,sectionHeight] of Object.entries(measurements.shortSections)){assert(sectionHeight<=height-measurements.nav.height+12,`Short section ${selector} too tall: ${sectionHeight}px at ${width}x${height}`)}}
+  assert(measurements.hero&&measurements.nav,"Missing hero/navigation on "+label);
+  if(width>=761&&height>=760){
+    const expected=height-measurements.nav.height;
+    assert(measurements.hero.height>=expected-3,`Hero not viewport-height: ${measurements.hero.height} vs ${expected}`);
+    assert(measurements.hero.height<=expected+4,`Hero unexpectedly taller than one viewport: ${measurements.hero.height} vs ${expected}`);
+  }else if(width<=760){
+    assert(measurements.hero.height>=height-measurements.nav.height-3,`Mobile hero shorter than viewport on ${label}`);
+  }
+  checkLocalLinks(measurements.links,base);
+  const filename=`${folder}/${label}-${width}x${height}-hero.png`;
+  await page.screenshot({path:filename});
+  console.log(JSON.stringify({label,viewport:`${width}x${height}`,heroHeight:Math.round(measurements.hero.height),navHeight:Math.round(measurements.nav.height),linkCount:measurements.links.length,overflow:Math.max(0,measurements.documentWidth-measurements.clientWidth),screenshot:filename}));
+}
+
+(async()=>{
+  const browser=await chromium.launch({headless:true,args:["--no-sandbox"]});
+  const pageErrors=[];
+  try {
+    const sets=[{width:1440,height:900},{width:1024,height:768},{width:390,height:844},{width:360,height:640}];
+    for(const {width,height} of sets){
+      const page=await browser.newPage({viewport:{width,height},deviceScaleFactor:1});
+      page.on("pageerror",error=>pageErrors.push(`${width}x${height}: ${error.message}`));
+      const response=await page.goto(base+"/de",{waitUntil:"domcontentloaded",timeout:30000});
+      assert.equal(response.status(),200,`DE home did not respond with 200`);
+      await page.waitForTimeout(420);
+      await auditPage(page,"de",width,height);
+      if(width===1440){
+        const routes=["/","/en","/de","/tr"];
+        for(const lang of ["en","de","tr"])for(const part of ["/services","/impressum","/datenschutz"])routes.push("/"+lang+part);
+        const assets=["/assets/farzaneh/portrait.png","/assets/farzaneh/certificate-public.png","/assets/farzaneh/portrait-office.png"];
+        for(const path of [...routes,...assets]){
+          const result=await page.request.get(base+path);
+          assert.equal(result.status(),200,`Broken route or media: ${path} responded ${result.status()}`);
+        }
+        console.log("Direct route/media checks passed: "+routes.length+" pages and "+assets.length+" public image paths");
+      }
+      if(width===1440||width===390){
+        for(const lang of ["en","tr"]){
+          const res=await page.goto(base+"/"+lang,{waitUntil:"domcontentloaded"});
+          assert.equal(res.status(),200);
+          await page.waitForTimeout(420);
+          await auditPage(page,lang,width,height);
+        }
+        const responseServices=await page.goto(base+"/de/services?service=interview",{waitUntil:"domcontentloaded"});
+        assert.equal(responseServices.status(),200,"Service detail route failed");
+        await page.waitForFunction(()=>document.querySelector("#service-hero-title")?.textContent?.includes("Vorstellungsgespräch"));
+        assert((await page.evaluate(()=>window.scrollY))<5,"Selected service must open from top");
+        assert((await page.locator(".service-hero-hook").innerText()).length>40,"Missing service-specific hook");
+        await page.waitForFunction(()=>document.querySelector(".package-option.active")?.getAttribute("data-service-id")==="interview",{timeout:5000});
+        const rates=page.locator(".package-choices button.package-rate");
+        assert.equal(await rates.count(),3,"Interview must offer three distinct session formats");
+        await rates.nth(1).click();
+        assert.equal(await rates.nth(1).getAttribute("aria-pressed"),"true","Small-group selection failed");
+        const fallback=await page.locator(".package-contact").getAttribute("href");
+        assert(fallback.startsWith("mailto:")||fallback.startsWith("https://"),"Missing payment/contact handoff");
+        if(fallback.startsWith("mailto:"))assert(decodeURIComponent(fallback).includes("Kleingruppe"),"Contact request must mention the chosen format");
+        const items=await page.locator("a[href]").evaluateAll(nodes=>nodes.map(a=>({href:a.getAttribute("href")})));
+        checkLocalLinks(items,base);
+        await page.screenshot({path:`${folder}/de-${width}x${height}-services.png`});
+        await page.locator('.package-option[data-service-id="academia"]').click();
+        await page.waitForFunction(()=>document.querySelector("#service-hero-title")?.textContent?.includes("Hochschulen"));
+        await page.waitForTimeout(600);
+        assert((await page.evaluate(()=>window.scrollY))<25,"Switching consultation should return to service introduction");
+        const pageWidth=await page.evaluate(()=>({doc:document.documentElement.scrollWidth,client:document.documentElement.clientWidth}));
+        assert(pageWidth.doc<=pageWidth.client+3,"Services horizontal overflow");
+        await page.screenshot({path:"qa-harmony/de-academic-service.png"});
+
+        for(const path of ["/de/impressum","/de/datenschutz"]){
+          const res=await page.goto(base+path,{waitUntil:"domcontentloaded"});
+          assert.equal(res.status(),200,`Legal page missing: ${path}`);
+        }
+        for(const [l,expected] of [["en","Privacy policy"],["tr","Gizlilik ve veri koruma politikası"]]){
+          const privacy=await page.goto(base+"/"+l+"/datenschutz",{waitUntil:"domcontentloaded"});
+          assert.equal(privacy.status(),200);
+          assert((await page.locator("h1").innerText()).includes(expected),"Privacy title not localized");
+          assert((await page.locator(".legal-entry").count())>=10,"Translated privacy section missing");
+          assert(await page.locator('.legal-translation-note a[href="/de/datenschutz"]').count(),"German source link missing");
+          const imprint=await page.goto(base+"/"+l+"/impressum",{waitUntil:"domcontentloaded"});
+          assert.equal(imprint.status(),200);
+          assert((await page.locator(".legal-entry").count())>=6,"Translated legal notice incomplete");
+        }
+
+        if(width===390){
+          await page.goto(base+"/de",{waitUntil:"domcontentloaded"});
+          const menu=page.locator(".menu-toggle");
+          await menu.click();
+          assert.equal(await menu.getAttribute("aria-expanded"),"true","Mobile navigation menu did not open");
+          await page.locator('#primary-navigation a[href="#services"]').click();
+          assert.equal(await menu.getAttribute("aria-expanded"),"false","Mobile menu did not close after navigation");
+          const accordion=page.locator(".service-entry button").first();
+          await accordion.click();
+          assert.equal(await accordion.getAttribute("aria-expanded"),"true","Service disclosure did not open");
+          const faq=page.locator(".faq-row button").first();
+          await faq.click();
+          assert.equal(await faq.getAttribute("aria-expanded"),"true","FAQ accordion did not open");
+          const choices=page.locator(".finder-choices button");
+          await choices.first().click();
+          await choices.nth(1).click();
+          await choices.first().click();
+          const recommendation=page.locator(".finder-recommendation a");
+          assert((await recommendation.getAttribute("href")).includes("/de/services?service=cv"),"Career Finder recommendation lost its selected service");
+          console.log("Mobile interactions passed: navigation, services disclosure, FAQ and Career Finder service link");
+        }
+
+      }
+      await page.close();
+    }
+    assert.deepEqual(pageErrors,[],"Runtime errors: "+pageErrors.join("; "));
+    console.log("UX HARMONY QA PASSED: locale routes, anchor links, service deep links, tier selection, hero viewport, duplicate section checks and responsive widths");
+  } finally {await browser.close();}
+})().catch(error=>{console.error(error.stack||error);process.exitCode=1;});

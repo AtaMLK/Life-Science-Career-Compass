@@ -3,7 +3,7 @@ import {useEffect,useRef,useState} from "react";
 import gsap from "gsap";
 import {ScrollTrigger} from "gsap/ScrollTrigger";
 import Image from "next/image";
-import ResourceViewer from "./resource-viewer";
+
 import type {Lang} from "@/lib/content";
 
 const items=[
@@ -36,11 +36,11 @@ export default function JourneyScroll({lang}:{lang:Lang}){
  return <section ref={root} className="journey-v3" id="journey"><div className="journey-heading"><span className="index-mark">03 / {text.k}</span><h2>{text.a}<br/><i>{text.b}</i></h2><p>{text.intro}</p></div>
  <div className="journey-grid-v3"><div className="journey-sticky"><div className="journey-frame">
  <div className="journey-number">{String(active+1).padStart(2,"0")} <span>/ 06</span></div>
- <div className="journey-portrait-wrap"><Image src="/assets/farzaneh/portrait.png" fill sizes="(max-width:760px) 80vw,40vw" alt="Dr. Farzaneh Hähndel" className="journey-person-photo"/></div>
+ <div className="journey-portrait-wrap"><Image src="/assets/farzaneh/portrait-office.png" fill sizes="(max-width:760px) 80vw,40vw" alt="Dr. Farzaneh Hähndel in a professional setting" className="journey-person-photo"/></div>
  <div className="journey-photo-caption"><strong>Dr. Farzaneh Hähndel</strong><span>PhD · IHK Job & Application Coach</span></div>
  <button type="button" className="certificate-open" onClick={()=>setDocumentOpen(true)}>{text.see}<span>↗</span></button>
  </div></div><div className="journey-steps"><div className="journey-progress-rail"><span className="journey-progress-fill"/></div>{items.map((item,i)=><article key={i} className={active===i?"journey-step active":"journey-step"}><div className="journey-serial">{String(i+1).padStart(2,"0")}</div><div className="journey-date">{item.year} · {item.place}</div><h3>{item[lang]}</h3><p>{lang==="en"?item.enText:lang==="de"?item.deText:item.trText}</p></article>)}</div></div>
- <div className="journey-archive"><ResourceViewer src="/assets/farzaneh/career-journey.png" label={text.full} lang={lang}/></div>
+ 
  <dialog ref={dialog} className="certificate-lightbox" aria-label={text.see} onCancel={()=>setDocumentOpen(false)} onClick={event=>{if(event.target===event.currentTarget)setDocumentOpen(false)}}><div className="certificate-modal" onClick={event=>event.stopPropagation()}><button autoFocus type="button" onClick={()=>setDocumentOpen(false)}>{text.close} ✕</button><Image src="/assets/farzaneh/certificate-public.png" width={800} height={1150} sizes="(max-width:760px) 90vw,650px" alt="IHK Job und Bewerbungscoaching certificate of Dr. Farzaneh Hähndel"/></div></dialog>
  </section>;
 }
