@@ -14,6 +14,7 @@ jobs:
       - run: npm ci --no-audit --no-fund
       - run: npm run typecheck
       - run: node scripts/verify-geo-language.cjs
+      - run: node scripts/verify-content.cjs
       - run: npm run lint
       - run: npm run build
       - run: npx playwright install --with-deps chromium
