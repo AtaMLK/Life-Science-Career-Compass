@@ -27,10 +27,14 @@ export default function MotionDirector(){
     const progress=document.querySelector<HTMLElement>(".reading-progress");
     if(progress)gsap.fromTo(progress,{scaleX:0,transformOrigin:"left"},{scaleX:1,ease:"none",scrollTrigger:{trigger:document.body,start:"top top",end:"bottom bottom",scrub:true}});
   });
+  // Refresh after the page's fonts and images settle. Observing the entire
+  // animated main element can create a refresh/layout feedback loop and
+  // interfere with click handling on lower-page interactive sections.
   let refreshFrame=0;
-  const observer=new ResizeObserver(()=>{cancelAnimationFrame(refreshFrame);refreshFrame=requestAnimationFrame(()=>ScrollTrigger.refresh())});
-  const main=document.getElementById("main-content");if(main)observer.observe(main);
-  return ()=>{observer.disconnect();cancelAnimationFrame(refreshFrame);ctx.revert()};
+  const refresh=()=>{cancelAnimationFrame(refreshFrame);refreshFrame=requestAnimationFrame(()=>ScrollTrigger.refresh())};
+  window.addEventListener("load",refresh,{once:true});
+  document.fonts.ready.then(refresh).catch(()=>{});
+  return ()=>{window.removeEventListener("load",refresh);cancelAnimationFrame(refreshFrame);ctx.revert()};
  },[]);
  return <span className="reading-progress" aria-hidden="true"/>;
 }
