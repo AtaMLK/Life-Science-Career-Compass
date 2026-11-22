@@ -2,7 +2,7 @@
 import { useEffect, useState } from "react";
 import Link from "next/link";
 import Image from "next/image";
-import { ArrowUpRight, Plus, Menu, X, Compass, Dna, MoveDownRight, Mail, ChevronRight } from "lucide-react";
+import { ArrowUpRight, Plus, Minus, Menu, X, Compass, Dna, MoveDownRight, Mail, ChevronRight } from "lucide-react";
 import { copy, services, type Lang } from "@/lib/content";
 import ThemeToggle from "./theme-toggle";
 import MotionDirector from "./motion-director";
