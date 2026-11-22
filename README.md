@@ -32,8 +32,8 @@ Set `NEXT_PUBLIC_SITE_URL` to the production origin (for example, `https://examp
 - CI workflow for typecheck, lint and build.
 
 ## Important before publishing
-1. **Add the actual portrait and confirmed brand logo.** The current hero is an original CSS-based scientific compass placeholder; the biography panel is an FH monogram. Do not present stock photos as Dr. Hähndel.
-2. **Review translations.** Service names and descriptions currently remain English inside all languages; the major UI copy is localized. Translate the catalog before claiming full localization.
+1. The actual Farzaneh portraits and public, birth-date-redacted certificate are included.
+2. Review the localized English, German and Turkish copy before publication.
 3. **Confirm credentials, employers and pricing** against source documents and obtain any permissions needed for certification or employer logo display.
 4. **Add accurate German Imprint (Impressum), privacy notice (Datenschutzerklärung), and relevant contact/legal business details** before launching ads. The current footer explicitly indicates these are pending.
 5. **Integrate a real booking/contact workflow** and backend if needed. Email links alone cannot produce measured completed bookings.
@@ -50,3 +50,28 @@ Set `NEXT_PUBLIC_SITE_URL` to the production origin (for example, `https://examp
 - `src/app/sitemap.ts`, `src/app/robots.ts`: crawl infrastructure.
 
 No account creation or testimonials/success statistics have been invented.
+
+
+## Editorial V3 (branch `design/editorial-motion-v2`)
+- Homepage with an original, six-stage GSAP ScrollTrigger career journey, a pinned portrait, active step indicator, progress rail and click-to-expand IHK certificate.
+- Dedicated localized `/[lang]/services` page with support fields, areas of expertise, interactive package comparison and enquiry links.
+- Navigation between homepage and services; English, German and Turkish content for both.
+- Data taken from the client-provided English brochure and uploaded professional portrait, IHK certificate, timeline, career consulting and package chart.
+- All five images are **required local assets**. Download the separate image package and extract its `public/` directory into the repository root:
+  `public/assets/farzaneh/{portrait,certificate,journey,consulting-overview,packages-table}.png`
+  The source repository contains code, not these private binary files. Next.js builds without them but pages will show broken images until copied.
+- The consultation action currently opens an email draft; it is not a completed calendar booking.
+- The prices and certificate details require owner approval before production publication.
+- Scroll-triggered effects respect `prefers-reduced-motion`; static content remains readable without JS animation.
+
+## Preserved GSAP edition — content branch
+
+Branch `feature/gsap-original-content` starts from the original GSAP editorial V3.1 commit `ffd18d1`, preserving its layout, typography, color palette and existing scroll animations. The only added UI is a localized, three-question Career Compass section with no account requirement or data persistence. Existing localized services, pricing explorer, journey, person schema, hreflang and sitemap remain.
+
+### Included visual assets and verification
+
+The real dark-background portrait and office portrait are committed in public/assets/farzaneh, together with a flattened public IHK certificate whose birth-date line is covered. A separate image ZIP is no longer required for these assets.
+
+See QA-REPORT.md for the exact source files, unavailable attachments, verification results and remaining operational limits. Missing brochure-image download links were removed; the translated HTML service descriptions and prices remain available.
+
+To run the browser checks, start the production server on port 3011, then run node scripts/verify-gsap.cjs and node scripts/verify-navigation.cjs. The checks use Microsoft Edge by default. Screenshots and results are saved in qa/.

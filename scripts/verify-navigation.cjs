@@ -1,0 +1,14 @@
+const base=process.env.QA_BASE_URL||'http://localhost:3011';
+/* eslint-disable @typescript-eslint/no-require-imports */
+const {chromium}=require(process.env.PLAYWRIGHT_MODULE||'playwright');const assert=require('node:assert/strict');
+(async()=>{const browser=await chromium.launch({channel:'msedge',headless:true});const page=await browser.newPage({reducedMotion:'reduce'});
+for(const width of [320,768,1024]){await page.setViewportSize({width,height:900});for(const path of ['/en','/en/services']){await page.goto(base+path);assert.ok(await page.evaluate(()=>document.documentElement.scrollWidth<=innerWidth+2),path+' overflow '+width);}}
+await page.setViewportSize({width:390,height:844});await page.goto(base+'/en');assert.ok(await page.locator('[data-reveal]').first().evaluate(el=>Number(getComputedStyle(el).opacity)===1));
+await page.keyboard.press('Tab');assert.equal(await page.locator(':focus').getAttribute('href'),'#main-content');
+await page.locator('.menu-toggle').click();await page.locator('.locale-options a').nth(1).click();await page.waitForURL('**/de');await page.waitForFunction(()=>document.documentElement.lang==='de');assert.equal(await page.locator('html').getAttribute('lang'),'de');
+await page.locator('.menu-toggle').click();await page.locator('.creative-links>a').nth(1).click();await page.waitForURL('**/de/services');await page.locator('.service-page-nav nav a').nth(2).click();await page.waitForURL('**/tr/services');await page.waitForFunction(()=>document.documentElement.lang==='tr');assert.equal(await page.locator('html').getAttribute('lang'),'tr');
+await page.locator('.service-page-nav>a').click();await page.waitForURL('**/tr');
+for(const path of ['/en','/de','/tr','/en/services','/de/services','/tr/services']){await page.goto(base+path);const r=await page.request.get(base+path);assert.equal(r.headers()['x-content-type-options'],'nosniff');assert.equal(r.headers()['x-frame-options'],'DENY');assert.equal(await page.locator('h1').count(),1);const schema=JSON.parse(await page.locator('script[type="application/ld+json"]').innerText());assert.ok(schema['@graph'].length>=3);assert.ok(!(await page.locator('body').innerText()).includes('{e.'));for(const a of await page.locator('a').all()){const href=await a.getAttribute('href');assert.ok(href&&href!=='#','empty href');if(href.startsWith('/assets/'))assert.equal((await page.request.get(base+href)).status(),200);}}
+for(const name of ['portrait.png','portrait-office.png','certificate-public.png'])assert.equal((await page.request.get(base+'/assets/farzaneh/'+name)).status(),200);
+assert.equal((await page.request.get(base+'/fr')).status(),404);
+await browser.close();console.log('PASS reduced motion, keyboard, language navigation, 320/768/1024 layouts, headers, schema, assets and 404');})().catch(e=>{console.error(e);process.exit(1)});
