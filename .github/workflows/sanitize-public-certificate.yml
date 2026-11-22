@@ -1,0 +1,37 @@
+name: Sanitize public certificate image
+
+on:
+  push:
+    branches: [main]
+    paths:
+      - ".github/workflows/sanitize-public-certificate.yml"
+  workflow_dispatch:
+
+permissions:
+  contents: write
+
+jobs:
+  remove-private-certificate-fields:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          persist-credentials: true
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.12"
+      - name: Install image library
+        run: python -m pip install --disable-pip-version-check Pillow==11.3.0
+      - name: Permanently remove private fields from image
+        run: python scripts/sanitize-certificate.py
+      - name: Commit redacted PNG
+        run: |
+          git config user.name "github-actions[bot]"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          git add public/assets/farzaneh/certificate-public.png
+          if git diff --staged --quiet; then
+            echo "Certificate already sanitized."
+          else
+            git commit -m "Redact private birth date from public IHK certificate PNG"
+            git push origin HEAD:main
+          fi
