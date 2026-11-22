@@ -98,3 +98,12 @@
 .v2 .journey-step h3,.v2 .journey-step p,.v2 .process-intro h2{overflow-wrap:anywhere;hyphens:auto}
 @media(max-width:480px){.v2 main h1,.v2 main h2,.v2 main h3,.service-page h1,.service-page h2{overflow-wrap:anywhere;hyphens:auto}.v2 .story>*,.v2 .chapter>*{min-width:0}}
 .support-mosaic>*{min-width:0}.support-chip-wall{grid-template-columns:repeat(2,minmax(0,1fr))}.support-chip-wall span{min-width:0;overflow-wrap:anywhere}
+
+/* Keep certificate dialog fully hidden until opened, above scroll animations. */
+.certificate-lightbox:not([open]){display:none!important}
+.certificate-lightbox[open]{display:grid;place-items:center;max-width:none;max-height:none;width:100vw;height:100dvh;margin:0;padding:clamp(10px,3vw,26px);border:0;color:#15282d;box-sizing:border-box}
+.certificate-lightbox::backdrop{background:rgba(8,17,21,.84)}
+.certificate-modal{width:min(760px,100%);max-height:calc(100dvh - 32px);overflow:auto;overscroll-behavior:contain;border-radius:10px;box-shadow:0 18px 60px #0008}
+.certificate-modal img{display:block;width:100%;height:auto;object-fit:contain}
+.certificate-modal>button:focus-visible{outline:3px solid #167f8b;outline-offset:2px}
+@media(max-width:760px){.certificate-lightbox[open]{padding:10px}.certificate-modal{max-height:calc(100dvh - 20px);padding:10px}}
