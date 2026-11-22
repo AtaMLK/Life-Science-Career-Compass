@@ -1,4 +1,6 @@
 import Analytics from "@/components/analytics";
+import FloatingContact from "@/components/floating-contact";
+import "./floating-contact.css";
 import {headers} from "next/headers";
 import type { Metadata } from "next";
 import "./globals.css";
@@ -13,5 +15,5 @@ export const metadata: Metadata = {
 };
 
 export default async function RootLayout({ children }: Readonly<{ children: React.ReactNode }>) {
-  return <html lang={(await headers()).get("x-site-language")||"en"}><body>{children}<Analytics/></body></html>;
+  return <html lang={(await headers()).get("x-site-language")||"en"}><body>{children}<FloatingContact/><Analytics/></body></html>;
 }
