@@ -88,3 +88,15 @@
 @media(max-width:1100px){.v2 .theme-toggle{margin-left:auto}}
 @media(max-width:760px){.theme-toggle{flex-basis:71px;width:71px}.theme-toggle-track{width:63px}.theme-toggle[data-mode="dark"] .theme-toggle-orb{transform:translateX(34px) rotate(360deg)}.service-page-nav .theme-toggle{margin-left:auto}}
 @media(prefers-reduced-motion:reduce){.theme-toggle *{transition:none!important}}
+
+/* Interaction safety: decorative scroll layers must never cover real controls. */
+.editorial-finder{position:relative;z-index:2;isolation:isolate}
+.editorial-finder .finder-surface{position:relative;z-index:3;pointer-events:auto}
+.editorial-finder .finder-surface button,.editorial-finder .finder-recommendation a{position:relative;z-index:4;pointer-events:auto;cursor:pointer}
+.editorial-finder .finder-progress{pointer-events:none}
+.journey-v3{z-index:1}
+.journey-portrait-wrap,.journey-number,.journey-photo-caption,.journey-progress-rail{pointer-events:none}
+.journey-frame .certificate-open{position:relative;z-index:5;pointer-events:auto;cursor:pointer;text-decoration:none}
+.certificate-lightbox:not([open]),.resource-dialog:not([open]){display:none!important;visibility:hidden;pointer-events:none}
+.certificate-lightbox[open],.resource-dialog[open]{pointer-events:auto}
+.reading-progress{pointer-events:none}
