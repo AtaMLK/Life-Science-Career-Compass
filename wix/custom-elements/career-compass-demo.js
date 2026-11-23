@@ -430,6 +430,16 @@ article.hero-original{display:block;position:relative;overflow:hidden;min-height
  .finale-original .details{flex-direction:column}
 }
 
+
+/* Abstract compass illustration: no face duplication or document used as an image. */
+.journey-original .portraitCard .journey-art{position:absolute;inset:0 0 105px;display:flex;align-items:center;justify-content:center;overflow:hidden;background:radial-gradient(circle at 28% 20%,#d9f4df 0%,transparent 48%),linear-gradient(145deg,#aedbd6,#649c9b)}
+.journey-original .compass-ring{width:min(66%,310px);aspect-ratio:1;position:relative;border:2px solid #1a545a99;border-radius:50%;box-shadow:0 0 0 18px #eef3e322,0 0 0 54px #f8f6e90f;transform:rotate(-14deg)}
+.journey-original .compass-ring:before,.journey-original .compass-ring:after{content:"";position:absolute;left:50%;top:-16%;width:1px;height:132%;background:#10444a55}
+.journey-original .compass-ring:after{transform:rotate(90deg)}
+.journey-original .compass-needle{position:absolute;left:50%;top:50%;width:36%;height:36%;border-left:4px solid #174a50;border-top:4px solid #174a50;transform:translate(-22%,-70%) rotate(45deg);z-index:1}
+.journey-original .compass-star{position:absolute;left:50%;top:50%;transform:translate(-50%,-50%) rotate(14deg);font:400 52px Georgia,serif;color:#fcf8e7;z-index:2;text-shadow:0 3px 25px #16424a55}
+.journey-original .journey-art-label{position:absolute;bottom:18px;left:14px;right:14px;text-align:center;font-size:9px;font-weight:800;letter-spacing:.13em;color:#17434a;z-index:3}
+
 @media(prefers-reduced-motion:reduce){*,*:before{scroll-behavior:auto!important;animation:none!important;transition:none!important}}
 `;
 
@@ -579,13 +589,17 @@ class CareerCompassDemo extends HTMLElement {
     journey.append(journeyHeading);
     const journeyLayout=this.el("div","layout"),journeyCard=this.el("div","portraitCard");
     const counter=this.el("div","count");counter.append(document.createTextNode("01 "),this.el("span",null,"/ 06"));
-    const journeyPhoto=this.el("img");journeyPhoto.src="https://life-science-career-compass.vercel.app/assets/farzaneh/career-journey.png";journeyPhoto.loading="lazy";journeyPhoto.alt="Illustrated academic and professional journey of Dr. Farzaneh Hähndel";
+    const journeyVisual=this.el("div","journey-art");
+    journeyVisual.setAttribute("aria-hidden","true");
+    const ring=this.el("div","compass-ring"),needle=this.el("div","compass-needle"),star=this.el("span","compass-star","✳");
+    ring.append(needle,star);journeyVisual.append(ring);
+    journeyVisual.append(this.el("div","journey-art-label","SCIENCE  ·  RESEARCH  ·  INDUSTRY  ·  COACHING"));
     const caption=this.el("div","caption");caption.append(this.el("strong",null,"Dr. Farzaneh Hähndel"),this.el("span",null,"PhD · IHK Job & Application Coach"));
     const cert=this.el("a","certificate",bio.certificate+" ↗");
     // Use only the public, date-of-birth-redacted copy; opens in a new browser tab.
     cert.href="https://life-science-career-compass.vercel.app/assets/farzaneh/certificate-public.png";
     cert.target="_blank";cert.rel="noopener noreferrer";
-    journeyCard.append(counter,journeyPhoto,caption,cert);
+    journeyCard.append(counter,journeyVisual,caption,cert);
     const steps=this.el("div","steps");
     careerJourney.forEach((item,index)=>{
       const step=this.el("article","step");
