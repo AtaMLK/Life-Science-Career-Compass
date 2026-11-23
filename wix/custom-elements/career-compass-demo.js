@@ -81,6 +81,12 @@ const editorialHero={
  tr:{intro:"BİREYSEL KARİYER KOÇLUĞU",based:"Almanya",tag:"KARİYERİNİZ BİR KEŞİF YOLCULUĞU.",person:"Koçunuzla tanışın",a:"Bilim sizi",b:"buraya getirdi.",c:"Sırada ne var?",aside:"Yeni bir sayfaya hazır meraklı zihinler için.",action:"PUSULAYI TAKİP EDİN",credential:"DR. FARZANEH HÄHNDEL · PhD / IHK KARİYER KOÇU",hint:"KEŞFETMEYE DEVAM"}
 };
 
+const editorialStatement={
+ en:{label:"NOT JUST A JOB SEARCH.",a:"Your expertise is",b:"scientific.",c:"Your next move is",d:"personal.",foot:"THE SCIENCE OF MOVING FORWARD",description:"Your scientific background is the starting point. Find a career direction that reflects your strengths, goals and ambitions."},
+ de:{label:"MEHR ALS NUR JOBSUCHE.",a:"Ihre Expertise ist",b:"wissenschaftlich.",c:"Ihr nächster Schritt ist",d:"persönlich.",foot:"WISSENSCHAFT UND KARRIERE IM EINKLANG",description:"Ihr wissenschaftlicher Hintergrund ist der Ausgangspunkt. Finden Sie einen Karriereweg, der zu Ihren Stärken, Zielen und Wünschen passt."},
+ tr:{label:"SADECE İŞ ARAMAK DEĞİL.",a:"Uzmanlığınız",b:"bilimsel.",c:"Sonraki adımınız",d:"size özel.",foot:"BİLİMDEN KARİYERE",description:"Bilimsel geçmişiniz başlangıç noktanız. Güçlü yönlerinize, hedeflerinize ve beklentilerinize uygun bir kariyer yönü belirleyin."}
+};
+
 const styles = `
 :host { display:block; width:100%; color:#14272b; font-family:Arial,Helvetica,sans-serif; }
 * {box-sizing:border-box}
@@ -154,6 +160,20 @@ article.hero-original{display:block;position:relative;overflow:hidden;min-height
 }
 @media(max-width:400px){.hero-original h1{font-size:46px}.hero-original .portrait{width:78%}.hero-original .stage{min-height:765px}}
 
+
+/* Vercel section 2: editorial statement */
+.statement-original{background:#121c23;color:#f6f3eb;padding:clamp(85px,10vw,145px) 7% 80px;min-height:520px}
+.statement-original .inner{max-width:1280px;margin:auto}
+.statement-original .eyebrow{font-size:11px;letter-spacing:.16em;font-weight:800;color:#abdace}
+.statement-original h2{font-family:Georgia,"Times New Roman",serif;letter-spacing:-.065em;font-size:clamp(49px,7.5vw,108px);line-height:1.08;margin:42px 0;max-width:1200px;font-weight:400}
+.statement-original h2 span{color:#9fd7cc}
+.statement-original h2 em{color:#e4aa84;font-weight:400}
+.statement-original p{max-width:610px;margin-left:auto;color:#cad2cd;font-size:17px;line-height:1.75}
+.statement-original .rule{height:1px;background:#a1b1ab;margin:75px 0 23px;transform-origin:left;transition:transform 1s ease}
+.statement-original .foot{display:flex;justify-content:space-between;align-items:center;gap:20px;font-size:10px;letter-spacing:.14em}
+.statement-original .symbol{font-size:37px;color:#abdace;line-height:1}
+@media(max-width:700px){.statement-original{min-height:0;padding:85px 7% 55px}.statement-original h2{font-size:clamp(42px,9.5vw,69px);margin:32px 0}.statement-original p{font-size:14px}.statement-original .rule{margin:55px 0 20px}}
+
 @media(prefers-reduced-motion:reduce){*,*:before{scroll-behavior:auto!important;animation:none!important;transition:none!important}}
 `;
 
@@ -217,6 +237,19 @@ class CareerCompassDemo extends HTMLElement {
     const bottom=this.el("div","bottom");
     bottom.append(this.el("span",null,h.credential),this.el("span",null,h.hint+" ↓"));
     hero.append(bottom);root.append(hero);
+    const st=editorialStatement[this.lang], statement=this.el("section","statement-original");
+    const inside=this.el("div","inner");
+    inside.append(this.el("div","eyebrow",st.label));
+    const big=this.el("h2");
+    big.append(document.createTextNode(st.a+" "));
+    big.append(this.el("span",null,st.b),this.el("br"));
+    big.append(document.createTextNode(st.c+" "));
+    big.append(this.el("em",null,st.d));
+    inside.append(big,this.el("p",null,st.description),this.el("div","rule"));
+    const statementFoot=this.el("div","foot");
+    statementFoot.append(this.el("span",null,st.foot),this.el("span","symbol","✳"));
+    inside.append(statementFoot);statement.append(inside);
+    root.append(statement);
     const quiz=this.el("section","quiz"),surface=this.el("div","surface");
     quiz.append(surface);root.append(quiz);
     const top=this.el("div","top");
