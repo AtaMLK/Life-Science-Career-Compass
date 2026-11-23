@@ -42,7 +42,19 @@ class CareerCompassServices extends HTMLElement{
   const parentPageUrl=document.referrer||window.location.href;
   const parentOrigin=new URL(parentPageUrl,window.location.href).origin;
   const homeLink=new URL(homeBase,parentOrigin);homeLink.searchParams.set("lang",this.lang);
-  back.href=homeLink.toString();back.target="_top";header.append(back);
+  back.href=homeLink.toString();back.target="_top";
+  back.addEventListener("click",(event)=>{
+    if(window.self!==window.top){
+      event.preventDefault();
+      const msg={
+        en:"Use Wix Editor → Pages & Menu → Home to preview the Home page. The public link isn't available yet.",
+        de:"Öffnen Sie die Startseite über Wix Editor → Seiten & Menü → Home. Der öffentliche Link ist noch nicht verfügbar.",
+        tr:"Ana sayfayı Wix Editor → Pages & Menu → Home üzerinden önizleyin. Genel bağlantı henüz aktif değil."
+      }[this.lang];
+      window.alert(msg);
+    }
+  });
+  header.append(back);
   const nav=this.node("nav");nav.setAttribute("aria-label","Languages");
   ["en","de","tr"].forEach(lang=>{const btn=this.node("button",null,lang.toUpperCase());btn.type="button";btn.setAttribute("aria-pressed",String(lang===this.lang));btn.addEventListener("click",()=>{this.lang=lang;this.render()});nav.append(btn)});
   header.append(nav);root.append(header);
