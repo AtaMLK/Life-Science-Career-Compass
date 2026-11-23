@@ -38,7 +38,10 @@ class CareerCompassServices extends HTMLElement{
   const sheet=this.node("style");sheet.textContent=style;root.append(sheet);
   const header=this.node("header","header"),back=this.node("a",null,u.back);
   const homeBase=this.getAttribute("home-url")||"/";
-  const homeLink=new URL(homeBase,window.location.origin);homeLink.searchParams.set("lang",this.lang);
+  // Preview may run the component in an iframe with an unrelated origin.
+  const parentPageUrl=document.referrer||window.location.href;
+  const parentOrigin=new URL(parentPageUrl,window.location.href).origin;
+  const homeLink=new URL(homeBase,parentOrigin);homeLink.searchParams.set("lang",this.lang);
   back.href=homeLink.toString();back.target="_top";header.append(back);
   const nav=this.node("nav");nav.setAttribute("aria-label","Languages");
   ["en","de","tr"].forEach(lang=>{const btn=this.node("button",null,lang.toUpperCase());btn.type="button";btn.setAttribute("aria-pressed",String(lang===this.lang));btn.addEventListener("click",()=>{this.lang=lang;this.render()});nav.append(btn)});
