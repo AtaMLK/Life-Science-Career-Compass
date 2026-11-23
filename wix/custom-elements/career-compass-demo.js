@@ -310,6 +310,16 @@ article.hero-original{display:block;position:relative;overflow:hidden;min-height
  .journey-original .step .number{top:18px}
 }
 
+/* Journey image uses the existing illustrated timeline rather than reusing the coach portrait.
+   A solid caption panel protects text contrast on all images and at all breakpoints. */
+.journey-original .portraitCard{background:#a6d7d1}
+.journey-original .portraitCard img{inset:0 0 105px;height:calc(100% - 105px);width:100%;object-fit:contain;object-position:center;background:#f3efe5;padding:16px}
+.journey-original .portraitCard .caption{bottom:76px;left:0;right:0;padding:13px 20px 10px;background:#12363d;color:#fff;text-shadow:none;z-index:2;gap:4px}
+.journey-original .portraitCard .caption strong{font-size:clamp(19px,2.1vw,27px);line-height:1.2;color:#fff}
+.journey-original .portraitCard .caption span{color:#deeee9;line-height:1.4;font-size:10px}
+.journey-original .certificate{bottom:14px;z-index:3}
+@media(max-width:700px){.journey-original .portraitCard img{padding:10px}.journey-original .portraitCard .caption{bottom:72px;padding:10px 15px}.journey-original .portraitCard .caption strong{font-size:20px}}
+
 @media(prefers-reduced-motion:reduce){*,*:before{scroll-behavior:auto!important;animation:none!important;transition:none!important}}
 `;
 
@@ -459,7 +469,7 @@ class CareerCompassDemo extends HTMLElement {
     journey.append(journeyHeading);
     const journeyLayout=this.el("div","layout"),journeyCard=this.el("div","portraitCard");
     const counter=this.el("div","count");counter.append(document.createTextNode("01 "),this.el("span",null,"/ 06"));
-    const journeyPhoto=this.el("img");journeyPhoto.src="https://life-science-career-compass.vercel.app/assets/farzaneh/portrait.png";journeyPhoto.loading="lazy";journeyPhoto.alt="Dr. Farzaneh Hähndel";
+    const journeyPhoto=this.el("img");journeyPhoto.src="https://life-science-career-compass.vercel.app/assets/farzaneh/career-journey.png";journeyPhoto.loading="lazy";journeyPhoto.alt="Illustrated academic and professional journey of Dr. Farzaneh Hähndel";
     const caption=this.el("div","caption");caption.append(this.el("strong",null,"Dr. Farzaneh Hähndel"),this.el("span",null,"PhD · IHK Job & Application Coach"));
     const cert=this.el("a","certificate",bio.certificate+" ↗");
     // Use only the public, date-of-birth-redacted copy; opens in a new browser tab.
