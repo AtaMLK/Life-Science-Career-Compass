@@ -126,6 +126,61 @@ const biographyLocale = {
  tr:{label:"03 / PUSULANIN ARDINDA",a:"Danışmanlığın arkasındaki",b:"bilim insanını tanıyın.",story:"Ben Dr. Farzaneh Hähndel. Bilimsel araştırma geçmişimi, Jena'daki doktora eğitimimi, akademi ve endüstri deneyimimi ve IHK iş ve başvuru koçluğu eğitimimi danışmanlık hizmetlerimde bir araya getiriyorum.",talk:"GÖRÜŞME BAŞLAT",foundation:"TEMELİMİZ",science:"Bilimsel eğitim",ihk:"İş ve başvuru koçluğu",based:"Almanya'da yerleşik",journey:"KARİYER YOLCULUĞU",journeyA:"Deneyim bir unvan değil.",journeyB:"Bir yolculuktur.",journeyIntro:"Eğitim, araştırma, endüstri ve kariyer danışmanlığı boyunca altı önemli adım.",certificate:"IHK sertifikasını görüntüle",archive:"Kariyer yolculuğu görselini aç"}
 };
 
+
+const nextSectionsCopy={
+ en:{
+  processLabel:"04 / HOW IT WORKS",processA:"Good guidance.",processB:"No guesswork.",steps:[
+   ["01","Find your focus","Choose the support that matches your situation."],
+   ["02","Talk through your goals","Share your background, questions and career ambitions."],
+   ["03","Move forward with a plan","Get targeted guidance and actionable next steps."]
+  ],
+  investmentLabel:"05 / YOUR INVESTMENT",investmentA:"Support should feel",investmentB:"clear, not complicated.",investmentText:"Choose a focused session for a particular challenge, or a longer coaching journey. We can discuss what you actually need before you commit.",packages:"All services, package details and pricing",discuss:"Discuss the right support",
+  faqLabel:"06 / GOOD TO KNOW",faqA:"Wondering",faqB:"about something?",faqText:"Here are a few things worth knowing before we talk.",faq:[
+   ["Who is this coaching for?","Life science graduates, researchers, PhD holders and professionals looking at opportunities in Germany's academia and industry."],
+   ["Can I get support while living outside Germany?","Consultations can be arranged online. Your application options depend on your qualifications and each employer's requirements."],
+   ["What languages are consultations available in?","English, German and Turkish."],
+   ["Can you help with a German-standard CV?","Yes. You can choose a CV review and optimization or creation from scratch in English or German."],
+   ["Is a job or an interview guaranteed?","No. Coaching supports your preparation and decision-making but cannot guarantee employment or admissions."],
+   ["Do you offer individual and group sessions?","Yes. Several services have 1:1, small-group and group options, subject to scheduling."]
+  ],
+  finalLabel:"READY FOR WHAT'S NEXT?",finalA:"Your next chapter",finalB:"starts with",finalC:"a conversation.",letsTalk:"LET'S TALK",footer:"DESIGNED FOR CURIOUS MINDS."
+ },
+ de:{
+  processLabel:"04 / ABLAUF",processA:"Klare Unterstützung.",processB:"Konkrete Schritte.",steps:[
+   ["01","Schwerpunkt wählen","Wählen Sie die passende Unterstützung."],
+   ["02","Ziele besprechen","Teilen Sie Ihren Hintergrund und Ihre Fragen."],
+   ["03","Plan entwickeln","Erhalten Sie praktische nächste Schritte."]
+  ],
+  investmentLabel:"05 / IHRE INVESTITION",investmentA:"Beratung sollte",investmentB:"klar und einfach sein.",investmentText:"Wählen Sie gezielte Einzelleistungen oder ein längeres Coachingprogramm. Gemeinsam klären wir Ihren Bedarf.",packages:"Alle Leistungen, Pakete und Preise",discuss:"Passende Unterstützung besprechen",
+  faqLabel:"06 / WISSENSWERTES",faqA:"Haben Sie",faqB:"noch Fragen?",faqText:"Einige Antworten vor unserem Gespräch.",faq:[
+   ["Für wen ist das Coaching geeignet?","Für Absolventen, Forschende und Fachkräfte aus den Lebenswissenschaften."],
+   ["Sind Online-Beratungen möglich?","Ja, Beratungen können online stattfinden."],
+   ["In welchen Sprachen beraten Sie?","Englisch, Deutsch und Türkisch."],
+   ["Helfen Sie bei einem deutschen Lebenslauf?","Ja, mit Überarbeitung oder Neuerstellung des Lebenslaufs."],
+   ["Ist eine Stelle garantiert?","Nein. Coaching ist eine Unterstützung, keine Jobgarantie."],
+   ["Gibt es Gruppenangebote?","Für ausgewählte Leistungen sind Gruppenformate vorgesehen."]
+  ],
+  finalLabel:"BEREIT FÜR DEN NÄCHSTEN SCHRITT?",finalA:"Ihr nächstes Kapitel",finalB:"beginnt mit",finalC:"einem Gespräch.",letsTalk:"KONTAKT AUFNEHMEN",footer:"FÜR NEUGIERIGE KÖPFE GESTALTET."
+ },
+ tr:{
+  processLabel:"04 / NASIL ÇALIŞIR",processA:"Doğru rehberlik.",processB:"Net adımlar.",steps:[
+   ["01","Odağınızı seçin","İhtiyacınıza uygun desteği belirleyin."],
+   ["02","Hedeflerinizi konuşun","Geçmişinizi ve sorularınızı paylaşın."],
+   ["03","Plan oluşturun","Somut ve uygulanabilir adımlar kazanın."]
+  ],
+  investmentLabel:"05 / ÜCRETLENDİRME",investmentA:"Destek almak",investmentB:"karmaşık olmamalı.",investmentText:"Belirli bir ihtiyaç için tek bir görüşme veya daha kapsamlı bir koçluk programı seçin. Önce size uygun olanı konuşabiliriz.",packages:"Tüm hizmetler, paketler ve fiyatlar",discuss:"Size uygun desteği konuşalım",
+  faqLabel:"06 / MERAK EDİLENLER",faqA:"Aklınızda",faqB:"soru mu var?",faqText:"Görüşmemizden önce bilmeniz gerekenler.",faq:[
+   ["Kimler danışmanlık alabilir?","Yaşam bilimleri mezunları, araştırmacılar ve Almanya'da kariyer planlayan profesyoneller."],
+   ["Almanya dışında yaşarken destek alabilir miyim?","Evet, online danışmanlık mümkündür."],
+   ["Hangi dillerde hizmet veriliyor?","İngilizce, Almanca ve Türkçe."],
+   ["Alman standartlarında CV hazırlanıyor mu?","Evet, mevcut CV'nin düzenlenmesi veya sıfırdan hazırlanması mümkündür."],
+   ["İş bulma garantisi var mı?","Hayır. Danışmanlık hazırlık ve strateji desteği sağlar."],
+   ["Grup seansları var mı?","Uygun hizmetlerde grup seçenekleri vardır."]
+  ],
+  finalLabel:"BİR SONRAKİ ADIMA HAZIR MISINIZ?",finalA:"Yeni kariyer sayfanız",finalB:"bir",finalC:"görüşmeyle başlar.",letsTalk:"KONUŞALIM",footer:"MERAKLI ZİHİNLER İÇİN TASARLANDI."
+ }
+};
+
 const styles = `
 :host { display:block; width:100%; color:#14272b; font-family:Arial,Helvetica,sans-serif; }
 * {box-sizing:border-box}
@@ -320,6 +375,61 @@ article.hero-original{display:block;position:relative;overflow:hidden;min-height
 .journey-original .certificate{bottom:14px;z-index:3}
 @media(max-width:700px){.journey-original .portraitCard img{padding:10px}.journey-original .portraitCard .caption{bottom:72px;padding:10px 15px}.journey-original .portraitCard .caption strong{font-size:20px}}
 
+
+/* Final homepage chapters: process, investment, FAQ and contact */
+.process-original{padding:100px 7%;background:#f7f2e8;color:#172b2d}
+.process-original .intro{max-width:1300px;margin:auto}
+.process-original .label,.investment-original .label,.faq-original .label,.finale-original .label{font-size:11px;letter-spacing:.16em;font-weight:800}
+.process-original h2{font:400 clamp(55px,7vw,105px)/1.08 Georgia,serif;letter-spacing:-.065em;margin:30px 0}
+.process-original h2 em{color:#c07866;font-weight:400}
+.process-original .steps{display:grid;grid-template-columns:repeat(3,1fr);gap:28px;max-width:1300px;margin:65px auto 0}
+.process-original .step{border-top:1px solid #24312f;padding-top:25px;min-height:230px}
+.process-original .step b{font:400 36px Georgia,serif}
+.process-original .step h3{font:400 27px Georgia,serif;letter-spacing:-.05em;margin:28px 0 14px}
+.process-original .step p{font-size:14px;line-height:1.75}
+.investment-original{display:grid;grid-template-columns:43% 57%;background:#f6d5c0;color:#182729}
+.investment-original .photo{min-height:580px;background:url("https://life-science-career-compass.vercel.app/assets/farzaneh/application-desk.jpg") center/cover}
+.investment-original .copy{padding:85px 10%;align-self:center}
+.investment-original h2{font:400 clamp(45px,5vw,79px)/1.1 Georgia,serif;letter-spacing:-.06em;margin:30px 0}
+.investment-original h2 em{color:#8f5949;font-weight:400}
+.investment-original p{font-size:15px;line-height:1.8}
+.investment-original .links{display:grid;gap:12px;margin-top:27px}
+.investment-original a{color:inherit;font-size:13px;font-weight:800;line-height:1.5}
+.investment-original a:nth-child(1){padding:15px;border:1px solid #263e3b}
+.faq-original{background:#e9eee6;color:#182729;display:grid;grid-template-columns:.8fr 1.2fr;gap:7%;padding:100px 7%}
+.faq-original h2{font:400 clamp(50px,6vw,94px)/1.1 Georgia,serif;letter-spacing:-.06em;margin:30px 0}
+.faq-original h2 em{color:#619988;font-weight:400}
+.faq-original .title p{font-size:15px;line-height:1.7}
+.faq-original .item{border-bottom:1px solid #18282550}
+.faq-original .item:first-child{border-top:1px solid #18282550}
+.faq-original .item button{width:100%;padding:22px 0;display:flex;gap:15px;align-items:center;border:0;background:none;text-align:left;color:inherit}
+.faq-original .item button b{flex:1;font-size:15px}
+.faq-original .item button span{font-size:12px}
+.faq-original .item .answer{margin:0;padding:0 20px 23px 36px;line-height:1.75;font-size:14px;color:#516c65}
+.finale-original{background:#13232a;color:#f1f1e8;padding:110px 7% 70px;position:relative}
+.finale-original h2{font:400 clamp(55px,8vw,126px)/1.05 Georgia,serif;letter-spacing:-.06em;margin:30px 0 65px}
+.finale-original h2 em{color:#a0dfd4;font-weight:400}
+.finale-original .contact{display:flex;justify-content:space-between;align-items:center;gap:20px;border-block:1px solid #e6efe680;padding:25px 0;font-size:clamp(25px,4vw,52px);font-weight:800;text-decoration:none;color:inherit}
+.finale-original .details{display:flex;flex-wrap:wrap;gap:20px 35px;margin-top:45px;font-size:12px}
+.finale-original .details a{color:inherit;text-decoration:none}
+.finale-original .foot{margin-top:60px;font-size:10px;letter-spacing:.12em;color:#a9c7be}
+@media(max-width:700px){
+ .process-original{padding:80px 7%}
+ .process-original h2{font-size:clamp(46px,10vw,70px)}
+ .process-original .steps{grid-template-columns:1fr;gap:16px;margin-top:40px}
+ .process-original .step{min-height:150px}
+ .investment-original{grid-template-columns:1fr}
+ .investment-original .photo{min-height:320px}
+ .investment-original .copy{padding:65px 7%}
+ .investment-original h2{font-size:clamp(43px,10vw,64px)}
+ .faq-original{grid-template-columns:1fr;padding:75px 7%;gap:40px}
+ .faq-original h2{font-size:clamp(47px,10vw,68px)}
+ .finale-original{padding:80px 7% 50px}
+ .finale-original h2{font-size:clamp(47px,10vw,73px)}
+ .finale-original .contact{font-size:27px}
+ .finale-original .details{flex-direction:column}
+}
+
 @media(prefers-reduced-motion:reduce){*,*:before{scroll-behavior:auto!important;animation:none!important;transition:none!important}}
 `;
 
@@ -489,6 +599,64 @@ class CareerCompassDemo extends HTMLElement {
     archiveLink.href="https://life-science-career-compass.vercel.app/assets/farzaneh/career-journey.png";
     archiveLink.rel="noopener noreferrer";archiveLink.target="_blank";
     archive.append(archiveLink);journey.append(archive);root.append(journey);
+
+    const more=nextSectionsCopy[this.lang];
+    const process=this.el("section","process-original"),processIntro=this.el("div","intro");
+    processIntro.append(this.el("div","label",more.processLabel));
+    const processTitle=this.el("h2");
+    processTitle.append(document.createTextNode(more.processA),this.el("br"),this.el("em",null,more.processB));
+    processIntro.append(processTitle);
+    const processSteps=this.el("div","steps");
+    more.steps.forEach(([number,title,description])=>{
+      const step=this.el("div","step");
+      step.append(this.el("b",null,number),this.el("h3",null,title),this.el("p",null,description));processSteps.append(step);
+    });
+    process.append(processIntro,processSteps);root.append(process);
+    const investment=this.el("section","investment-original"),investmentVisual=this.el("div","photo");
+    investmentVisual.setAttribute("role","img");investmentVisual.setAttribute("aria-label","Application preparation workspace");
+    const investmentCopy=this.el("div","copy");
+    investmentCopy.append(this.el("div","label",more.investmentLabel));
+    const investmentTitle=this.el("h2");investmentTitle.append(document.createTextNode(more.investmentA),this.el("br"),this.el("em",null,more.investmentB));
+    investmentCopy.append(investmentTitle,this.el("p",null,more.investmentText));
+    const investLinks=this.el("div","links");
+    const packagesLink=this.el("a",null,more.packages+" ↗");
+    // The Wix pricing page is not yet migrated; show the existing, accurate source page for now.
+    packagesLink.href="https://life-science-career-compass.vercel.app/"+this.lang+"/services";
+    packagesLink.target="_blank";packagesLink.rel="noopener noreferrer";
+    const investMail=this.el("a",null,more.discuss+" ↗");
+    investMail.href="mailto:Ls.career-compass@mail.de?subject="+encodeURIComponent("Career coaching support enquiry");
+    investLinks.append(packagesLink,investMail);investmentCopy.append(investLinks);
+    investment.append(investmentVisual,investmentCopy);root.append(investment);
+    const faqSection=this.el("section","faq-original"),faqHeading=this.el("div","title");
+    faqHeading.append(this.el("span","label",more.faqLabel));
+    const faqTitle=this.el("h2");faqTitle.append(document.createTextNode(more.faqA),this.el("br"),this.el("em",null,more.faqB));
+    faqHeading.append(faqTitle,this.el("p",null,more.faqText));faqSection.append(faqHeading);
+    const faqList=this.el("div","items");
+    more.faq.forEach(([question,answer],index)=>{
+      const item=this.el("div","item"),button=this.el("button"),answerNode=this.el("p","answer",answer);
+      button.type="button";button.setAttribute("aria-expanded","false");answerNode.hidden=true;
+      button.append(this.el("span",null,String(index+1).padStart(2,"0")),this.el("b",null,question),this.el("span",null,"+"));
+      button.addEventListener("click",()=>{
+        const isOpen=button.getAttribute("aria-expanded")==="true";
+        button.setAttribute("aria-expanded",String(!isOpen));answerNode.hidden=isOpen;
+        button.lastChild.textContent=isOpen?"+":"−";
+      });
+      item.append(button,answerNode);faqList.append(item);
+    });
+    faqSection.append(faqList);root.append(faqSection);
+    const finale=this.el("section","finale-original");
+    finale.append(this.el("span","label",more.finalLabel));
+    const finaleTitle=this.el("h2");
+    finaleTitle.append(document.createTextNode(more.finalA),this.el("br"),document.createTextNode(more.finalB+" "),this.el("em",null,more.finalC));
+    finale.append(finaleTitle);
+    const contact=this.el("a","contact",more.letsTalk+" ↗");
+    contact.href="mailto:Ls.career-compass@mail.de?subject="+encodeURIComponent("Consultation request for Dr. Farzaneh Hähndel");
+    finale.append(contact);
+    const contactDetails=this.el("div","details");
+    const email=this.el("a",null,"Ls.career-compass@mail.de");email.href="mailto:Ls.career-compass@mail.de";
+    const phone=this.el("a",null,"+49 157 85331977");phone.href="tel:+4915785331977";
+    const linkedin=this.el("a",null,"LinkedIn ↗");linkedin.href="https://www.linkedin.com/in/fhaehndel";linkedin.rel="noopener noreferrer";linkedin.target="_blank";
+    contactDetails.append(email,phone,linkedin);finale.append(contactDetails,this.el("div","foot","© LIFE SCIENCE CAREER COMPASS · "+more.footer));root.append(finale);
     const quiz=this.el("section","quiz"),surface=this.el("div","surface");
     quiz.append(surface);root.append(quiz);
     const top=this.el("div","top");
