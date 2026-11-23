@@ -447,6 +447,16 @@ article.hero-original{display:block;position:relative;overflow:hidden;min-height
 .journey-original .journey-art-label{position:absolute;bottom:18px;left:14px;right:14px;text-align:center;font-size:9px;font-weight:800;letter-spacing:.13em;color:#17434a;z-index:3}
 
 
+/* German hero headline needs a dedicated layout: do not overlap the portrait. */
+.hero-original.is-german h1{max-width:55%;font-size:clamp(43px,5.3vw,79px);line-height:1.03;overflow-wrap:normal}
+.hero-original.is-german .nameplate{max-width:52%}
+.hero-original.is-german .portrait{right:4%;width:38%}
+@media(max-width:700px){
+ .hero-original.is-german h1{max-width:100%;font-size:clamp(42px,10.1vw,63px);line-height:1.05}
+ .hero-original.is-german .nameplate{max-width:100%}
+ .hero-original.is-german .portrait{width:65%;right:7%}
+}
+@media(max-width:400px){.hero-original.is-german h1{font-size:clamp(38px,10vw,46px)}}
 /* Wix-compatible local navigation, without changing the Wix site's own header */
 .compass-navigation{background:#f4f2e9;color:#15272a;display:flex;align-items:center;justify-content:space-between;gap:24px;padding:15px clamp(18px,4vw,55px);border-bottom:1px solid #1c38352a}
 .compass-navigation .brand{font-size:11px;letter-spacing:.12em;line-height:1.28;font-weight:800;white-space:nowrap}
@@ -525,13 +535,13 @@ class CareerCompassDemo extends HTMLElement {
       locales.append(button);
     });
     navLinks.append(locales);siteNav.append(navLinks);root.append(siteNav);
-    const h=editorialHero[this.lang], hero=this.el("article","hero-original");
+    const h=editorialHero[this.lang], hero=this.el("article","hero-original"+(this.lang==="de"?" is-german":""));
     const ambientA=this.el("div","ambient a"), ambientB=this.el("div","ambient b");
     ambientA.setAttribute("aria-hidden","true");ambientB.setAttribute("aria-hidden","true");
     hero.append(ambientA,ambientB);
     const meta=this.el("div","meta");
     meta.append(this.el("span",null,h.intro),this.el("span",null,h.based+" · EN / DE / TR"));
-    hero.append(meta);
+    // Navigation already shows language; avoid duplicated metadata above the hero.
     const stage=this.el("div","stage");
     const kicker=this.el("div","kicker reveal",h.tag);
     const nameplate=this.el("div","nameplate reveal");
