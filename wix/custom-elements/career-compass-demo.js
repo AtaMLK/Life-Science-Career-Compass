@@ -420,7 +420,7 @@ article.hero-original{display:block;position:relative;overflow:hidden;min-height
 .investment-original p{font-size:15px;line-height:1.8}
 .investment-original .links{display:grid;gap:12px;margin-top:27px}
 .investment-original a{color:inherit;font-size:13px;font-weight:800;line-height:1.5}
-.investment-original .links button{padding:15px;border:1px solid #263e3b;background:transparent;color:#182729;font-size:13px;font-weight:800;text-align:left;cursor:pointer}
+.investment-original .links a:first-child{display:block;padding:15px;border:1px solid #263e3b;text-decoration:none;color:#182729;font-size:13px;font-weight:800}
 .faq-original{background:#e9eee6;color:#182729;display:grid;grid-template-columns:.8fr 1.2fr;gap:7%;padding:100px 7%}
 .faq-original h2{font:400 clamp(50px,6vw,94px)/1.1 Georgia,serif;letter-spacing:-.06em;margin:30px 0}
 .faq-original h2 em{color:#619988;font-weight:400}
@@ -776,59 +776,14 @@ class CareerCompassDemo extends HTMLElement {
     const investmentTitle=this.el("h2");investmentTitle.append(document.createTextNode(more.investmentA),this.el("br"),this.el("em",null,more.investmentB));
     investmentCopy.append(investmentTitle,this.el("p",null,more.investmentText));
     const investLinks=this.el("div","links");
-    const pricingLabels=wixPricingLabels[this.lang];
-    const packagesLink=this.el("button",null,pricingLabels.show+" ↗");
-    packagesLink.type="button";packagesLink.setAttribute("aria-expanded","false");
+    const packagesLink=this.el("a",null,more.packages+" ↗");
+    // The Services page is a separate Wix page, expected at /services.
+    // When the Wix page slug differs, update this link to the actual Wix URL.
+    packagesLink.href="/services";
     const investMail=this.el("a",null,more.discuss+" ↗");
     investMail.href="mailto:Ls.career-compass@mail.de?subject="+encodeURIComponent("Career coaching support enquiry");
     investLinks.append(packagesLink,investMail);investmentCopy.append(investLinks);
     investment.append(investmentVisual,investmentCopy);root.append(investment);
-
-    const pricing=this.el("section","pricing-original");
-    pricing.hidden=true;
-    pricing.setAttribute("aria-label",pricingLabels.eyebrow);
-    packagesLink.addEventListener("click",()=>{
-      const isOpen=!pricing.hidden;pricing.hidden=isOpen;
-      packagesLink.setAttribute("aria-expanded",String(!isOpen));
-      packagesLink.textContent=(isOpen?pricingLabels.show:pricingLabels.hide)+" ↗";
-      if(!isOpen)pricing.scrollIntoView({behavior:window.matchMedia("(prefers-reduced-motion: reduce)").matches?"auto":"smooth",block:"start"});
-    });
-    const pricingHeader=this.el("div","heading");
-    pricingHeader.append(this.el("span","kicker",pricingLabels.eyebrow),this.el("h2",null,pricingLabels.heading),this.el("p",null,pricingLabels.intro));
-    pricing.append(pricingHeader);
-    const pricingLayout=this.el("div","layout"),pricingOptions=this.el("div","choices"),pricingDetails=this.el("div","details");
-    const showRate=(service)=>{
-      pricingDetails.replaceChildren();
-      pricingDetails.append(this.el("span","kicker",pricingLabels.eyebrow),this.el("h3",null,service[this.lang]));
-      const duration=this.el("div","rate duration");
-      duration.append(this.el("span",null,pricingLabels.duration),this.el("strong",null,service.time));
-      pricingDetails.append(duration);
-      [[pricingLabels.one,service.one],[pricingLabels.small,service.small],[pricingLabels.group,service.group]].forEach(([label,amount])=>{
-        if(amount===null)return;
-        const rate=this.el("div","rate");
-        rate.append(this.el("span",null,label),this.el("strong",null,"€"+amount));
-        pricingDetails.append(rate);
-      });
-      pricingDetails.append(this.el("p","note",pricingLabels.note));
-      const enquire=this.el("a","enquire",pricingLabels.ask+" ↗");
-      enquire.href="mailto:Ls.career-compass@mail.de?subject="+encodeURIComponent("Consultation — "+service[this.lang]);
-      pricingDetails.append(enquire);
-    };
-    const pricingButtons=[];
-    wixPrices.forEach((service,index)=>{
-      const button=this.el("button","option");button.type="button";
-      button.setAttribute("aria-pressed",String(index===0));
-      button.append(this.el("span",null,String(index+1).padStart(2,"0")),this.el("strong",null,service[this.lang]),this.el("span",null,"↗"));
-      button.addEventListener("click",()=>{
-        pricingButtons.forEach(b=>b.setAttribute("aria-pressed","false"));
-        button.setAttribute("aria-pressed","true");
-        showRate(service);
-        if(window.matchMedia("(max-width:700px)").matches)pricingDetails.scrollIntoView({behavior:"smooth",block:"start"});
-      });
-      pricingButtons.push(button);pricingOptions.append(button);
-    });
-    showRate(wixPrices[0]);
-    pricingLayout.append(pricingOptions,pricingDetails);pricing.append(pricingLayout);root.append(pricing);
 
     const faqSection=this.el("section","faq-original"),faqHeading=this.el("div","title");
     faqHeading.append(this.el("span","label",more.faqLabel));
