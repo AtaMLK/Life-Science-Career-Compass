@@ -111,6 +111,21 @@ const editorialServices={
  ]}
 };
 
+
+const careerJourney = [
+ {year:"2014–2017",place:"Istanbul, Türkiye",title:{en:"The scientific foundation",de:"Das wissenschaftliche Fundament",tr:"Bilimsel temel"},detail:{en:"Bachelor’s degree in Food Science and Technology, Istanbul Technical University.",de:"Bachelorstudium Lebensmittelwissenschaft und -technologie, Technische Universität Istanbul.",tr:"İstanbul Teknik Üniversitesi, Gıda Bilimi ve Teknolojisi lisans eğitimi."}},
+ {year:"2019–2025",place:"Jena, Germany",title:{en:"The doctorate",de:"Die Promotion",tr:"Doktora yolculuğu"},detail:{en:"Doctoral research at Friedrich Schiller University Jena.",de:"Promotionsforschung an der Friedrich-Schiller-Universität Jena.",tr:"Friedrich Schiller Üniversitesi Jena'da doktora araştırmaları."}},
+ {year:"2019–2023",place:"Jena, Germany",title:{en:"Research in practice",de:"Forschung in der Praxis",tr:"Uygulamalı araştırma"},detail:{en:"Research experience at University Hospital Jena.",de:"Forschungserfahrung am Universitätsklinikum Jena.",tr:"Jena Üniversite Hastanesinde araştırma deneyimi."}},
+ {year:"2023–2024",place:"Jena, Germany",title:{en:"From academia to industry",de:"Von der Wissenschaft in die Industrie",tr:"Akademiden endüstriye"},detail:{en:"A new perspective at Analytik Jena.",de:"Ein neuer Blickwinkel bei Analytik Jena.",tr:"Analytik Jena'da yeni bir bakış açısı."}},
+ {year:"2026–present",place:"Germany / International",title:{en:"International life sciences",de:"Internationale Lebenswissenschaften",tr:"Uluslararası yaşam bilimleri"},detail:{en:"Professional experience with Charles River Laboratories.",de:"Berufserfahrung bei Charles River Laboratories.",tr:"Charles River Laboratories ile profesyonel deneyim."}},
+ {year:"2026",place:"IHK · Germany",title:{en:"Sharing the experience",de:"Erfahrung weitergeben",tr:"Deneyimi paylaşmak"},detail:{en:"Completed IHK Job- und Bewerbungscoaching training and qualification.",de:"IHK-Weiterbildung Job- und Bewerbungscoaching erfolgreich abgeschlossen.",tr:"IHK İş ve Başvuru Koçluğu eğitimini başarıyla tamamladı."}}
+];
+const biographyLocale = {
+ en:{label:"03 / BEHIND THE COMPASS",a:"Meet the scientist",b:"behind the guidance.",story:"I'm Dr. Farzaneh Hähndel. My background spans life science research, a PhD in Jena, experience in university and industry environments, and IHK job and application coaching training. I support professionals navigating German academic and industry opportunities.",talk:"START A CONVERSATION",foundation:"THE FOUNDATION",science:"Scientific training",ihk:"Job & application coaching",based:"Based in Germany",journey:"THE JOURNEY",journeyA:"Experience isn't a title.",journeyB:"It's a journey.",journeyIntro:"Six chapters across education, research, industry and career coaching.",certificate:"View IHK certificate",archive:"View career journey illustration"},
+ de:{label:"03 / HINTER DEM KOMPASS",a:"Lernen Sie die Wissenschaftlerin",b:"hinter der Beratung kennen.",story:"Ich bin Dr. Farzaneh Hähndel. Mein Werdegang verbindet wissenschaftliche Forschung, eine Promotion in Jena, Erfahrung in Hochschule und Industrie sowie die IHK-Weiterbildung im Job- und Bewerbungscoaching.",talk:"GESPRÄCH BEGINNEN",foundation:"DIE GRUNDLAGE",science:"Wissenschaftliche Ausbildung",ihk:"Job- und Bewerbungscoaching",based:"In Deutschland ansässig",journey:"DER WEG",journeyA:"Erfahrung ist kein Titel.",journeyB:"Sondern ein Weg.",journeyIntro:"Sechs Etappen zwischen Studium, Forschung, Industrie und Karrierecoaching.",certificate:"IHK-Zertifikat ansehen",archive:"Originalillustration des Karrierewegs ansehen"},
+ tr:{label:"03 / PUSULANIN ARDINDA",a:"Danışmanlığın arkasındaki",b:"bilim insanını tanıyın.",story:"Ben Dr. Farzaneh Hähndel. Bilimsel araştırma geçmişimi, Jena'daki doktora eğitimimi, akademi ve endüstri deneyimimi ve IHK iş ve başvuru koçluğu eğitimimi danışmanlık hizmetlerimde bir araya getiriyorum.",talk:"GÖRÜŞME BAŞLAT",foundation:"TEMELİMİZ",science:"Bilimsel eğitim",ihk:"İş ve başvuru koçluğu",based:"Almanya'da yerleşik",journey:"KARİYER YOLCULUĞU",journeyA:"Deneyim bir unvan değil.",journeyB:"Bir yolculuktur.",journeyIntro:"Eğitim, araştırma, endüstri ve kariyer danışmanlığı boyunca altı önemli adım.",certificate:"IHK sertifikasını görüntüle",archive:"Kariyer yolculuğu görselini aç"}
+};
+
 const styles = `
 :host { display:block; width:100%; color:#14272b; font-family:Arial,Helvetica,sans-serif; }
 * {box-sizing:border-box}
@@ -239,6 +254,62 @@ article.hero-original{display:block;position:relative;overflow:hidden;min-height
 .services-original .chapter h3{font-size:43px}
 }
 
+
+/* Original Vercel biography / academic journey */
+.story-original{display:grid;grid-template-columns:45% 55%;background:#17272b;color:#f5f1e7;min-height:730px}
+.story-original .photo{min-height:730px;position:relative;overflow:hidden;background:linear-gradient(110deg,#173f4533,#121f2a59),url("https://life-science-career-compass.vercel.app/assets/farzaneh/coaching-session.jpg") center/cover}
+.story-original .photo img{position:absolute;inset:8% 8% 0;width:84%;height:92%;object-fit:contain;object-position:bottom;filter:drop-shadow(0 20px 22px #0d20243b)}
+.story-original .tag{position:absolute;left:6%;bottom:5%;font-size:11px;letter-spacing:.13em;line-height:1.8;background:#102b32dd;padding:10px 14px}
+.story-original .copy{padding:95px 10%;align-self:center}
+.story-original .label,.journey-original .label{font-size:11px;font-weight:800;letter-spacing:.17em}
+.story-original h2{font:400 clamp(43px,5.2vw,78px)/1.09 Georgia,serif;letter-spacing:-.06em;margin:35px 0}
+.story-original h2 em{color:#a2dcce;font-weight:400}
+.story-original p{line-height:1.85;color:#c2d3cd;font-size:15px}
+.story-original .name{color:#fff;font-size:17px;font-weight:800}
+.story-original a{display:inline-block;border-bottom:1px solid #c2d3cd;margin-top:25px;padding-bottom:10px;color:inherit;text-decoration:none;font-size:13px;font-weight:800}
+.proof-original{background:#a7d8d0;color:#14272b;padding:65px 7%;display:grid;grid-template-columns:1.2fr repeat(3,1fr);gap:30px;align-items:center}
+.proof-original strong{display:block;font:400 clamp(48px,6vw,80px) Georgia,serif;letter-spacing:-.075em}
+.proof-original p{font-size:12px;letter-spacing:.07em;line-height:1.6}
+.journey-original{background:#f3efe5;color:#182729;padding:95px 7% 80px}
+.journey-original .heading{max-width:1040px;margin:0 auto 65px}
+.journey-original h2{font:400 clamp(50px,6vw,96px)/1.07 Georgia,serif;letter-spacing:-.065em;margin:23px 0}
+.journey-original h2 em{color:#367e83;font-weight:400}
+.journey-original .heading p{font-size:16px;line-height:1.8;max-width:660px}
+.journey-original .layout{max-width:1250px;margin:auto;display:grid;grid-template-columns:.88fr 1.12fr;gap:9%;align-items:start}
+.journey-original .portraitCard{position:sticky;top:28px;min-height:540px;overflow:hidden;border-radius:14px;background:#a6d7d1;box-shadow:0 25px 65px #142d291a}
+.journey-original .portraitCard .count{position:absolute;top:22px;left:25px;font:400 60px Georgia,serif;z-index:1}
+.journey-original .portraitCard .count span{font:700 12px Arial,sans-serif}
+.journey-original .portraitCard img{position:absolute;inset:4% 0 17%;height:79%;width:100%;object-fit:contain;object-position:bottom}
+.journey-original .portraitCard .caption{position:absolute;left:24px;right:24px;bottom:89px;display:grid;gap:5px;color:#15363b;text-shadow:0 1px 5px #c5f0ea}
+.journey-original .portraitCard .caption strong{font:400 27px Georgia,serif}
+.journey-original .portraitCard .caption span{font-size:11px;letter-spacing:.1em}
+.journey-original .certificate{position:absolute;bottom:21px;left:22px;right:22px;display:flex;justify-content:space-between;align-items:center;text-decoration:none;padding:17px;background:#f6f0e3;color:#16363f;border:1px solid #16363f;font-size:12px;font-weight:800}
+.journey-original .steps{border-left:2px solid #c7d7cf;padding-left:35px}
+.journey-original .step{position:relative;padding:30px 0 65px;min-height:200px;border-bottom:1px solid #18363b19}
+.journey-original .step .number{position:absolute;left:-54px;top:28px;width:36px;height:36px;display:grid;place-items:center;background:#d9e9df;border-radius:50%;font-size:11px}
+.journey-original .step .date{font-size:11px;letter-spacing:.12em;font-weight:800}
+.journey-original .step h3{font:400 clamp(33px,4vw,57px)/1.12 Georgia,serif;letter-spacing:-.06em;margin:20px 0 10px}
+.journey-original .step p{font-size:14px;line-height:1.8}
+.journey-original .archive{max-width:1250px;margin:25px auto 0;text-align:right}
+.journey-original .archive a{color:inherit;text-decoration:none;border-bottom:1px solid;font-weight:800;font-size:12px}
+@media(max-width:700px){
+ .story-original{grid-template-columns:1fr}
+ .story-original .photo{min-height:420px}
+ .story-original .copy{padding:70px 7%}
+ .story-original h2{font-size:clamp(42px,10vw,66px)}
+ .proof-original{grid-template-columns:1fr 1fr;padding:55px 7%;gap:20px}
+ .journey-original{padding:75px 7% 60px}
+ .journey-original h2{font-size:clamp(42px,10vw,63px)}
+ .journey-original .layout{grid-template-columns:1fr;gap:25px}
+ .journey-original .portraitCard{position:relative;top:auto;min-height:380px;max-height:440px}
+ .journey-original .portraitCard .count{font-size:43px}
+ .journey-original .portraitCard .caption strong{font-size:23px}
+ .journey-original .steps{margin-left:13px}
+ .journey-original .step{min-height:165px;padding:20px 0 40px}
+ .journey-original .step h3{font-size:37px}
+ .journey-original .step .number{top:18px}
+}
+
 @media(prefers-reduced-motion:reduce){*,*:before{scroll-behavior:auto!important;animation:none!important;transition:none!important}}
 `;
 
@@ -360,6 +431,54 @@ class CareerCompassDemo extends HTMLElement {
       part.append(copyCol,itemsCol);chapters.append(part);
     });
     servicesSection.append(chapters);root.append(servicesSection);
+    const bio=biographyLocale[this.lang];
+    const story=this.el("section","story-original"),storyPhoto=this.el("div","photo");
+    const portrait=this.el("img");
+    portrait.src="https://life-science-career-compass.vercel.app/assets/farzaneh/portrait-office.png";
+    portrait.alt="Dr. Farzaneh Hähndel";portrait.loading="lazy";
+    storyPhoto.append(portrait,this.el("div","tag","DR. FARZANEH HÄHNDEL · PhD / IHK"));
+    const storyCopy=this.el("div","copy");
+    storyCopy.append(this.el("span","label",bio.label));
+    const storyTitle=this.el("h2");
+    storyTitle.append(document.createTextNode(bio.a),this.el("br"),this.el("em",null,bio.b));
+    storyCopy.append(storyTitle,this.el("p","name","Dr. Farzaneh Hähndel"),this.el("p",null,bio.story));
+    const storyContact=this.el("a",null,bio.talk+" ↗");
+    storyContact.href="mailto:Ls.career-compass@mail.de?subject="+encodeURIComponent("Career coaching consultation");
+    storyCopy.append(storyContact);story.append(storyPhoto,storyCopy);root.append(story);
+    const proof=this.el("section","proof-original");
+    proof.append(this.el("span","label",bio.foundation));
+    [[ "PhD",bio.science ],["IHK",bio.ihk],["DE",bio.based]].forEach(([mark,description])=>{
+      const item=this.el("div");item.append(this.el("strong",null,mark),this.el("p",null,description));proof.append(item);
+    });
+    root.append(proof);
+    const journey=this.el("section","journey-original"),journeyHeading=this.el("div","heading");
+    journeyHeading.append(this.el("span","label",bio.journey));
+    const journeyTitle=this.el("h2");
+    journeyTitle.append(document.createTextNode(bio.journeyA),this.el("br"),this.el("em",null,bio.journeyB));
+    journeyHeading.append(journeyTitle,this.el("p",null,bio.journeyIntro));
+    journey.append(journeyHeading);
+    const journeyLayout=this.el("div","layout"),journeyCard=this.el("div","portraitCard");
+    const counter=this.el("div","count");counter.append(document.createTextNode("01 "),this.el("span",null,"/ 06"));
+    const journeyPhoto=this.el("img");journeyPhoto.src="https://life-science-career-compass.vercel.app/assets/farzaneh/portrait.png";journeyPhoto.loading="lazy";journeyPhoto.alt="Dr. Farzaneh Hähndel";
+    const caption=this.el("div","caption");caption.append(this.el("strong",null,"Dr. Farzaneh Hähndel"),this.el("span",null,"PhD · IHK Job & Application Coach"));
+    const cert=this.el("a","certificate",bio.certificate+" ↗");
+    // Use only the public, date-of-birth-redacted copy; opens in a new browser tab.
+    cert.href="https://life-science-career-compass.vercel.app/assets/farzaneh/certificate-public.png";
+    cert.target="_blank";cert.rel="noopener noreferrer";
+    journeyCard.append(counter,journeyPhoto,caption,cert);
+    const steps=this.el("div","steps");
+    careerJourney.forEach((item,index)=>{
+      const step=this.el("article","step");
+      step.append(this.el("span","number",String(index+1).padStart(2,"0")));
+      step.append(this.el("div","date",item.year+" · "+item.place));
+      step.append(this.el("h3",null,item.title[this.lang]));
+      step.append(this.el("p",null,item.detail[this.lang]));steps.append(step);
+    });
+    journeyLayout.append(journeyCard,steps);journey.append(journeyLayout);
+    const archive=this.el("div","archive"),archiveLink=this.el("a",null,bio.archive+" ↗");
+    archiveLink.href="https://life-science-career-compass.vercel.app/assets/farzaneh/career-journey.png";
+    archiveLink.rel="noopener noreferrer";archiveLink.target="_blank";
+    archive.append(archiveLink);journey.append(archive);root.append(journey);
     const quiz=this.el("section","quiz"),surface=this.el("div","surface");
     quiz.append(surface);root.append(quiz);
     const top=this.el("div","top");
