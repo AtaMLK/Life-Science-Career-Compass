@@ -794,6 +794,19 @@ class CareerCompassDemo extends HTMLElement {
     const servicesLink=new URL(servicesDestination,parentOrigin);
     servicesLink.searchParams.set("lang",this.lang);
     packagesLink.href=servicesLink.toString();packagesLink.target="_top";
+    packagesLink.addEventListener("click",(event)=>{
+      // Wix editor/preview runs custom elements in an iframe. Public /services
+      // does not exist until the site's new page is published. Avoid 404.
+      if(window.self!==window.top){
+        event.preventDefault();
+        const msg={
+          en:"The Services page can be previewed via Wix Editor → Pages & Menu → Services. Its public link is not available yet.",
+          de:"Die Leistungsseite lässt sich im Wix Editor unter Seiten & Menü → Services ansehen. Der öffentliche Link ist noch nicht verfügbar.",
+          tr:"Hizmetler sayfasını Wix Editor → Pages & Menu → Services üzerinden önizleyebilirsiniz. Genel bağlantı henüz aktif değil."
+        }[this.lang];
+        window.alert(msg);
+      }
+    });
     const investMail=this.el("a",null,more.discuss+" ↗");
     investMail.href="mailto:Ls.career-compass@mail.de?subject="+encodeURIComponent("Career coaching support enquiry");
     investLinks.append(packagesLink,investMail);investmentCopy.append(investLinks);
