@@ -74,6 +74,13 @@ const copy = {
   }
 };
 
+
+const editorialHero={
+ en:{intro:"INDEPENDENT CAREER COACHING",based:"Based in Germany",tag:"YOUR CAREER IS A DISCOVERY.",person:"Meet your coach",a:"Science took",b:"you this far.",c:"What's next?",aside:"For curious minds ready for a new chapter.",action:"FOLLOW THE COMPASS",credential:"DR. FARZANEH HÄHNDEL · PhD / IHK CAREER COACH",hint:"SCROLL TO EXPLORE"},
+ de:{intro:"INDIVIDUELLES KARRIERECOACHING",based:"In Deutschland ansässig",tag:"KARRIERE IST EINE ENTDECKUNGSREISE.",person:"Ihre Karriereberaterin",a:"Die Wissenschaft brachte",b:"Sie bis hierher.",c:"Was kommt jetzt?",aside:"Für neugierige Menschen, die bereit für ein neues Kapitel sind.",action:"DEM KOMPASS FOLGEN",credential:"DR. FARZANEH HÄHNDEL · PhD / IHK-KARRIERECOACH",hint:"WEITER ENTDECKEN"},
+ tr:{intro:"BİREYSEL KARİYER KOÇLUĞU",based:"Almanya",tag:"KARİYERİNİZ BİR KEŞİF YOLCULUĞU.",person:"Koçunuzla tanışın",a:"Bilim sizi",b:"buraya getirdi.",c:"Sırada ne var?",aside:"Yeni bir sayfaya hazır meraklı zihinler için.",action:"PUSULAYI TAKİP EDİN",credential:"DR. FARZANEH HÄHNDEL · PhD / IHK KARİYER KOÇU",hint:"KEŞFETMEYE DEVAM"}
+};
+
 const styles = `
 :host { display:block; width:100%; color:#14272b; font-family:Arial,Helvetica,sans-serif; }
 * {box-sizing:border-box}
@@ -107,6 +114,43 @@ button:focus-visible,a:focus-visible {outline:3px solid #147f86;outline-offset:3
 .privacy {font-size:11px!important;color:#536f6d;margin-top:15px}
 [hidden] {display:none!important}
 @media(max-width:700px) { article {grid-template-columns:1fr;gap:24px;min-height:0} .visual {min-height:220px} h1{font-size:44px} }
+
+/* Original Vercel editorial hero adapted for Wix Shadow DOM */
+article.hero-original{display:block;position:relative;overflow:hidden;min-height:710px;padding:0;background:#d7efec;color:#10232a;isolation:isolate}
+.hero-original .ambient{position:absolute;border-radius:50%;filter:blur(52px);pointer-events:none;z-index:-1}
+.hero-original .ambient.a{width:65%;height:75%;background:#b1e9f2;right:-15%;top:-20%}
+.hero-original .ambient.b{width:45%;height:50%;background:#f6e5be;left:-12%;bottom:-25%}
+.hero-original .meta,.hero-original .bottom{position:relative;display:flex;justify-content:space-between;gap:14px;letter-spacing:.13em;font-size:10px;font-weight:800;padding:23px 4%}
+.hero-original .stage{min-height:580px;max-width:1480px;margin:auto;position:relative;padding:66px 7% 46px;display:flex;flex-direction:column;justify-content:center}
+.hero-original .kicker{letter-spacing:.21em;font-size:11px;font-weight:800;position:relative;z-index:2}
+.hero-original .nameplate{position:relative;z-index:3;border-left:2px solid #147f86;padding-left:15px;margin:22px 0 0;display:flex;flex-direction:column;gap:6px;align-items:flex-start;font-size:12px}
+.hero-original .nameplate strong{font-size:15px}
+.hero-original .nameplate small{font-size:10px}
+.hero-original h1{font-size:clamp(64px,9vw,150px);line-height:.97;letter-spacing:-.075em;max-width:1100px;position:relative;z-index:2;margin:24px 0 15px}
+.hero-original h1 em{font-style:italic;font-weight:400;color:#fffaf0;text-shadow:0 2px 30px #41677742}
+.hero-original h1 span{color:#087989}
+.hero-original .portrait{position:absolute;right:5%;top:9%;width:37%;height:75%;overflow:hidden;border-radius:46% 46% 4% 4%;transform:rotate(8deg);box-shadow:0 25px 75px #244c4a2e}
+.hero-original .portrait img{width:100%;height:100%;object-fit:cover;object-position:center}
+.hero-original .side-note{position:absolute;right:5%;bottom:9%;z-index:4;display:flex;align-items:center;gap:10px;background:#f5f0e3;padding:13px 17px;transform:rotate(-6deg);max-width:230px}
+.hero-original .side-note span{font-size:38px;color:#df9276}
+.hero-original .side-note p{font-size:12px;line-height:1.5;font-weight:800;margin:0}
+.hero-original .action{position:relative;z-index:4;align-self:flex-start;margin-top:28px;border:0;border-bottom:1px solid #10232a;background:transparent;padding:0 0 12px;letter-spacing:.14em;font-size:12px;font-weight:800;color:inherit}
+.hero-original .bottom{padding-top:20px;padding-bottom:25px}
+.hero-original .reveal{animation:compass-reveal .8s both}
+.hero-original .reveal.late{animation-delay:.14s}
+@keyframes compass-reveal{from{opacity:0;transform:translateY(18px)}to{opacity:1;transform:translateY(0)}}
+@media(max-width:700px){
+ article.hero-original{min-height:0}
+ .hero-original .meta{font-size:8px}
+ .hero-original .meta span:last-child{display:none}
+ .hero-original .stage{min-height:720px;padding:50px 6% 255px;justify-content:flex-start}
+ .hero-original h1{font-size:clamp(48px,12vw,78px);line-height:1.03;margin:32px 0}
+ .hero-original .portrait{width:65%;height:290px;top:auto;bottom:23px;right:7%}
+ .hero-original .side-note{right:auto;left:5%;bottom:60px;max-width:175px}
+ .hero-original .bottom{font-size:8px}
+}
+@media(max-width:400px){.hero-original h1{font-size:46px}.hero-original .portrait{width:78%}.hero-original .stage{min-height:695px}}
+
 @media(prefers-reduced-motion:reduce){*,*:before{scroll-behavior:auto!important;animation:none!important;transition:none!important}}
 `;
 
@@ -139,15 +183,37 @@ class CareerCompassDemo extends HTMLElement {
     const t=copy[this.lang], root=this.shadowRoot;
     root.replaceChildren();
     const style=this.el("style");style.textContent=styles;root.append(style);
-    const hero=this.el("article");
-    const intro=this.el("div");
-    intro.append(this.el("small",null,t.kicker),this.el("h1",null,t.headline),this.el("p",null,t.intro));
-    const start=this.el("button","primary",t.button);
-    start.type="button";
-    start.addEventListener("click",()=>this.shadowRoot.querySelector(".quiz").scrollIntoView({behavior:matchMedia("(prefers-reduced-motion: reduce)").matches?"auto":"smooth",block:"start"}));
-    intro.append(start);
-    const visual=this.el("div","visual"),visualText=this.el("div","visual-text",t.coaching);visual.append(visualText);
-    hero.append(intro,visual);root.append(hero);
+
+    const h=editorialHero[this.lang], hero=this.el("article","hero-original");
+    const ambientA=this.el("div","ambient a"), ambientB=this.el("div","ambient b");
+    ambientA.setAttribute("aria-hidden","true");ambientB.setAttribute("aria-hidden","true");
+    hero.append(ambientA,ambientB);
+    const meta=this.el("div","meta");
+    meta.append(this.el("span",null,h.intro),this.el("span",null,h.based+" · EN / DE / TR"));
+    hero.append(meta);
+    const stage=this.el("div","stage");
+    const kicker=this.el("div","kicker reveal",h.tag);
+    const nameplate=this.el("div","nameplate reveal");
+    nameplate.append(this.el("span",null,h.person),this.el("strong",null,"Dr. Farzaneh Hähndel"),this.el("small",null,"PhD · IHK"));
+    const heading=this.el("h1","reveal late");
+    heading.append(document.createTextNode(h.a),this.el("br"));
+    const emphasis=this.el("em",null,h.b);heading.append(emphasis,this.el("br"),this.el("span",null,h.c));
+    const photo=this.el("div","portrait");
+    const img=this.el("img");
+    img.src="https://life-science-career-compass.vercel.app/assets/farzaneh/portrait.png";
+    img.alt="Dr. Farzaneh Hähndel";
+    img.loading="eager";
+    photo.append(img);
+    const aside=this.el("div","side-note");
+    aside.append(this.el("span",null,"✳"),this.el("p",null,h.aside));
+    const cta=this.el("button","action",h.action+" ↘");
+    cta.type="button";
+    cta.addEventListener("click",()=>this.shadowRoot.querySelector(".quiz").scrollIntoView({behavior:matchMedia("(prefers-reduced-motion: reduce)").matches?"auto":"smooth",block:"start"}));
+    stage.append(kicker,nameplate,heading,photo,aside,cta);
+    hero.append(stage);
+    const bottom=this.el("div","bottom");
+    bottom.append(this.el("span",null,h.credential),this.el("span",null,h.hint+" ↓"));
+    hero.append(bottom);root.append(hero);
     const quiz=this.el("section","quiz"),surface=this.el("div","surface");
     quiz.append(surface);root.append(quiz);
     const top=this.el("div","top");
