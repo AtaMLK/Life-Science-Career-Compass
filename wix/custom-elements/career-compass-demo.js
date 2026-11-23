@@ -531,7 +531,14 @@ class CareerCompassDemo extends HTMLElement {
   }
 
   static get observedAttributes() {return ["lang","services-url"];}
-  attributeChangedCallback(){if(this.isConnected)this.connectedCallback();}
+  attributeChangedCallback(name){
+    if(!this.isConnected)return;
+    if(name==="lang"){
+      const selected=this.getAttribute("lang");
+      if(copy[selected])this.lang=selected;
+    }
+    this.render();
+  }
 
   el(tag, className, text) {
     const node=document.createElement(tag);
@@ -780,7 +787,11 @@ class CareerCompassDemo extends HTMLElement {
     const packagesLink=this.el("a",null,more.packages+" ↗");
     // Set the element attribute services-url to the real Wix Services page URL if its slug differs.
     const servicesDestination=this.getAttribute("services-url")||"/services";
-    const servicesLink=new URL(servicesDestination,window.location.origin);
+    // In Wix preview, custom elements can be iframe-hosted. Never resolve a page
+    // link against the iframe's origin when the parent Wix page URL is available.
+    const parentPageUrl=document.referrer||window.location.href;
+    const parentOrigin=new URL(parentPageUrl,window.location.href).origin;
+    const servicesLink=new URL(servicesDestination,parentOrigin);
     servicesLink.searchParams.set("lang",this.lang);
     packagesLink.href=servicesLink.toString();packagesLink.target="_top";
     const investMail=this.el("a",null,more.discuss+" ↗");
