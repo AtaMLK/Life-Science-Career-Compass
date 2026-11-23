@@ -30,14 +30,16 @@ const style=`
 class CareerCompassServices extends HTMLElement{
  constructor(){super();this.attachShadow({mode:"open"});this.lang="en";this.selected="industry"}
  static get observedAttributes(){return["lang","home-url"]}
- connectedCallback(){this.lang=ui[this.getAttribute("lang")]?this.getAttribute("lang"):"en";this.render()}
- attributeChangedCallback(){if(this.isConnected){this.lang=ui[this.getAttribute("lang")]?this.getAttribute("lang"):"en";this.render()}}
+ connectedCallback(){const requested=this.getAttribute("lang")||new URLSearchParams(window.location.search).get("lang");this.lang=ui[requested]?requested:"en";this.render()}
+ attributeChangedCallback(name){if(this.isConnected){if(name==="lang"){const requested=this.getAttribute("lang");if(ui[requested])this.lang=requested;}this.render()}}
  node(tag,cl,text){const el=document.createElement(tag);if(cl)el.className=cl;if(text!==undefined)el.textContent=text;return el}
  render(){
   const u=ui[this.lang],root=this.shadowRoot;root.replaceChildren();
   const sheet=this.node("style");sheet.textContent=style;root.append(sheet);
   const header=this.node("header","header"),back=this.node("a",null,u.back);
-  back.href=this.getAttribute("home-url")||"/";header.append(back);
+  const homeBase=this.getAttribute("home-url")||"/";
+  const homeLink=new URL(homeBase,window.location.origin);homeLink.searchParams.set("lang",this.lang);
+  back.href=homeLink.toString();back.target="_top";header.append(back);
   const nav=this.node("nav");nav.setAttribute("aria-label","Languages");
   ["en","de","tr"].forEach(lang=>{const btn=this.node("button",null,lang.toUpperCase());btn.type="button";btn.setAttribute("aria-pressed",String(lang===this.lang));btn.addEventListener("click",()=>{this.lang=lang;this.render()});nav.append(btn)});
   header.append(nav);root.append(header);
