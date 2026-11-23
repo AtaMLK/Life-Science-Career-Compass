@@ -143,13 +143,16 @@ article.hero-original{display:block;position:relative;overflow:hidden;min-height
  article.hero-original{min-height:0}
  .hero-original .meta{font-size:8px}
  .hero-original .meta span:last-child{display:none}
- .hero-original .stage{min-height:720px;padding:50px 6% 255px;justify-content:flex-start}
+ .hero-original .stage{min-height:790px;padding:50px 6% 335px;justify-content:flex-start}
  .hero-original h1{font-size:clamp(48px,12vw,78px);line-height:1.03;margin:32px 0}
  .hero-original .portrait{width:65%;height:290px;top:auto;bottom:23px;right:7%}
- .hero-original .side-note{right:auto;left:5%;bottom:60px;max-width:175px}
+ .hero-original .action{margin-top:14px;align-self:flex-start;font-size:10px;max-width:180px;position:relative;z-index:5}
+ .hero-original .side-note{right:auto;left:5%;bottom:60px;max-width:145px;padding:9px 11px;gap:6px}
+ .hero-original .side-note span{font-size:25px}
+ .hero-original .side-note p{font-size:10px;line-height:1.35}
  .hero-original .bottom{font-size:8px}
 }
-@media(max-width:400px){.hero-original h1{font-size:46px}.hero-original .portrait{width:78%}.hero-original .stage{min-height:695px}}
+@media(max-width:400px){.hero-original h1{font-size:46px}.hero-original .portrait{width:78%}.hero-original .stage{min-height:765px}}
 
 @media(prefers-reduced-motion:reduce){*,*:before{scroll-behavior:auto!important;animation:none!important;transition:none!important}}
 `;
