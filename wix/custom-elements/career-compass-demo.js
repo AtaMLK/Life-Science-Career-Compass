@@ -187,6 +187,25 @@ const wixNavigation={
  tr:{approach:"Yaklaşım",services:"Hizmetler",journey:"Kariyer yolu",questions:"Sorular",contact:"İletişim",languages:"Dil seçimi"}
 };
 
+
+const wixPrices=[
+ {id:"industry",en:"Industry Job Opportunities",de:"Industriejobs finden",tr:"Endüstride İş Fırsatları",time:"60 min",one:80,small:75,group:70},
+ {id:"academia",en:"University & Research Applications",de:"Bewerbungen an Hochschulen & Forschungseinrichtungen",tr:"Üniversite ve Araştırma Başvuruları",time:"60 min",one:80,small:75,group:70},
+ {id:"cv",en:"CV Review & Optimization",de:"Lebenslauf optimieren",tr:"CV İnceleme ve İyileştirme",time:"Per CV",one:80,small:75,group:70},
+ {id:"cv-from-scratch",en:"CV Creation from Scratch",de:"Lebenslauf neu erstellen",tr:"Sıfırdan CV Hazırlama",time:"Per CV",one:100,small:null,group:null},
+ {id:"letter-review",en:"Cover Letter Review",de:"Anschreiben überarbeiten",tr:"Ön Yazı İnceleme ve Düzenleme",time:"Per letter",one:85,small:80,group:75},
+ {id:"letter-from-scratch",en:"Cover Letter from Scratch",de:"Anschreiben neu erstellen",tr:"Sıfırdan Ön Yazı Hazırlama",time:"Per letter",one:100,small:null,group:null},
+ {id:"documents",en:"Application Document Review",de:"Bewerbungsunterlagen prüfen",tr:"Başvuru Belgelerini Düzenleme",time:"Per application",one:60,small:55,group:50},
+ {id:"interview",en:"Interview Preparation",de:"Vorstellungsgespräch vorbereiten",tr:"Mülakat Hazırlığı",time:"90 min",one:150,small:145,group:140},
+ {id:"salary",en:"Salary Negotiation",de:"Gehaltsverhandlung",tr:"Maaş Müzakeresi",time:"60 min",one:150,small:145,group:140},
+ {id:"coaching",en:"Personal Career Coaching",de:"Individuelles Karrierecoaching",tr:"Kişiye Özel Kariyer Koçluğu",time:"6 × 60 min",one:600,small:null,group:null}
+];
+const wixPricingLabels={
+ en:{eyebrow:"SERVICES & PACKAGES",heading:"The details, without the guesswork.",intro:"Select a service to compare individual, small-group and group rates.",one:"One-to-one",small:"Small group (up to 4)",group:"Group (up to 8)",duration:"Duration",ask:"Ask about this service",note:"Pricing from the service brochure; confirm rates with Farzaneh before booking. Group formats are subject to availability.",show:"View prices and packages",hide:"Hide prices and packages"},
+ de:{eyebrow:"LEISTUNGEN & PREISE",heading:"Klare Leistungen, transparente Preise.",intro:"Wählen Sie eine Leistung, um Einzel- und Gruppenpreise zu vergleichen.",one:"Einzelberatung",small:"Kleingruppe (bis 4)",group:"Gruppe (bis 8)",duration:"Dauer",ask:"Leistung anfragen",note:"Preise aus der Leistungsübersicht; vor Buchung bestätigen lassen. Gruppenangebote nach Verfügbarkeit.",show:"Preise und Pakete ansehen",hide:"Preise und Pakete ausblenden"},
+ tr:{eyebrow:"HİZMETLER VE PAKETLER",heading:"Net hizmetler, anlaşılır fiyatlar.",intro:"Bireysel ve grup fiyatlarını karşılaştırmak için hizmet seçin.",one:"Bireysel",small:"Küçük grup (4 kişiye kadar)",group:"Grup (8 kişiye kadar)",duration:"Süre",ask:"Bu hizmeti sor",note:"Fiyatlar hizmet broşüründen alınmıştır; rezervasyon öncesi teyit edilmelidir. Grup seçenekleri uygunluğa bağlıdır.",show:"Fiyatları ve paketleri göster",hide:"Fiyatları ve paketleri gizle"}
+};
+
 const styles = `
 :host { display:block; width:100%; color:#14272b; font-family:Arial,Helvetica,sans-serif; }
 * {box-sizing:border-box}
@@ -401,7 +420,7 @@ article.hero-original{display:block;position:relative;overflow:hidden;min-height
 .investment-original p{font-size:15px;line-height:1.8}
 .investment-original .links{display:grid;gap:12px;margin-top:27px}
 .investment-original a{color:inherit;font-size:13px;font-weight:800;line-height:1.5}
-.investment-original a:nth-child(1){padding:15px;border:1px solid #263e3b}
+.investment-original .links button{padding:15px;border:1px solid #263e3b;background:transparent;color:#182729;font-size:13px;font-weight:800;text-align:left;cursor:pointer}
 .faq-original{background:#e9eee6;color:#182729;display:grid;grid-template-columns:.8fr 1.2fr;gap:7%;padding:100px 7%}
 .faq-original h2{font:400 clamp(50px,6vw,94px)/1.1 Georgia,serif;letter-spacing:-.06em;margin:30px 0}
 .faq-original h2 em{color:#619988;font-weight:400}
@@ -468,6 +487,29 @@ article.hero-original{display:block;position:relative;overflow:hidden;min-height
 .compass-navigation .locale button[aria-pressed="true"]{opacity:1;color:#006d79;text-decoration:underline;text-underline-offset:5px}
 .compass-navigation button:focus-visible{outline:2px solid #147f86;outline-offset:3px}
 @media(max-width:700px){.compass-navigation{align-items:flex-start;flex-direction:column;gap:12px;padding:17px 6%}.compass-navigation .links{justify-content:flex-start;gap:7px 15px}.compass-navigation button{font-size:11px}.compass-navigation .locale{border-left:0;padding-left:0;margin-left:0}}
+
+
+/* Interactive price explorer, contained in the Wix custom element */
+.pricing-original{background:#f4f0e7;padding:85px 7%;color:#15252a}
+.pricing-original .heading{max-width:1100px;margin:0 auto 55px}
+.pricing-original .kicker{font-size:11px;letter-spacing:.17em;font-weight:800}
+.pricing-original h2{font:400 clamp(44px,6vw,86px)/1.08 Georgia,serif;letter-spacing:-.06em;margin:25px 0}
+.pricing-original .heading p{font-size:15px;line-height:1.75}
+.pricing-original .layout{display:grid;grid-template-columns:1fr 1fr;gap:6%;max-width:1300px;margin:auto;align-items:start}
+.pricing-original .choices{display:block;margin:0}
+.pricing-original .option{width:100%;display:flex;gap:16px;align-items:center;text-align:left;color:#173135;border:0;border-bottom:1px solid #1e3c3b36;padding:16px 3px;background:none}
+.pricing-original .option span{font-size:10px;color:#68817e}
+.pricing-original .option strong{font:400 21px Georgia,serif;flex:1}
+.pricing-original .option[aria-pressed="true"]{color:#00838b;background:#e5f1e9}
+.pricing-original .details{position:sticky;top:25px;background:#c3e8df;border-radius:6px;padding:33px}
+.pricing-original .details h3{font:400 clamp(32px,4vw,60px)/1.1 Georgia,serif;margin:29px 0;letter-spacing:-.06em}
+.pricing-original .rate{display:flex;justify-content:space-between;align-items:center;gap:14px;padding:15px 0;border-top:1px solid #2a544c44}
+.pricing-original .rate span{font-size:13px}
+.pricing-original .rate strong{font:400 27px Georgia,serif}
+.pricing-original .rate.duration strong{font:700 13px Arial,sans-serif}
+.pricing-original .note{font-size:12px;line-height:1.7;margin:19px 0;color:#365c58}
+.pricing-original .enquire{display:block;text-decoration:none;background:#142a30;color:#f6f2e9;padding:17px 20px;font-size:13px;font-weight:800}
+@media(max-width:700px){.pricing-original{padding:68px 7%}.pricing-original .layout{grid-template-columns:1fr;gap:25px}.pricing-original .details{position:static}.pricing-original .option strong{font-size:18px}.pricing-original .details h3{font-size:38px}}
 
 @media(prefers-reduced-motion:reduce){*,*:before{scroll-behavior:auto!important;animation:none!important;transition:none!important}}
 `;
@@ -734,14 +776,60 @@ class CareerCompassDemo extends HTMLElement {
     const investmentTitle=this.el("h2");investmentTitle.append(document.createTextNode(more.investmentA),this.el("br"),this.el("em",null,more.investmentB));
     investmentCopy.append(investmentTitle,this.el("p",null,more.investmentText));
     const investLinks=this.el("div","links");
-    const packagesLink=this.el("a",null,more.packages+" ↗");
-    // The Wix pricing page is not yet migrated; show the existing, accurate source page for now.
-    packagesLink.href="https://life-science-career-compass.vercel.app/"+this.lang+"/services";
-    packagesLink.target="_blank";packagesLink.rel="noopener noreferrer";
+    const pricingLabels=wixPricingLabels[this.lang];
+    const packagesLink=this.el("button",null,pricingLabels.show+" ↗");
+    packagesLink.type="button";packagesLink.setAttribute("aria-expanded","false");
     const investMail=this.el("a",null,more.discuss+" ↗");
     investMail.href="mailto:Ls.career-compass@mail.de?subject="+encodeURIComponent("Career coaching support enquiry");
     investLinks.append(packagesLink,investMail);investmentCopy.append(investLinks);
     investment.append(investmentVisual,investmentCopy);root.append(investment);
+
+    const pricing=this.el("section","pricing-original");
+    pricing.hidden=true;
+    pricing.setAttribute("aria-label",pricingLabels.eyebrow);
+    packagesLink.addEventListener("click",()=>{
+      const isOpen=!pricing.hidden;pricing.hidden=isOpen;
+      packagesLink.setAttribute("aria-expanded",String(!isOpen));
+      packagesLink.textContent=(isOpen?pricingLabels.show:pricingLabels.hide)+" ↗";
+      if(!isOpen)pricing.scrollIntoView({behavior:window.matchMedia("(prefers-reduced-motion: reduce)").matches?"auto":"smooth",block:"start"});
+    });
+    const pricingHeader=this.el("div","heading");
+    pricingHeader.append(this.el("span","kicker",pricingLabels.eyebrow),this.el("h2",null,pricingLabels.heading),this.el("p",null,pricingLabels.intro));
+    pricing.append(pricingHeader);
+    const pricingLayout=this.el("div","layout"),pricingOptions=this.el("div","choices"),pricingDetails=this.el("div","details");
+    const showRate=(service)=>{
+      pricingDetails.replaceChildren();
+      pricingDetails.append(this.el("span","kicker",pricingLabels.eyebrow),this.el("h3",null,service[this.lang]));
+      const duration=this.el("div","rate duration");
+      duration.append(this.el("span",null,pricingLabels.duration),this.el("strong",null,service.time));
+      pricingDetails.append(duration);
+      [[pricingLabels.one,service.one],[pricingLabels.small,service.small],[pricingLabels.group,service.group]].forEach(([label,amount])=>{
+        if(amount===null)return;
+        const rate=this.el("div","rate");
+        rate.append(this.el("span",null,label),this.el("strong",null,"€"+amount));
+        pricingDetails.append(rate);
+      });
+      pricingDetails.append(this.el("p","note",pricingLabels.note));
+      const enquire=this.el("a","enquire",pricingLabels.ask+" ↗");
+      enquire.href="mailto:Ls.career-compass@mail.de?subject="+encodeURIComponent("Consultation — "+service[this.lang]);
+      pricingDetails.append(enquire);
+    };
+    const pricingButtons=[];
+    wixPrices.forEach((service,index)=>{
+      const button=this.el("button","option");button.type="button";
+      button.setAttribute("aria-pressed",String(index===0));
+      button.append(this.el("span",null,String(index+1).padStart(2,"0")),this.el("strong",null,service[this.lang]),this.el("span",null,"↗"));
+      button.addEventListener("click",()=>{
+        pricingButtons.forEach(b=>b.setAttribute("aria-pressed","false"));
+        button.setAttribute("aria-pressed","true");
+        showRate(service);
+        if(window.matchMedia("(max-width:700px)").matches)pricingDetails.scrollIntoView({behavior:"smooth",block:"start"});
+      });
+      pricingButtons.push(button);pricingOptions.append(button);
+    });
+    showRate(wixPrices[0]);
+    pricingLayout.append(pricingOptions,pricingDetails);pricing.append(pricingLayout);root.append(pricing);
+
     const faqSection=this.el("section","faq-original"),faqHeading=this.el("div","title");
     faqHeading.append(this.el("span","label",more.faqLabel));
     const faqTitle=this.el("h2");faqTitle.append(document.createTextNode(more.faqA),this.el("br"),this.el("em",null,more.faqB));
