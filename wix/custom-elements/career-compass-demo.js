@@ -87,6 +87,30 @@ const editorialStatement={
  tr:{label:"SADECE İŞ ARAMAK DEĞİL.",a:"Uzmanlığınız",b:"bilimsel.",c:"Sonraki adımınız",d:"size özel.",foot:"BİLİMDEN KARİYERE",description:"Bilimsel geçmişiniz başlangıç noktanız. Güçlü yönlerinize, hedeflerinize ve beklentilerinize uygun bir kariyer yönü belirleyin."}
 };
 
+
+const editorialAudience={
+ en:{label:"01 / THE PEOPLE",a:"Brilliant minds.",b:"Different paths.",intro:"There is no single career formula. Your background, goals, and ambitions shape your direction.",people:[["Graduates & Early Careers","Turn your education into a confident first step."],["PhD Students & Researchers","Explore a career in academia or transition into industry."],["Industry Professionals","Prepare for your next role, interview or salary discussion."]]},
+ de:{label:"01 / FÜR WEN",a:"Starke Köpfe.",b:"Unterschiedliche Wege.",intro:"Es gibt nicht den einen Karriereweg. Ihr Hintergrund und Ihre Ziele bestimmen die Richtung.",people:[["Berufseinsteiger","Mit einem klaren Plan in den Beruf starten."],["Promovierende & Forschende","Neue Perspektiven in Forschung und Industrie finden."],["Fachkräfte in der Industrie","Den nächsten Karriereschritt vorbereiten."]]},
+ tr:{label:"01 / KİMLER İÇİN",a:"Parlak zihinler.",b:"Farklı yollar.",intro:"Herkese uyan tek bir kariyer formülü yoktur. Geçmişiniz ve hedefleriniz yolunuzu belirler.",people:[["Yeni Mezunlar","Kariyerinize güvenle başlayın."],["Doktora Öğrencileri ve Araştırmacılar","Akademi ve endüstri seçeneklerini keşfedin."],["Sektör Profesyonelleri","Yeni pozisyonlara, mülakatlara ve ücret görüşmelerine hazırlanın."]]}
+};
+const editorialServices={
+ en:{label:"02 / THE WORK",a:"One career.",b:"Many possibilities.",intro:"Pick a direction. Discover the support behind it.",ask:"Ask about this service",chapters:[
+ {label:"EXPLORE",title:"Find your direction.",text:"A strong scientific background opens doors. The challenge is knowing which ones to knock on.",items:[["Industry Job Opportunities","Discover life science industry roles in Germany and plan a strategic job search."],["University & Research Applications","Explore academic and research openings and prepare applications."]]},
+ {label:"PRESENT",title:"Tell your story well.",text:"Your experience deserves more than a list of qualifications.",items:[["CV Review & Optimization","Improve your CV for professional applications in Germany."],["CV Creation from Scratch","Create a well-structured CV in English or German."],["Cover Letter Review","Refine your existing letter for a specific opportunity."],["Cover Letter from Scratch","Develop a tailored application letter."],["Application Document Review","Review and organize your application documents."]]},
+ {label:"ADVANCE",title:"Own your next move.",text:"Prepare for interviews and negotiations with clarity.",items:[["Interview Preparation","Interview practice and personalized feedback."],["Salary Negotiation","Prepare evidence-based salary conversations."],["Personal Career Coaching","Six individual sessions shaped around your goals."]]}
+ ]},
+ de:{label:"02 / LEISTUNGEN",a:"Eine Karriere.",b:"Viele Möglichkeiten.",intro:"Entdecken Sie gezielte Unterstützung und sinnvolle nächste Schritte.",ask:"Leistung anfragen",chapters:[
+ {label:"ORIENTIEREN",title:"Finden Sie Ihre Richtung.",text:"Entdecken Sie Möglichkeiten auf Basis Ihrer wissenschaftlichen Qualifikation.",items:[["Industriejobs finden","Passende Stellen in der deutschen Life-Science-Industrie finden."],["Bewerbungen an Hochschulen & Forschungseinrichtungen","Unterstützung bei akademischen Bewerbungen."]]},
+ {label:"PRÄSENTIEREN",title:"Erzählen Sie Ihre Geschichte.",text:"Präsentieren Sie Ihre Erfahrung überzeugend.",items:[["Lebenslauf optimieren","Individuelle Prüfung und Überarbeitung."],["Lebenslauf neu erstellen","Lebenslauf auf Deutsch oder Englisch erstellen."],["Anschreiben überarbeiten","Vorhandenes Bewerbungsschreiben verbessern."],["Anschreiben neu erstellen","Zielgerichtetes Anschreiben erstellen."],["Bewerbungsunterlagen prüfen","Dokumente prüfen und ordnen."]]},
+ {label:"WEITERKOMMEN",title:"Gestalten Sie Ihren nächsten Schritt.",text:"Gespräche und Verhandlungen gezielt vorbereiten.",items:[["Vorstellungsgespräch vorbereiten","Interviewtraining und Feedback."],["Gehaltsverhandlung","Gehaltsgespräche fundiert vorbereiten."],["Individuelles Karrierecoaching","Sechs persönliche Coachingtermine."]]}
+ ]},
+ tr:{label:"02 / HİZMETLER",a:"Tek kariyer.",b:"Birçok olasılık.",intro:"Yönünüzü seçin, size uygun desteği keşfedin.",ask:"Hizmet hakkında bilgi al",chapters:[
+ {label:"KEŞFET",title:"Yönünüzü bulun.",text:"Bilimsel geçmişinizle doğru fırsatları belirleyin.",items:[["Endüstride İş Fırsatları","Almanya'daki uygun endüstri pozisyonlarını bulun."],["Üniversite ve Araştırma Başvuruları","Akademik başvurular için destek."]]},
+ {label:"ANLAT",title:"Hikâyenizi doğru anlatın.",text:"Deneyiminizi başvurularda güçlü şekilde sunun.",items:[["CV İnceleme ve İyileştirme","CV'nizi Almanya için geliştirin."],["Sıfırdan CV Hazırlama","İngilizce veya Almanca CV hazırlayın."],["Ön Yazı İnceleme ve Düzenleme","Mevcut ön yazınızı iyileştirin."],["Sıfırdan Ön Yazı Hazırlama","Yeni ve hedefe yönelik ön yazı oluşturun."],["Başvuru Belgelerini Düzenleme","Başvuru evraklarını gözden geçirin."]]},
+ {label:"İLERLE",title:"Sonraki adımınızı sahiplenin.",text:"Mülakat ve maaş görüşmelerine hazırlanın.",items:[["Mülakat Hazırlığı","Mülakat pratiği ve geri bildirim."],["Maaş Müzakeresi","Ücret görüşmelerine hazırlık."],["Kişiye Özel Kariyer Koçluğu","Altı bireysel koçluk oturumu."]]}
+ ]}
+};
+
 const styles = `
 :host { display:block; width:100%; color:#14272b; font-family:Arial,Helvetica,sans-serif; }
 * {box-sizing:border-box}
@@ -174,6 +198,47 @@ article.hero-original{display:block;position:relative;overflow:hidden;min-height
 .statement-original .symbol{font-size:37px;color:#abdace;line-height:1}
 @media(max-width:700px){.statement-original{min-height:0;padding:85px 7% 55px}.statement-original h2{font-size:clamp(42px,9.5vw,69px);margin:32px 0}.statement-original p{font-size:14px}.statement-original .rule{margin:55px 0 20px}}
 
+
+/* Vercel-inspired audience + three service chapters */
+.audience-original{display:grid;grid-template-columns:1fr 1fr;min-height:650px;background:#f4f2e9;color:#14272b}
+.audience-original .visual{min-height:560px;background:linear-gradient(#112b3644,#112b3644),url("https://life-science-career-compass.vercel.app/assets/farzaneh/interview-session.jpg") center/cover}
+.audience-original .body{padding:90px 9%;align-self:center}
+.audience-original .index,.services-original .index{font-size:11px;font-weight:800;letter-spacing:.17em}
+.audience-original h2,.services-original h2{font:400 clamp(49px,5.5vw,83px)/1.08 Georgia,serif;letter-spacing:-.065em;margin:30px 0}
+.audience-original h2 span{color:#0e8791}
+.audience-original .intro{line-height:1.7;color:#5d6968;font-size:15px}
+.audience-original .path{display:flex;align-items:center;gap:15px;width:100%;text-align:left;background:none;border:0;border-top:1px solid #1a262429;padding:20px 0;color:#14272b}
+.audience-original .path span{font-size:11px;font-weight:800;color:#147b85}
+.audience-original .path strong{display:block;font-size:16px}
+.audience-original .path small{display:block;color:#63746f;font-size:12px;line-height:1.6;margin-top:5px}
+.audience-original .path b{margin-left:auto}
+.services-original{background:#e5e8dc;color:#14272b;padding:100px 6% 80px}
+.services-original .intro{max-width:1100px;margin:0 auto 60px}
+.services-original h2 em{color:#448d87}
+.services-original .intro p{font-size:16px;line-height:1.65}
+.services-original .chapters{max-width:1280px;margin:auto;display:grid;gap:18px}
+.services-original .chapter{display:grid;grid-template-columns:1fr 1fr;gap:8%;padding:55px 5%;background:#bbe8e5;border-radius:4px}
+.services-original .chapter:nth-child(2){background:#f5c9b4}
+.services-original .chapter:nth-child(3){background:#dce8b5}
+.services-original .chapter .name{font-size:11px;font-weight:800;letter-spacing:.16em}
+.services-original .chapter h3{font:400 clamp(38px,4vw,66px)/1.1 Georgia,serif;letter-spacing:-.055em;margin:25px 0}
+.services-original .chapter p{line-height:1.7;font-size:14px}
+.services-original .entries{align-self:center}
+.services-original .service{border-bottom:1px solid #1a343a44}
+.services-original .service:first-child{border-top:1px solid #1a343a44}
+.services-original .service button{width:100%;text-align:left;padding:16px 0;display:flex;justify-content:space-between;align-items:center;gap:14px;background:none;color:inherit;border:0;font-size:16px;font-weight:700}
+.services-original .service .details{padding:0 0 18px;line-height:1.7;font-size:13px}
+.services-original .service .details a{font-weight:800;color:inherit}
+@media(max-width:700px){
+.audience-original{grid-template-columns:1fr}
+.audience-original .visual{min-height:310px}
+.audience-original .body{padding:55px 7%}
+.audience-original h2,.services-original h2{font-size:clamp(43px,10vw,65px)}
+.services-original{padding:75px 6%}
+.services-original .chapter{grid-template-columns:1fr;gap:30px;padding:35px 7%}
+.services-original .chapter h3{font-size:43px}
+}
+
 @media(prefers-reduced-motion:reduce){*,*:before{scroll-behavior:auto!important;animation:none!important;transition:none!important}}
 `;
 
@@ -250,6 +315,51 @@ class CareerCompassDemo extends HTMLElement {
     statementFoot.append(this.el("span",null,st.foot),this.el("span","symbol","✳"));
     inside.append(statementFoot);statement.append(inside);
     root.append(statement);
+    const aud=editorialAudience[this.lang], audience=this.el("section","audience-original");
+    const audienceVisual=this.el("div","visual");
+    audienceVisual.setAttribute("role","img");audienceVisual.setAttribute("aria-label","Career coaching and interview setting");
+    const audienceBody=this.el("div","body");
+    audienceBody.append(this.el("div","index",aud.label));
+    const audienceHeading=this.el("h2");
+    audienceHeading.append(document.createTextNode(aud.a),this.el("br"),this.el("span",null,aud.b));
+    audienceBody.append(audienceHeading,this.el("p","intro",aud.intro));
+    aud.people.forEach(([name,description],i)=>{
+      const button=this.el("button","path");button.type="button";
+      button.append(this.el("span",null,"0"+(i+1)));
+      const summary=this.el("div");summary.append(this.el("strong",null,name),this.el("small",null,description));
+      button.append(summary,this.el("b",null,"↗"));
+      button.addEventListener("click",()=>this.shadowRoot.querySelector(".quiz").scrollIntoView({behavior:"smooth"}));
+      audienceBody.append(button);
+    });
+    audience.append(audienceVisual,audienceBody);root.append(audience);
+    const svc=editorialServices[this.lang],servicesSection=this.el("section","services-original");
+    const svcIntro=this.el("div","intro");
+    svcIntro.append(this.el("div","index",svc.label));
+    const svcTitle=this.el("h2");
+    svcTitle.append(document.createTextNode(svc.a),this.el("br"),this.el("em",null,svc.b));
+    svcIntro.append(svcTitle,this.el("p",null,svc.intro));servicesSection.append(svcIntro);
+    const chapters=this.el("div","chapters");
+    svc.chapters.forEach((chapter,index)=>{
+      const part=this.el("div","chapter"),copyCol=this.el("div"),itemsCol=this.el("div","entries");
+      copyCol.append(this.el("div","name",String(index+1).padStart(2,"0")+" / 03  ·  "+chapter.label),this.el("h3",null,chapter.title),this.el("p",null,chapter.text));
+      chapter.items.forEach(([name,description])=>{
+        const item=this.el("div","service"),toggle=this.el("button"),details=this.el("div","details");
+        toggle.type="button";toggle.setAttribute("aria-expanded","false");
+        toggle.append(this.el("span",null,name),this.el("span",null,"+"));
+        details.hidden=true;details.append(this.el("p",null,description));
+        const request=this.el("a",null,svc.ask+" ↗");
+        request.href="mailto:Ls.career-compass@mail.de?subject="+encodeURIComponent(name+" consultation request");
+        details.append(request);
+        toggle.addEventListener("click",()=>{
+          const isOpen=toggle.getAttribute("aria-expanded")==="true";
+          toggle.setAttribute("aria-expanded",String(!isOpen));details.hidden=isOpen;
+          toggle.lastChild.textContent=isOpen?"+":"−";
+        });
+        item.append(toggle,details);itemsCol.append(item);
+      });
+      part.append(copyCol,itemsCol);chapters.append(part);
+    });
+    servicesSection.append(chapters);root.append(servicesSection);
     const quiz=this.el("section","quiz"),surface=this.el("div","surface");
     quiz.append(surface);root.append(quiz);
     const top=this.el("div","top");
