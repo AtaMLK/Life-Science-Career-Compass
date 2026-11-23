@@ -561,6 +561,45 @@ class CareerCompassDemo extends HTMLElement {
       part.append(copyCol,itemsCol);chapters.append(part);
     });
     servicesSection.append(chapters);root.append(servicesSection);
+    const quiz=this.el("section","quiz"),surface=this.el("div","surface");
+    quiz.append(surface);root.append(quiz);
+    const top=this.el("div","top");
+    top.append(this.el("small",null,"CAREER COMPASS"),this.el("small",null,t.step+" "+Math.min(this.step+1,5)+" / 5"));
+    surface.append(top);
+    const progress=this.el("div","progress");
+    for(let i=0;i<5;i++){const line=this.el("span",i<=this.step?"on":"");progress.append(line)}
+    surface.append(progress);
+    if(this.step<5){
+      const current=t.questions[this.step];
+      surface.append(this.el("h2",null,current.q));
+      const choices=this.el("div","choices");
+      current.a.forEach((answer,index)=>{
+        const button=this.el("button",null,answer+"  →");button.type="button";
+        button.addEventListener("click",()=>{
+          this.answers=this.answers.slice(0,this.step).concat(index);
+          this.step+=1;
+          this.render();
+        });
+        choices.append(button);
+      });
+      surface.append(choices);
+    }else{
+      const recommendation=t.recommendation[this.answers[1]??0];
+      surface.append(this.el("h2",null,t.result),this.el("h3",null,recommendation));
+      const summary=this.el("div","result");
+      t.questions.forEach((q,i)=>summary.append(this.el("p",null,q.q+" — "+q.a[this.answers[i]])));
+      summary.append(this.el("p",null,t.note));surface.append(summary);
+      const subject="Life Science Career Compass — "+recommendation;
+      const body=t.questions.map((q,i)=>q.q+": "+q.a[this.answers[i]]).join("\n")+"\n\n"+t.note;
+      const link=this.el("a","email",t.ask);
+      link.href="mailto:Ls.career-compass@mail.de?subject="+encodeURIComponent(subject)+"&body="+encodeURIComponent(body);
+      surface.append(link,this.el("p","privacy",t.privacy));
+    }
+    const footer=this.el("div","footer"),back=this.el("button",null,"← "+t.back),reset=this.el("button",null,t.reset);
+    back.type="button";reset.type="button";back.disabled=this.step===0;
+    back.addEventListener("click",()=>{if(this.step>0){this.step-=1;this.answers.pop();this.render()}});
+    reset.addEventListener("click",()=>{this.step=0;this.answers=[];this.render()});
+    footer.append(back,reset);surface.append(footer);
     const bio=biographyLocale[this.lang];
     const story=this.el("section","story-original"),storyPhoto=this.el("div","photo");
     const portrait=this.el("img");
@@ -671,45 +710,7 @@ class CareerCompassDemo extends HTMLElement {
     const phone=this.el("a",null,"+49 157 85331977");phone.href="tel:+4915785331977";
     const linkedin=this.el("a",null,"LinkedIn ↗");linkedin.href="https://www.linkedin.com/in/fhaehndel";linkedin.rel="noopener noreferrer";linkedin.target="_blank";
     contactDetails.append(email,phone,linkedin);finale.append(contactDetails,this.el("div","foot","© LIFE SCIENCE CAREER COMPASS · "+more.footer));root.append(finale);
-    const quiz=this.el("section","quiz"),surface=this.el("div","surface");
-    quiz.append(surface);root.append(quiz);
-    const top=this.el("div","top");
-    top.append(this.el("small",null,"CAREER COMPASS"),this.el("small",null,t.step+" "+Math.min(this.step+1,5)+" / 5"));
-    surface.append(top);
-    const progress=this.el("div","progress");
-    for(let i=0;i<5;i++){const line=this.el("span",i<=this.step?"on":"");progress.append(line)}
-    surface.append(progress);
-    if(this.step<5){
-      const current=t.questions[this.step];
-      surface.append(this.el("h2",null,current.q));
-      const choices=this.el("div","choices");
-      current.a.forEach((answer,index)=>{
-        const button=this.el("button",null,answer+"  →");button.type="button";
-        button.addEventListener("click",()=>{
-          this.answers=this.answers.slice(0,this.step).concat(index);
-          this.step+=1;
-          this.render();
-        });
-        choices.append(button);
-      });
-      surface.append(choices);
-    }else{
-      const recommendation=t.recommendation[this.answers[1]??0];
-      surface.append(this.el("h2",null,t.result),this.el("h3",null,recommendation));
-      const summary=this.el("div","result");
-      t.questions.forEach((q,i)=>summary.append(this.el("p",null,q.q+" — "+q.a[this.answers[i]])));
-      summary.append(this.el("p",null,t.note));surface.append(summary);
-      const subject="Life Science Career Compass — "+recommendation;
-      const body=t.questions.map((q,i)=>q.q+": "+q.a[this.answers[i]]).join("\n")+"\n\n"+t.note;
-      const link=this.el("a","email",t.ask);
-      link.href="mailto:Ls.career-compass@mail.de?subject="+encodeURIComponent(subject)+"&body="+encodeURIComponent(body);
-      surface.append(link,this.el("p","privacy",t.privacy));
-    }
-    const footer=this.el("div","footer"),back=this.el("button",null,"← "+t.back),reset=this.el("button",null,t.reset);
-    back.type="button";reset.type="button";back.disabled=this.step===0;
-    back.addEventListener("click",()=>{if(this.step>0){this.step-=1;this.answers.pop();this.render()}});
-    reset.addEventListener("click",()=>{this.step=0;this.answers=[];this.render()});
-    footer.append(back,reset);surface.append(footer);
+
   }
 }
 
