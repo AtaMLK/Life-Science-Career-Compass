@@ -524,12 +524,13 @@ class CareerCompassDemo extends HTMLElement {
   }
 
   connectedCallback() {
-    const language=(this.getAttribute("lang")||"en").toLowerCase();
+    const queryLanguage=new URLSearchParams(window.location.search).get("lang");
+    const language=(this.getAttribute("lang")||queryLanguage||"en").toLowerCase();
     this.lang=copy[language]?language:"en";
     this.render();
   }
 
-  static get observedAttributes() {return ["lang"];}
+  static get observedAttributes() {return ["lang","services-url"];}
   attributeChangedCallback(){if(this.isConnected)this.connectedCallback();}
 
   el(tag, className, text) {
@@ -777,9 +778,11 @@ class CareerCompassDemo extends HTMLElement {
     investmentCopy.append(investmentTitle,this.el("p",null,more.investmentText));
     const investLinks=this.el("div","links");
     const packagesLink=this.el("a",null,more.packages+" ↗");
-    // The Services page is a separate Wix page, expected at /services.
-    // When the Wix page slug differs, update this link to the actual Wix URL.
-    packagesLink.href="/services";
+    // Set the element attribute services-url to the real Wix Services page URL if its slug differs.
+    const servicesDestination=this.getAttribute("services-url")||"/services";
+    const servicesLink=new URL(servicesDestination,window.location.origin);
+    servicesLink.searchParams.set("lang",this.lang);
+    packagesLink.href=servicesLink.toString();packagesLink.target="_top";
     const investMail=this.el("a",null,more.discuss+" ↗");
     investMail.href="mailto:Ls.career-compass@mail.de?subject="+encodeURIComponent("Career coaching support enquiry");
     investLinks.append(packagesLink,investMail);investmentCopy.append(investLinks);
