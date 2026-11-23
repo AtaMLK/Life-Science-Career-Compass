@@ -181,6 +181,12 @@ const nextSectionsCopy={
  }
 };
 
+const wixNavigation={
+ en:{approach:"Approach",services:"Services",journey:"The journey",questions:"Questions",contact:"Contact",languages:"Choose language"},
+ de:{approach:"Ansatz",services:"Leistungen",journey:"Werdegang",questions:"Fragen",contact:"Kontakt",languages:"Sprache wählen"},
+ tr:{approach:"Yaklaşım",services:"Hizmetler",journey:"Kariyer yolu",questions:"Sorular",contact:"İletişim",languages:"Dil seçimi"}
+};
+
 const styles = `
 :host { display:block; width:100%; color:#14272b; font-family:Arial,Helvetica,sans-serif; }
 * {box-sizing:border-box}
@@ -440,6 +446,19 @@ article.hero-original{display:block;position:relative;overflow:hidden;min-height
 .journey-original .compass-star{position:absolute;left:50%;top:50%;transform:translate(-50%,-50%) rotate(14deg);font:400 52px Georgia,serif;color:#fcf8e7;z-index:2;text-shadow:0 3px 25px #16424a55}
 .journey-original .journey-art-label{position:absolute;bottom:18px;left:14px;right:14px;text-align:center;font-size:9px;font-weight:800;letter-spacing:.13em;color:#17434a;z-index:3}
 
+
+/* Wix-compatible local navigation, without changing the Wix site's own header */
+.compass-navigation{background:#f4f2e9;color:#15272a;display:flex;align-items:center;justify-content:space-between;gap:24px;padding:15px clamp(18px,4vw,55px);border-bottom:1px solid #1c38352a}
+.compass-navigation .brand{font-size:11px;letter-spacing:.12em;line-height:1.28;font-weight:800;white-space:nowrap}
+.compass-navigation .links{display:flex;align-items:center;justify-content:flex-end;flex-wrap:wrap;gap:10px 20px}
+.compass-navigation button{border:0;background:none;padding:8px 0;color:inherit;font-size:12px;font-weight:700;cursor:pointer}
+.compass-navigation button:hover{text-decoration:underline;text-underline-offset:4px}
+.compass-navigation .locale{display:flex;gap:8px;border-left:1px solid #173b3b44;padding-left:16px;margin-left:2px}
+.compass-navigation .locale button{font-size:10px;letter-spacing:.07em;opacity:.55}
+.compass-navigation .locale button[aria-pressed="true"]{opacity:1;color:#006d79;text-decoration:underline;text-underline-offset:5px}
+.compass-navigation button:focus-visible{outline:2px solid #147f86;outline-offset:3px}
+@media(max-width:700px){.compass-navigation{align-items:flex-start;flex-direction:column;gap:12px;padding:17px 6%}.compass-navigation .links{justify-content:flex-start;gap:7px 15px}.compass-navigation button{font-size:11px}.compass-navigation .locale{border-left:0;padding-left:0;margin-left:0}}
+
 @media(prefers-reduced-motion:reduce){*,*:before{scroll-behavior:auto!important;animation:none!important;transition:none!important}}
 `;
 
@@ -473,6 +492,39 @@ class CareerCompassDemo extends HTMLElement {
     root.replaceChildren();
     const style=this.el("style");style.textContent=styles;root.append(style);
 
+    const navCopy=wixNavigation[this.lang],siteNav=this.el("nav","compass-navigation");
+    siteNav.setAttribute("aria-label","Career Compass");
+    siteNav.append(this.el("div","brand","LIFE SCIENCE\nCAREER COMPASS"));
+    const navLinks=this.el("div","links");
+    [
+      [navCopy.approach,".statement-original"],
+      [navCopy.services,".services-original"],
+      [navCopy.journey,".journey-original"],
+      [navCopy.questions,".faq-original"],
+      [navCopy.contact,".finale-original"]
+    ].forEach(([label,selector])=>{
+      const button=this.el("button",null,label);button.type="button";
+      button.addEventListener("click",()=>{
+        const target=this.shadowRoot.querySelector(selector);
+        if(target)target.scrollIntoView({behavior:window.matchMedia("(prefers-reduced-motion: reduce)").matches?"auto":"smooth",block:"start"});
+      });
+      navLinks.append(button);
+    });
+    const locales=this.el("div","locale");locales.setAttribute("aria-label",navCopy.languages);
+    ["en","de","tr"].forEach(code=>{
+      const button=this.el("button",null,code.toUpperCase());button.type="button";
+      button.setAttribute("aria-pressed",String(this.lang===code));
+      button.addEventListener("click",()=>{
+        if(this.lang===code)return;
+        this.lang=code;
+        // Keep language choice within this component without duplicate attribute renders.
+        // A Wix custom element does not navigate to a different page on language switch.
+        // Preserve the current quiz step and selections while translating all labels.
+        this.render();
+      });
+      locales.append(button);
+    });
+    navLinks.append(locales);siteNav.append(navLinks);root.append(siteNav);
     const h=editorialHero[this.lang], hero=this.el("article","hero-original");
     const ambientA=this.el("div","ambient a"), ambientB=this.el("div","ambient b");
     ambientA.setAttribute("aria-hidden","true");ambientB.setAttribute("aria-hidden","true");
